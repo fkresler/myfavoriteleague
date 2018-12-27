@@ -1,0 +1,18 @@
+{
+    "name": "my-favourite-league",
+    "version": "0.0.1",
+    "description": "An application to keep track of your favorite or strongest champions in the MOBA League of Legends",
+    "main": "index.js",
+    "scripts": {
+        "server": "cd backend && node server.js",
+        "client": "cd frontend && npm run start",
+        "start": "concurrently \"npm run server\" \"npm run client\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": ["league", "of", "legends", "league", "lol", "champion", "tier", "list"],
+    "author": "Fabian Kresler",
+    "license": "ISC",
+    "dependencies": {
+        "concurrently": "^4.1.0"
+    }
+}

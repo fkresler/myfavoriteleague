@@ -1,0 +1,16 @@
+{
+    "name": "my-favourite-league-backend",
+    "version": "0.0.1",
+    "description": "Backend",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Fabian Kresler",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.16.4",
+        "morgan": "^1.9.1"
+    }
+}
