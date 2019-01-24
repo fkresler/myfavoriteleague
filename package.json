@@ -9,7 +9,16 @@
         "start": "concurrently \"npm run server\" \"npm run client\"",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": ["league", "of", "legends", "league", "lol", "champion", "tier", "list"],
+    "keywords": [
+        "league",
+        "of",
+        "legends",
+        "league",
+        "lol",
+        "champion",
+        "tier",
+        "list"
+    ],
     "author": "Fabian Kresler",
     "license": "ISC",
     "dependencies": {
