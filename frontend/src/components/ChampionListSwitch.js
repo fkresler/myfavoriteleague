@@ -40,7 +40,7 @@ class ChampionListSwitch extends Component {
 	}
 }
 
-ChampionListSwitch.PropTypes = {
+ChampionListSwitch.propTypes = {
 	currentListIdentifier: PropTypes.oneOf(["complete","favorites"]).isRequired,
 	selectListByIdentifier: PropTypes.func.isRequired
 };
