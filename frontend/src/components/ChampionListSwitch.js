@@ -3,45 +3,46 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledChampionListSwitch = styled.div`
+	display: flex;
 	width: 60%;
+	margin: 1rem auto;
+	border-radius: 3px;
+	overflow: hidden;
 `;
 
 const StyledChampionListSwitchButton = styled.div`
-	width: 100%;
-	background-color: ${props => props.isActive ? "orange" : "blue"};
+	flex-grow: 1;
+	flex-basis: 0;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	background-color: ${({isActive}) => isActive ? "blue" : "orange"};
 	color: #fff;
+	font-weight: bold;
+	cursor: ${({isActive}) => isActive ? "default" : "pointer"};
+	text-decoration: ${({isActive}) => isActive ? "underline" : "none"};
+	user-select: none;
 `;
 
 class ChampionListSwitch extends Component {
 	render() {
+		let currentListIdentifier = this.props.currentListIdentifier;
+		let selectListByIdentifier = this.props.selectListByIdentifier;
 		return (
-			<div className="champion-list-switch-wrapper">
-				<ChampionListSwitchButton identifier="complete" content="All Champions" isActive={true} selectOnClick={props.switchToListMode}/>
-				<ChampionListSwitchButton identifier="favorites" content="My Favorites" isActive={false} selectOnClick={props.switchToFavMode}/>
-			</div>
+			<StyledChampionListSwitch>
+				<StyledChampionListSwitchButton isActive={currentListIdentifier === "complete"} onClick={() => selectListByIdentifier("complete")}>
+					All Champions
+				</StyledChampionListSwitchButton>
+				<StyledChampionListSwitchButton isActive={currentListIdentifier === "favorites"} onClick={() => selectListByIdentifier("favorites")}>
+					Favorites
+				</StyledChampionListSwitchButton>
+			</StyledChampionListSwitch>
 		);
 	}
 }
 
 ChampionListSwitch.PropTypes = {
-	currentSwitchMode: PropTypes.oneOf(['complete','favorites']).isRequired,
-	switchToListMode: PropTypes.func.isRequired,
-	switchToFavMode: PropTypes.func.isRequired
-};
-
-class ChampionListSwitchButton extends Component {
-	render() {
-		return (
-			<StyledChampionListSwitchButton onClick={selectOnClick}>{content}</StyledChampionListSwitchButton>
-		);
-	}
-}
-
-ChampionListSwitchButton.PropTypes = {
-	identifier: PropTypes.string.isRequired,
-	content: PropTypes.string.isRequired,
-	isActive: PropTypes.bool,
-	selectOnClick: PropTypes.func.isRequired
+	currentListIdentifier: PropTypes.oneOf(["complete","favorites"]).isRequired,
+	selectListByIdentifier: PropTypes.func.isRequired
 };
 
 export default ChampionListSwitch;
