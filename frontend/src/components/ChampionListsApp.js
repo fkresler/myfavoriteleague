@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 
+import ChampionList from "./ChampionList";
 import ChampionCard from "./ChampionCard";
 import ChampionListSwitch from "./ChampionListSwitch";
 
@@ -15,6 +16,9 @@ class ChampionListsApp extends Component {
         this.LIST_IDENTIFIERS = ["complete","favorites"];
         this.state = {
             championData: {},
+            championLists: {
+                "favorites": []
+            },
             favoriteListChampions: [],
             activeListIdentifier: this.LIST_IDENTIFIERS[0]
         }
@@ -56,6 +60,17 @@ class ChampionListsApp extends Component {
         }
     }
 
+    addChampionToListById = (listId, championKey) => {
+        let championLists = {...this.state.championLists};
+        let specifiedList = championLists[listId];
+        if(specifiedList.indexOf(championKey) < 0) {
+            specifiedList.push(championKey);
+            this.setState({
+                championLists: championLists
+            });
+        }
+    }
+
     removeChampionFromFavoriteList = (championKey) => {
         let previousFavoriteList = this.state.favoriteListChampions.slice();
         let championIndex = previousFavoriteList.indexOf(championKey);
@@ -63,6 +78,18 @@ class ChampionListsApp extends Component {
             previousFavoriteList.splice(championIndex, 1);
             this.setState({
                 favoriteListChampions: previousFavoriteList
+            });
+        }
+    }
+
+    removeChampionFromListById = (listId, championKey) => {
+        let championLists = {...this.state.championLists};
+        let specifiedList = championLists[listId];
+        let championIndex = specifiedList.indexOf(championKey);
+        if(championIndex > -1) {
+            specifiedList.splice(championIndex, 1);
+            this.setState({
+                championLists: championLists
             });
         }
     }
@@ -82,6 +109,12 @@ class ChampionListsApp extends Component {
         return (
             <StyledChampionListsWrapper>
                 <ChampionListSwitch currentListIdentifier={activeListIdentifier} selectListByIdentifier={selectActiveListByIdentifier}/>
+                <ChampionList championListId={"favorites"}
+                    completeChampionData={this.state.championData}
+                    selectedChampionData={this.state.championLists["favorites"]}
+                    addChampionToListById={this.addChampionToListById}
+                    removeChampionFromListById={this.removeChampionFromListById}
+                />
                 {currentlyActiveChampionListArray.map((key) => {
                     let isCurrentChampionInFavorites = this.state.favoriteListChampions.indexOf(key) > -1;
                     return (

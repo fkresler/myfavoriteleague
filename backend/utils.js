@@ -1,6 +1,27 @@
 const fs = require("fs");
 
 module.exports = {
+	getCurrentVersionByApiIdentifier: async function(apiIdentifier) {
+		const apiVersionUrl = "https://ddragon.leagueoflegends.com/realms/euw.json";
+		return (
+			fetch(apiVersionUrl)
+			.then((response) => {
+				response
+					.json()
+					.then((data) => {
+						return data.n[apiIdentifier];
+					})
+					.catch((err) => {
+						console.log("Error: while trying to decrypt response from api for api versions!");
+						console.log(err);
+					});
+			})
+			.catch((err) => {
+				console.log("Error: while contacting the api to get api versions!");
+				console.log(err);
+			})
+		);
+	},
 	getLocalData: function(name) {
 		const fileName = "data/" + name + ".json";
 		try {
@@ -8,6 +29,7 @@ module.exports = {
 			var jsonData = JSON.parse(data);
 			return jsonData;
 		} catch (fileReadingError) {
+			console.log("Error: while trying to read data from local data file for " + fileName);
 			console.log(fileReadingError);
 			return null;
 		}
@@ -19,6 +41,7 @@ module.exports = {
 			fs.writeFileSync(fileName, jsonData);
 			return true;
 		} catch (fileWriteError) {
+			console.log("Error: while trying to write data to local data file for " + fileName);
 			console.log(fileWriteError);
 			return false;
 		}
@@ -29,6 +52,7 @@ module.exports = {
 			fs.unlinkSync(fileName);
 			return true;
 		} catch (fileDeletionError) {
+			console.log("Error: while trying to clear data from local data file for " + fileName);
 			console.log(fileDeletionError);
 			return false;
 		}

@@ -6,10 +6,11 @@ const utils = require("./utils");
 var app = express();
 app.use(morgan("combined"));
 
-app.get("/champions", function(req, res) {
-	const apiUrl = "http://ddragon.leagueoflegends.com/cdn/9.2.1/data/en_US/champion.json";
+app.get("/champions", async function(req, res) {
+	const currentVersion = await utils.getCurrentVersionByApiIdentifier("champion");
+	const apiUrl = "http://ddragon.leagueoflegends.com/cdn/" + currentVersion + "/data/en_US/champion.json";
 	fetch(apiUrl)
-		.then(function(response) {
+		.then((response) => {
 			if (response.status !== 200) {
 				console.log("Error: status code was " + response.status);
 				var localData = utils.getLocalData("champions");
@@ -19,11 +20,11 @@ app.get("/champions", function(req, res) {
 			}
 			response
 				.json()
-				.then(function(data) {
+				.then((data) => {
 					utils.setLocalData("champions", data);
 					res.send(data);
 				})
-				.catch(function(err) {
+				.catch((err) => {
 					console.log("Error: response could not be decrypted");
 					var localData = utils.getLocalData("champions");
 					if (localData) {
@@ -33,7 +34,7 @@ app.get("/champions", function(req, res) {
 					}
 				});
 		})
-		.catch(function(err) {
+		.catch((err) => {
 			console.log("Error: request was not successful");
 			var localData = utils.getLocalData("champions");
 			if (localData) {
