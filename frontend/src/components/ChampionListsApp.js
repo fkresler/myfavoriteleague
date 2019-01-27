@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 
+import ChampionCard from "./ChampionCard";
 import ChampionListSwitch from "./ChampionListSwitch";
 
 const StyledChampionListsWrapper = styled.div`
@@ -14,6 +15,7 @@ class ChampionListsApp extends Component {
         this.LIST_IDENTIFIERS = ["complete","favorites"];
         this.state = {
             championData: {},
+            favoriteListChampions: [],
             activeListIdentifier: this.LIST_IDENTIFIERS[0]
         }
     }
@@ -44,6 +46,27 @@ class ChampionListsApp extends Component {
             });
     }
 
+    addChampionToFavoriteList = (championKey) => {
+        let previousFavoriteList = this.state.favoriteListChampions.slice();
+        if(previousFavoriteList.indexOf(championKey) < 0) {
+            previousFavoriteList.push(championKey);
+            this.setState({
+                favoriteListChampions: previousFavoriteList
+            });
+        }
+    }
+
+    removeChampionFromFavoriteList = (championKey) => {
+        let previousFavoriteList = this.state.favoriteListChampions.slice();
+        let championIndex = previousFavoriteList.indexOf(championKey);
+        if(championIndex > -1) {
+            previousFavoriteList.splice(championIndex, 1);
+            this.setState({
+                favoriteListChampions: previousFavoriteList
+            });
+        }
+    }
+
     selectActiveListByIdentifier = (identifier) => {
         if(this.LIST_IDENTIFIERS.indexOf(identifier) > -1) {
             this.setState({
@@ -53,15 +76,20 @@ class ChampionListsApp extends Component {
     }
 
     render() {
-        let imageUrl = "http://ddragon.leagueoflegends.com/cdn/9.2.1/img/champion/";
         let activeListIdentifier = this.state.activeListIdentifier;
         let selectActiveListByIdentifier = this.selectActiveListByIdentifier;
+        let currentlyActiveChampionListArray = this.state.activeListIdentifier === "favorites" ? this.state.favoriteListChampions : Object.keys(this.state.championData);
         return (
             <StyledChampionListsWrapper>
                 <ChampionListSwitch currentListIdentifier={activeListIdentifier} selectListByIdentifier={selectActiveListByIdentifier}/>
-                {Object.keys(this.state.championData).map((key) => {
+                {currentlyActiveChampionListArray.map((key) => {
+                    let isCurrentChampionInFavorites = this.state.favoriteListChampions.indexOf(key) > -1;
                     return (
-                        <img src={imageUrl + this.state.championData[key].image.full} alt={key} title={key}/>
+                        <ChampionCard championData={this.state.championData[key]}
+                            isChampionInFavorites={isCurrentChampionInFavorites}
+                            addChampionToFavoriteList={this.addChampionToFavoriteList}
+                            removeChampionFromFavoriteList={this.removeChampionFromFavoriteList}
+                        />
                     );
                 })}
             </StyledChampionListsWrapper>
