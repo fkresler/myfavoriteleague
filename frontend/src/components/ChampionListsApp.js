@@ -13,14 +13,13 @@ const StyledChampionListsWrapper = styled.div`
 class ChampionListsApp extends Component {
     constructor(props) {
         super(props);
-        this.LIST_IDENTIFIERS = ["complete","favorites"];
+        this.DEFAULTLISTIDENTIFIER = "Favorites";
         this.state = {
             championData: {},
             championLists: {
-                "favorites": []
+                "Favorites": []
             },
-            favoriteListChampions: [],
-            activeListIdentifier: this.LIST_IDENTIFIERS[0]
+            activeListIdentifier: this.DEFAULTLISTIDENTIFIER
         }
     }
 
@@ -50,16 +49,6 @@ class ChampionListsApp extends Component {
             });
     }
 
-    addChampionToFavoriteList = (championKey) => {
-        let previousFavoriteList = this.state.favoriteListChampions.slice();
-        if(previousFavoriteList.indexOf(championKey) < 0) {
-            previousFavoriteList.push(championKey);
-            this.setState({
-                favoriteListChampions: previousFavoriteList
-            });
-        }
-    }
-
     addChampionToListById = (listId, championKey) => {
         let championLists = {...this.state.championLists};
         let specifiedList = championLists[listId];
@@ -67,17 +56,6 @@ class ChampionListsApp extends Component {
             specifiedList.push(championKey);
             this.setState({
                 championLists: championLists
-            });
-        }
-    }
-
-    removeChampionFromFavoriteList = (championKey) => {
-        let previousFavoriteList = this.state.favoriteListChampions.slice();
-        let championIndex = previousFavoriteList.indexOf(championKey);
-        if(championIndex > -1) {
-            previousFavoriteList.splice(championIndex, 1);
-            this.setState({
-                favoriteListChampions: previousFavoriteList
             });
         }
     }
@@ -95,7 +73,7 @@ class ChampionListsApp extends Component {
     }
 
     selectActiveListByIdentifier = (identifier) => {
-        if(this.LIST_IDENTIFIERS.indexOf(identifier) > -1) {
+        if(Object.keys(this.state.championLists).indexOf(identifier) > -1) {
             this.setState({
                 activeListIdentifier: identifier
             });
@@ -105,26 +83,18 @@ class ChampionListsApp extends Component {
     render() {
         let activeListIdentifier = this.state.activeListIdentifier;
         let selectActiveListByIdentifier = this.selectActiveListByIdentifier;
-        let currentlyActiveChampionListArray = this.state.activeListIdentifier === "favorites" ? this.state.favoriteListChampions : Object.keys(this.state.championData);
         return (
             <StyledChampionListsWrapper>
-                <ChampionListSwitch currentListIdentifier={activeListIdentifier} selectListByIdentifier={selectActiveListByIdentifier}/>
-                <ChampionList championListId={"favorites"}
+                <ChampionListSwitch availableLists={this.state.championLists}
+                    currentListIdentifier={activeListIdentifier}
+                    selectListByIdentifier={selectActiveListByIdentifier}
+                />
+                <ChampionList championListId={activeListIdentifier}
                     completeChampionData={this.state.championData}
-                    selectedChampionData={this.state.championLists["favorites"]}
+                    selectedChampionData={this.state.championLists[activeListIdentifier]}
                     addChampionToListById={this.addChampionToListById}
                     removeChampionFromListById={this.removeChampionFromListById}
                 />
-                {currentlyActiveChampionListArray.map((key) => {
-                    let isCurrentChampionInFavorites = this.state.favoriteListChampions.indexOf(key) > -1;
-                    return (
-                        <ChampionCard championData={this.state.championData[key]}
-                            isChampionInFavorites={isCurrentChampionInFavorites}
-                            addChampionToFavoriteList={this.addChampionToFavoriteList}
-                            removeChampionFromFavoriteList={this.removeChampionFromFavoriteList}
-                        />
-                    );
-                })}
             </StyledChampionListsWrapper>
         );
     }

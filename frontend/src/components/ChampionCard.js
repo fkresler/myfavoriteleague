@@ -7,24 +7,24 @@ const StyledChampionCard = styled.div`
     margin: 1rem;
 
     img {
-        border: 1rem solid ${({isFavorite}) => isFavorite ? "green" : "transparent"};
+        border: 1rem solid ${({shouldBeMarked}) => shouldBeMarked ? "green" : "transparent"};
         border-radius: 50%;
     }
 `;
 
 class ChampionCard extends Component {
-    toggleChampionInFavorites = () => {
+    toggleChampionInCurrentlyActiveList = () => {
         if(this.props.isChampionInFavorites) {
-            this.props.removeChampionFromFavoriteList(this.props.championData.id);
+            this.props.removeChampionFromListById(this.props.championData.id);
         } else {
-            this.props.addChampionToFavoriteList(this.props.championData.id);
+            this.props.addChampionToListById(this.props.championData.id);
         }
     }
 
     render() {
         let imageUrlPrefix = "http://ddragon.leagueoflegends.com/cdn/" + this.props.championData.version + "/img/champion/";
         return (
-            <StyledChampionCard isFavorite={this.props.isChampionInFavorites} onClick={this.toggleChampionInFavorites}>
+            <StyledChampionCard shouldBeMarked={!!this.props.shouldBeMarked} onClick={this.toggleChampionInFavorites}>
                 <img src={imageUrlPrefix + this.props.championData.image.full} title={this.props.championData.name} alt={this.props.championData.name}/>
             </StyledChampionCard>
         );
@@ -39,9 +39,9 @@ ChampionCard.propTypes = {
         image: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired
     }),
-    isChampionInFavorites: PropTypes.bool.isRequired,
-    addChampionToFavoriteList: PropTypes.func.isRequired,
-    removeChampionFromFavoriteList: PropTypes.func.isRequired
+    addChampionToCurrentListById: PropTypes.func.isRequired,
+    removeChampionFromCurrentListById: PropTypes.func.isRequired,
+    shouldBeMarked: PropTypes.bool
 };
 
 export default ChampionCard;

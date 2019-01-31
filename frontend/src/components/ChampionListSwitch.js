@@ -29,19 +29,21 @@ class ChampionListSwitch extends Component {
 		let selectListByIdentifier = this.props.selectListByIdentifier;
 		return (
 			<StyledChampionListSwitch>
-				<StyledChampionListSwitchButton isActive={currentListIdentifier === "complete"} onClick={() => selectListByIdentifier("complete")}>
-					All Champions
-				</StyledChampionListSwitchButton>
-				<StyledChampionListSwitchButton isActive={currentListIdentifier === "favorites"} onClick={() => selectListByIdentifier("favorites")}>
-					Favorites
-				</StyledChampionListSwitchButton>
+				{Object.keys(this.props.availableLists).map((key) => {
+					return (
+						<StyledChampionListSwitchButton isActive={key === currentListIdentifier} onClick={() => selectListByIdentifier(key)}>
+							{key}
+						</StyledChampionListSwitchButton>
+					);
+				})}
 			</StyledChampionListSwitch>
 		);
 	}
 }
 
 ChampionListSwitch.propTypes = {
-	currentListIdentifier: PropTypes.oneOf(["complete","favorites"]).isRequired,
+	availableLists: PropTypes.object.isRequired,
+	currentListIdentifier: PropTypes.string.isRequired,
 	selectListByIdentifier: PropTypes.func.isRequired
 };
 
