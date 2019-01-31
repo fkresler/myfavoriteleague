@@ -13,18 +13,11 @@ const StyledChampionCard = styled.div`
 `;
 
 class ChampionCard extends Component {
-    toggleChampionInCurrentlyActiveList = () => {
-        if(this.props.isChampionInFavorites) {
-            this.props.removeChampionFromListById(this.props.championData.id);
-        } else {
-            this.props.addChampionToListById(this.props.championData.id);
-        }
-    }
-
     render() {
         let imageUrlPrefix = "http://ddragon.leagueoflegends.com/cdn/" + this.props.championData.version + "/img/champion/";
+        let championId = this.props.championData.id;
         return (
-            <StyledChampionCard shouldBeMarked={!!this.props.shouldBeMarked} onClick={this.toggleChampionInFavorites}>
+            <StyledChampionCard shouldBeMarked={!!this.props.shouldBeMarked} onClick={() => this.props.toggleChampionSelectedState(championId)}>
                 <img src={imageUrlPrefix + this.props.championData.image.full} title={this.props.championData.name} alt={this.props.championData.name}/>
             </StyledChampionCard>
         );
@@ -39,8 +32,7 @@ ChampionCard.propTypes = {
         image: PropTypes.object.isRequired,
         title: PropTypes.string.isRequired
     }),
-    addChampionToCurrentListById: PropTypes.func.isRequired,
-    removeChampionFromCurrentListById: PropTypes.func.isRequired,
+    toggleChampionSelectedState: PropTypes.func.isRequired,
     shouldBeMarked: PropTypes.bool
 };
 

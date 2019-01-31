@@ -17,7 +17,12 @@ class ChampionListsApp extends Component {
         this.state = {
             championData: {},
             championLists: {
-                "Favorites": []
+                "Favorites": [],
+                "Top": [],
+                "Jungle": [],
+                "Mid": [],
+                "Bot": [],
+                "Support": []
             },
             activeListIdentifier: this.DEFAULTLISTIDENTIFIER
         }

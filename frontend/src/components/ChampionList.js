@@ -5,6 +5,14 @@ import styled from "styled-components";
 import ChampionCard from "./ChampionCard";
 
 class ChampionList extends Component {
+    toggleChampionInCurrentList = (championKey) => {
+        if(this.props.selectedChampionData.indexOf(championKey) > -1) {
+            this.removeChampionFromCurrentListById(championKey);
+        } else {
+            this.addChampionToCurrentListById(championKey);
+        }
+    }
+
     addChampionToCurrentListById = (championKey) => {
         this.props.addChampionToListById(this.props.championListId, championKey);
     }
@@ -20,8 +28,7 @@ class ChampionList extends Component {
                     let isChampionInCurrentList = this.props.selectedChampionData.indexOf(key) > -1;
                     return (
                         <ChampionCard championData={this.props.completeChampionData[key]}
-                            addChampionToCurrentListById={this.addChampionToCurrentListById}
-                            removeChampionFromCurrentListById={this.removeChampionFromCurrentListById}
+                            toggleChampionSelectedState={this.toggleChampionInCurrentList}
                             shouldBeMarked={isChampionInCurrentList}
                         />
                     )
