@@ -23,17 +23,21 @@ class ChampionList extends Component {
 
     render() {
         return (
-            <div>
-                {Object.keys(this.props.completeChampionData).map((key) => {
-                    let isChampionInCurrentList = this.props.selectedChampionData.indexOf(key) > -1;
-                    return (
-                        <ChampionCard championData={this.props.completeChampionData[key]}
-                            toggleChampionSelectedState={this.toggleChampionInCurrentList}
-                            shouldBeMarked={isChampionInCurrentList}
-                        />
-                    )
-                })}
-            </div>
+            <React.Fragment>
+                <div>
+                </div>
+                <div>
+                    {Object.keys(this.props.completeChampionData).map((key) => {
+                        let isChampionInCurrentList = this.props.selectedChampionData.indexOf(key) > -1;
+                        return (
+                            <ChampionCard championData={this.props.completeChampionData[key]}
+                                toggleChampionSelectedState={this.toggleChampionInCurrentList}
+                                shouldBeMarked={isChampionInCurrentList}
+                            />
+                        )
+                    })}
+                </div>
+            </React.Fragment>
         );
     }
 }

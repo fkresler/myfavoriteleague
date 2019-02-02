@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import styled from "styled-components";
 
 import ChampionList from "./ChampionList";
-import ChampionCard from "./ChampionCard";
 import ChampionListSwitch from "./ChampionListSwitch";
 
 const StyledChampionListsWrapper = styled.div`
