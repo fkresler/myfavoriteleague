@@ -11,7 +11,7 @@
         "client": "cd frontend && npm run start",
         "start-dev": "concurrently \"npm run server\" \"npm run client\"",
         "start-live": "cd backend && node server.js",
-        "start": "npm run setup-heroku && npm prepare-deploy && npm run start-live"
+        "start": "npm run setup-heroku && npm run prepare-deploy && npm run start-live"
     },
     "keywords": [
         "league",
