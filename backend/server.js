@@ -5,6 +5,7 @@ const utils = require("./utils");
 const path = require("path");
 
 var app = express();
+var port = process.env.PORT || 3000;
 app.use(morgan("combined"));
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -56,4 +57,4 @@ app.get("/champions", async function(req, res) {
 	}
 });
 
-app.listen(80);
+app.listen(port);
