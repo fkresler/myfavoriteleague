@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import styled from "styled-components";
+import Cookies from "js-cookie";
 
 import ChampionList from "./ChampionList";
 import ChampionListSwitch from "./ChampionListSwitch";
@@ -12,6 +13,7 @@ const StyledChampionListsWrapper = styled.div`
 class ChampionListsApp extends Component {
     constructor(props) {
         super(props);
+        this.COOKIENAME = "myfavoriteleague-mylists";
         this.DEFAULTLISTIDENTIFIER = "Favorites";
         this.state = {
             championData: {},
@@ -29,6 +31,7 @@ class ChampionListsApp extends Component {
 
     componentDidMount() {
         const apiUrl = "/champions";
+        // Get static champion data
         fetch(apiUrl)
             .then((response) => {
                 if (response.status !== 200) {
@@ -51,6 +54,13 @@ class ChampionListsApp extends Component {
             .catch((err) => {
                 console.log("Error: request was not successful");
             });
+        // Get previously saved cookie data
+        let previousCookieData = Cookies.get(this.COOKIENAME);
+        if(previousCookieData) {
+            this.setState({
+                championLists: JSON.parse(previousCookieData)
+            });
+        }
     }
 
     addChampionToListById = (listId, championKey) => {
@@ -61,6 +71,7 @@ class ChampionListsApp extends Component {
             this.setState({
                 championLists: championLists
             });
+            Cookies.set(this.COOKIENAME, JSON.stringify(this.state.championLists));
         }
     }
 
@@ -73,6 +84,7 @@ class ChampionListsApp extends Component {
             this.setState({
                 championLists: championLists
             });
+            Cookies.set(this.COOKIENAME, JSON.stringify(this.state.championLists));
         }
     }
 
