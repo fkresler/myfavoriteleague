@@ -18,26 +18,28 @@ app.get("/champions", async function(req, res) {
 			.then((response) => {
 				if (response.status !== 200) {
 					console.log("Error: status code was " + response.status);
+					console.log("Full response: " + {response});
 					var localData = utils.getLocalData("champions");
 					if (localData) {
 						res.send(localData);
 					}
+				} else {
+					response
+						.json()
+						.then((data) => {
+							utils.setLocalData("champions", data);
+							res.send(data);
+						})
+						.catch((err) => {
+							console.log("Error: response could not be decrypted");
+							var localData = utils.getLocalData("champions");
+							if (localData) {
+								res.send(localData);
+							} else {
+								res.send("Error: No data found!");
+							}
+						});
 				}
-				response
-					.json()
-					.then((data) => {
-						utils.setLocalData("champions", data);
-						res.send(data);
-					})
-					.catch((err) => {
-						console.log("Error: response could not be decrypted");
-						var localData = utils.getLocalData("champions");
-						if (localData) {
-							res.send(localData);
-						} else {
-							res.send("Error: No data found!");
-						}
-					});
 			})
 			.catch((err) => {
 				console.log("Error: request was not successful");
@@ -45,7 +47,7 @@ app.get("/champions", async function(req, res) {
 				if (localData) {
 					res.send(localData);
 				}
-			});	
+			});
 	}
 });
 
