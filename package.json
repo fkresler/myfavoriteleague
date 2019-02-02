@@ -2,12 +2,16 @@
     "name": "my-favourite-league",
     "version": "0.0.1",
     "description": "An application to keep track of your favorite or strongest champions in the MOBA League of Legends",
-    "main": "index.js",
     "scripts": {
+        "setup": "npm run install && cd frontend && npm run install && cd ../backend && npm run install",
+        "clean": "rm -rf ./backend/build && rm -rf ./frontend/build",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "deploy": "npm run clean && cd frontend && npm run build && cd .. && cp -R ./frontend/build ./backend/build",
         "server": "cd backend && node server.js",
         "client": "cd frontend && npm run start",
-        "start": "concurrently \"npm run server\" \"npm run client\"",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start-dev": "concurrently \"npm run server\" \"npm run client\"",
+        "start": "cd backend && node server.js",
+        "auto-deploy": "npm run setup && npm run clean && npm run deploy && npm run start"
     },
     "keywords": [
         "league",

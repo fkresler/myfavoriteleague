@@ -2,10 +2,15 @@ require("isomorphic-fetch");
 const express = require("express");
 const morgan = require("morgan");
 const utils = require("./utils");
+const path = require("path");
 
 var app = express();
 app.use(morgan("combined"));
+app.use(express.static(path.join(__dirname, 'build')));
 
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 app.get("/champions", async function(req, res) {
 	const currentVersion = await utils.getCurrentVersionByApiIdentifier("champion");
 	const apiUrl = "http://ddragon.leagueoflegends.com/cdn/" + currentVersion + "/data/en_US/champion.json";
