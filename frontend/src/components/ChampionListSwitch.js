@@ -19,6 +19,7 @@ const StyledChampionListSwitchButton = styled.div`
 	color: #fff;
 	font-weight: bold;
 	cursor: ${({isActive}) => isActive ? "default" : "pointer"};
+	text-align: center;
 	text-decoration: ${({isActive}) => isActive ? "underline" : "none"};
 	user-select: none;
 `;
