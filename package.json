@@ -4,13 +4,15 @@
     "description": "An application to keep track of your favorite or strongest champions in the MOBA League of Legends",
     "scripts": {
         "setup": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ..",
+        "setup-heroku": "npm install && cd ./backend && npm install && cd ..",
         "clean": "rm -rf ./backend/build && rm -rf ./frontend/build",
         "prepare-deploy": "npm run clean && cd frontend && npm run build && cd .. && cp -R ./frontend/build ./backend/build",
+        "heroku-postbuild": "npm run setup && npm run prepare-deploy",
         "server": "cd backend && node server.js",
         "client": "cd frontend && npm run start",
         "start-dev": "concurrently \"npm run server\" \"npm run client\"",
-        "start-live": "cd backend && node server.js",
-        "start": "npm run setup && npm run prepare-deploy && npm run start-live"
+        "start-heroku": "npm run setup-heroku && npm run server",
+        "start": "npm run start-heroku"
     },
     "keywords": [
         "league",
