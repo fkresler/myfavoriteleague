@@ -4,6 +4,13 @@ import styled from "styled-components";
 
 import ChampionCard from "./ChampionCard";
 
+const StyledChampionListHeadline = styled.div`
+    display: block;
+    background-color: green;
+    color: white;
+    padding: 2rem;
+`;
+
 class ChampionList extends Component {
     toggleChampionInCurrentList = (championKey) => {
         if(this.props.selectedChampionData.indexOf(championKey) > -1) {
@@ -25,8 +32,18 @@ class ChampionList extends Component {
         return (
             <React.Fragment>
                 <div>
+                    <StyledChampionListHeadline>{this.props.championListId}</StyledChampionListHeadline>
+                    {this.props.selectedChampionData.map((key) => {
+                        return (
+                            <ChampionCard championData={this.props.completeChampionData[key]}
+                                toggleChampionSelectedState={this.toggleChampionInCurrentList}
+                                shouldBeMarked={true}
+                            />
+                        );
+                    })}
                 </div>
                 <div>
+                    <StyledChampionListHeadline>Select your champions from the complete list:</StyledChampionListHeadline>
                     {Object.keys(this.props.completeChampionData).map((key) => {
                         let isChampionInCurrentList = this.props.selectedChampionData.indexOf(key) > -1;
                         return (
@@ -34,7 +51,7 @@ class ChampionList extends Component {
                                 toggleChampionSelectedState={this.toggleChampionInCurrentList}
                                 shouldBeMarked={isChampionInCurrentList}
                             />
-                        )
+                        );
                     })}
                 </div>
             </React.Fragment>

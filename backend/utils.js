@@ -9,6 +9,7 @@ module.exports = {
 				response
 					.json()
 					.then((data) => {
+						console.log("Version for the API " + apiIdentifier + " was detected as: " + data.n[apiIdentifier]);
 						return data.n[apiIdentifier];
 					})
 					.catch((err) => {
