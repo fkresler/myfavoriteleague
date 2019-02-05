@@ -2,26 +2,18 @@ const fs = require("fs");
 
 module.exports = {
 	getCurrentVersionByApiIdentifier: async function(apiIdentifier) {
-		const apiVersionUrl = "https://ddragon.leagueoflegends.com/realms/euw.json";
-		return (
-			fetch(apiVersionUrl)
-			.then((response) => {
-				response
-					.json()
-					.then((data) => {
-						console.log("Version for the API " + apiIdentifier + " was detected as: " + data.n[apiIdentifier]);
-						return data.n[apiIdentifier];
-					})
-					.catch((err) => {
-						console.log("Error: while trying to decrypt response from api for api versions!");
-						console.log(err);
-					});
-			})
-			.catch((err) => {
-				console.log("Error: while contacting the api to get api versions!");
-				console.log(err);
-			})
-		);
+		try {
+			const apiVersionUrl = "https://ddragon.leagueoflegends.com/realms/euw.json";
+			let apiVersionsResponse = await fetch(apiVersionUrl);
+			let apiVersionsData = await apiVersionsResponse.json();
+			if(apiVersionsData.n[apiIdentifier]) {
+				return apiVersionsData.n[apiIdentifier];
+			} else {
+				throw new Error("Version for the API " + apiIdentifier + " was not found!");
+			}
+		} catch(err) {
+			console.log("getCurrentVersionByApiIdentifier: " + err);
+		}
 	},
 	getLocalData: function(name) {
 		const fileName = "data/" + name + ".json";
@@ -32,7 +24,6 @@ module.exports = {
 		} catch (fileReadingError) {
 			console.log("Error: while trying to read data from local data file for " + fileName);
 			console.log(fileReadingError);
-			return null;
 		}
 	},
 	setLocalData: function(name, data) {
@@ -40,22 +31,18 @@ module.exports = {
 		try {
 			var jsonData = JSON.stringify(data);
 			fs.writeFileSync(fileName, jsonData);
-			return true;
 		} catch (fileWriteError) {
 			console.log("Error: while trying to write data to local data file for " + fileName);
 			console.log(fileWriteError);
-			return false;
 		}
 	},
 	clearLocalData: function(name) {
 		const fileName = "data/" + name + ".json";
 		try {
 			fs.unlinkSync(fileName);
-			return true;
 		} catch (fileDeletionError) {
 			console.log("Error: while trying to clear data from local data file for " + fileName);
 			console.log(fileDeletionError);
-			return false;
 		}
 	}
 };
