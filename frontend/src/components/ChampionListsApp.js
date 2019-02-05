@@ -29,31 +29,22 @@ class ChampionListsApp extends Component {
         }
     }
 
-    componentDidMount() {
-        const apiUrl = "/champions";
-        // Get static champion data
-        fetch(apiUrl)
-            .then((response) => {
-                if (response.status !== 200) {
-                    console.log("Error: status code was " + response.status);
-                }
-                response
-                    .json()
-                    .then((data) => {
-                        console.log("Data received: " + data);
-                        if(data.data) {
-                            this.setState({
-                                championData: data.data
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        console.log("Error: data could not be decrypted");
+    async componentDidMount() {
+        try {
+            const localApiUrl = "/champion";
+            let localApiResponse = await fetch(localApiUrl);
+            if(localApiResponse.ok) {
+                let localApiResponseJson = await localApiResponse.json();
+                console.log("Data received: " + localApiResponseJson);
+                if(localApiResponseJson.data) {
+                    this.setState({
+                        championData: localApiResponseJson.data
                     });
-            })
-            .catch((err) => {
-                console.log("Error: request was not successful");
-            });
+                }
+            }
+        } catch(err) {
+            console.log("Error during mounting: " + err);
+        }
         // Get previously saved cookie data
         let previousCookieData = Cookies.get(this.COOKIENAME);
         if(previousCookieData) {

@@ -18,61 +18,26 @@ app.get("/", function(req, res) {
 app.get("/champion", async (req, res) => {
 	const CHAMPIONAPIIDENTIFIER = "champion";
 	try {
-		const currentVersion = await utils.getCurrentVersionByApiIdentifier(
-			CHAMPIONAPIIDENTIFIER
-		);
-		const localData = utils.getLocalData(CHAMPIONAPIIDENTIFIER);
-		const localVersion = localData.version ? localData.version : "0";
-		if (localVersion >= currentVersion) {
-			console.log(
-				"Local champion version is still up to date: return local data!"
-			);
+		let currentVersion = await utils.getCurrentVersionByApiIdentifier(CHAMPIONAPIIDENTIFIER);
+		let localData = utils.getLocalData(CHAMPIONAPIIDENTIFIER);
+		let localVersion = localData ? localData.version : "0";
+		if(localData && localVersion >= currentVersion) {
+			console.log("Local champion version is still up to date: return local data!");
 			res.send(localData);
 		} else {
-			console.log(
-				"Champion data requires update: updating local champion data now!"
-			);
-			fetch(
-				"http://ddragon.leagueoflegends.com/cdn/" +
-					currentVersion +
-					"/data/en_US/champion.json"
-			)
-				.then(response => {
-					if (response.ok) {
-						response
-							.json()
-							.then(data => {
-								utils.setLocalData(CHAMPIONAPIIDENTIFIER, data);
-								res.send(data);
-							})
-							.catch(err => {
-								throw new Error(
-									"Reason: response data could not be decrypted!"
-								);
-							});
-					} else {
-						throw new Error(
-							"Reason: status code on api call was " +
-								response.status
-						);
-					}
-				})
-				.catch(err => {
-					throw new Error(
-						"Reason: could not compute the api call" + err
-					);
-				});
+			console.log("Champion data requires update: updating local champion data now!");
+			let apiResponse = await fetch("http://ddragon.leagueoflegends.com/cdn/" + currentVersion + "/data/en_US/champion.json")
+			if (apiResponse.ok) {
+				let apiResponseDataJson = await apiResponse.json()
+				utils.setLocalData(CHAMPIONAPIIDENTIFIER, apiResponseDataJson);
+				res.send(apiResponseDataJson);
+			} else {
+				throw new Error("Reason: status code on api call was " + response.status);
+			}
 		}
 	} catch (err) {
 		console.log("Error on /champion: " + err);
-		try {
-			var localData = utils.getLocalData(CHAMPIONAPIIDENTIFIER);
-			if (localData) {
-				res.send(localData);
-			}
-		} catch (err) {
-			res.send("Sorry, we can not compute a response for you currently!");
-		}
+        res.send("This could be an error page!");
 	}
 });
 
