@@ -9,6 +9,23 @@ const StyledChampionListHeadline = styled.div`
     background-color: green;
     color: white;
     padding: 2rem;
+    font-weight: bold;
+`;
+
+const StyledStickyWrapper = styled.div`
+    display: block;
+    background-color: #fff;
+    max-height: 75vh;
+    overflow-y: scroll;
+    position: sticky;
+    top: 0;
+`;
+
+const StyledChampionList = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-wrap: wrap;
 `;
 
 class ChampionList extends Component {
@@ -31,19 +48,21 @@ class ChampionList extends Component {
     render() {
         return (
             <React.Fragment>
-                <div>
+                <StyledStickyWrapper>
                     <StyledChampionListHeadline>{this.props.championListId}</StyledChampionListHeadline>
-                    {this.props.selectedChampionData.map((key) => {
-                        return (
-                            <ChampionCard championData={this.props.completeChampionData[key]}
-                                toggleChampionSelectedState={this.toggleChampionInCurrentList}
-                                shouldBeMarked={true}
-                            />
-                        );
-                    })}
-                </div>
-                <div>
+                    <StyledChampionList>
+                        {this.props.selectedChampionData.map((key) => {
+                            return (
+                                <ChampionCard championData={this.props.completeChampionData[key]}
+                                    toggleChampionSelectedState={this.toggleChampionInCurrentList}
+                                    shouldBeMarked={true}
+                                />
+                            );
+                        })}
+                    </StyledChampionList>
                     <StyledChampionListHeadline>Select your champions from the complete list:</StyledChampionListHeadline>
+                </StyledStickyWrapper>
+                <StyledChampionList>
                     {Object.keys(this.props.completeChampionData).map((key) => {
                         let isChampionInCurrentList = this.props.selectedChampionData.indexOf(key) > -1;
                         return (
@@ -53,7 +72,7 @@ class ChampionList extends Component {
                             />
                         );
                     })}
-                </div>
+                </StyledChampionList>
             </React.Fragment>
         );
     }

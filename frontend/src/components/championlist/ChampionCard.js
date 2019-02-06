@@ -7,6 +7,9 @@ const StyledChampionCard = styled.div`
     margin: 1rem;
 
     img {
+        height: 10vh;
+        max-height: 5rem;
+        width: auto;
         border: 1rem solid ${({shouldBeMarked}) => shouldBeMarked ? "green" : "transparent"};
         border-radius: 50%;
     }

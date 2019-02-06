@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ChampionListsApp from "./components/ChampionListsApp";
+import ChampionListsApp from "./components/championlist/ChampionListsApp";
 
 class App extends Component {
   render() {

@@ -13,8 +13,7 @@ const StyledChampionListSwitch = styled.div`
 const StyledChampionListSwitchButton = styled.div`
 	flex-grow: 1;
 	flex-basis: 0;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+	padding: 1rem;
 	background-color: ${({isActive}) => isActive ? "blue" : "orange"};
 	color: #fff;
 	font-weight: bold;
