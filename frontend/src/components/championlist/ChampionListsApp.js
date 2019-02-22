@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Cookies from "js-cookie";
 
 import ChampionList from "./ChampionList";
-import ChampionListSwitch from "./ChampionListSwitch";
+import ChampionListSwitch from "../championlist/ChampionListSwitch";
 
 const StyledChampionListsWrapper = styled.div`
     display: block;
