@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import ChampionListSwitch from "./ChampionListSwitch";
+import ChampionMoodBoard from "./ChampionMoodBoard";
 
 it("renders without crashing", () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ChampionListSwitch />, div);
+    ReactDOM.render(<ChampionMoodBoard />, div);
     ReactDOM.unmountComponentAtNode(div);
 });

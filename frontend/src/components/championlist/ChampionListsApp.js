@@ -54,28 +54,28 @@ class ChampionListsApp extends Component {
         }
     }
 
-    addChampionToListById = (listId, championKey) => {
+    componentDidUpdate() {
+        Cookies.set(this.COOKIENAME, JSON.stringify(this.state.championLists));
+    }
+
+    addChampionToListById = (listId, championKey, priority = 1) => {
         let championLists = {...this.state.championLists};
-        let specifiedList = championLists[listId];
-        if(specifiedList.indexOf(championKey) < 0) {
-            specifiedList.push(championKey);
-            this.setState({
-                championLists: championLists
-            });
-            Cookies.set(this.COOKIENAME, JSON.stringify(this.state.championLists));
-        }
+        let specifiedChampionListObject = championLists[listId] ? {...championLists[listId]} : {};
+        specifiedChampionListObject[championKey] = priority;
+        championLists[listId] = specifiedChampionListObject;
+        this.setState({
+            championLists: championLists
+        });
     }
 
     removeChampionFromListById = (listId, championKey) => {
         let championLists = {...this.state.championLists};
-        let specifiedList = championLists[listId];
-        let championIndex = specifiedList.indexOf(championKey);
-        if(championIndex > -1) {
-            specifiedList.splice(championIndex, 1);
+        let specifiedChampionListObject = championLists[listId];
+        if(specifiedChampionListObject[championKey]) {
+            specifiedChampionListObject[championKey] = 0;
             this.setState({
                 championLists: championLists
             });
-            Cookies.set(this.COOKIENAME, JSON.stringify(this.state.championLists));
         }
     }
 
