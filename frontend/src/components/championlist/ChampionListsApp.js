@@ -90,6 +90,18 @@ class ChampionListsApp extends Component {
         }
     };
 
+    isChampionInList = (listId, championKey) => {
+        // Implement state logic only once in higher order component
+    };
+
+    setChampionPriority = (listId, championKey, priority) => {
+        // Set champion priority only
+    };
+
+    setChampionNote = (listId, championKey, note) => {
+        // Set champion note only
+    };
+
     selectActiveListByIdentifier = identifier => {
         if (Object.keys(this.state.championLists).indexOf(identifier) > -1) {
             this.setState({
