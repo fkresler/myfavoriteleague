@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 import ProductIntroduction from "./components/startpage/ProductIntroduction";
 import NotFoundContent from "./components/errorpage/NotFoundContent";
-import ChampionListsApp from "./components/championlist/ChampionListsApp";
+import ChampionPreferenceListsApp from "./components/championlist/ChampionPreferenceListsAppWrapper";
 
 const StyledNavigationBar = styled.div`
     position: fixed;
@@ -52,7 +52,11 @@ const App = () => (
             <StyledContentWrapper>
                 <Switch>
                     <Route exact path="/" component={ProductIntroduction} />
-                    <Route exact path="/mylists" component={ChampionListsApp} />
+                    <Route
+                        exact
+                        path="/mylists"
+                        component={ChampionPreferenceListsApp}
+                    />
                     <Route component={NotFoundContent} />
                 </Switch>
             </StyledContentWrapper>
