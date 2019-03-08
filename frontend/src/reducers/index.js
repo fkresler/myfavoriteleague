@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
-import championPreferenceListReducer from "./championPreferenceListReducer";
+import championPreferenceListsReducer from "./championPreferenceListsReducer";
 
 export default combineReducers({
-    championPreferenceListReducer
+    championPreferenceListsReducer
 });

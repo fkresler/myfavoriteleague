@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 
-import ChampionList from "./ChampionList";
-import ChampionListSwitch from "../championlist/ChampionListSwitch";
+import ChampionList from "../ChampionList";
+import ChampionListSwitch from "../ChampionListSwitch";
 
 const StyledChampionListsWrapper = styled.div`
     display: block;

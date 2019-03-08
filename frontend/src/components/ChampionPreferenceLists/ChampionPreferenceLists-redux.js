@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import ChampionPreferenceListsApp from "./ChampionPreferenceListsApp";
+import ChampionPreferenceLists from "./ChampionPreferenceLists";
 
 const mapStateToProps = state => ({
     championData: state.championData,
@@ -11,4 +11,4 @@ const mapDispatchToProps = dispatch => ({});
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ChampionPreferenceListsApp);
+)(ChampionPreferenceLists);

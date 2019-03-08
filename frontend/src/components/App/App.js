@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,9 +7,11 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 
-import ProductIntroduction from "./components/startpage/ProductIntroduction";
-import NotFoundContent from "./components/errorpage/NotFoundContent";
-import ChampionPreferenceListsApp from "./components/championlist/ChampionPreferenceListsAppWrapper";
+import StartingPageContent from "../StartingPageContent";
+import PageNotFoundContent from "../PageNotFoundContent";
+import ImprovementNotes from "../ImprovementNotes";
+import ChampionMoodBoard from "../ChampionMoodBoard";
+import ChampionPreferenceLists from "../ChampionPreferenceLists";
 
 const StyledNavigationBar = styled.div`
     position: fixed;
@@ -17,18 +19,19 @@ const StyledNavigationBar = styled.div`
     width: 100%;
     padding: 1rem 2rem;
     display: flex;
-    justify-content: flex-start;
     box-sizing: border-box;
     background-color: green;
     color: #fff;
     font-weight: bold;
+    z-index: 9999;
+
+    a {
+        margin: 0 0.5rem;
+        text-decoration: none;
+    }
 
     a:first-child {
         margin-right: auto;
-    }
-
-    a {
-        padding: 0 0.5rem;
     }
 `;
 
@@ -37,7 +40,6 @@ const StyledContentWrapper = styled.div`
     width: 100%;
     height: 100%;
     margin-top: 3rem;
-    padding: 1rem;
     box-sizing: border-box;
 `;
 
@@ -46,18 +48,25 @@ const App = () => (
         <div>
             <StyledNavigationBar>
                 <Link to="/">Home</Link>
+                <Link to="/notes">My Notes</Link>
+                <Link to="/moodboard">My Championmoodboard</Link>
                 <Link to="/mylists">My Lists</Link>
-                <Link to="/error">Error</Link>
             </StyledNavigationBar>
             <StyledContentWrapper>
                 <Switch>
-                    <Route exact path="/" component={ProductIntroduction} />
+                    <Route exact path="/" component={StartingPageContent} />
+                    <Route exact path="/notes" component={ImprovementNotes} />
+                    <Route
+                        exact
+                        path="/moodboard"
+                        component={ChampionMoodBoard}
+                    />
                     <Route
                         exact
                         path="/mylists"
-                        component={ChampionPreferenceListsApp}
+                        component={ChampionPreferenceLists}
                     />
-                    <Route component={NotFoundContent} />
+                    <Route component={PageNotFoundContent} />
                 </Switch>
             </StyledContentWrapper>
         </div>

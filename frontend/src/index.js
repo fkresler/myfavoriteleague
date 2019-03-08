@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import "./index.css";
-import App from "./App";
+import MyFavoriteLeagueApp from "./components/App";
 import myFavoriteLeagueStore from "./myFavoriteLeagueStore";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
     <Provider store={myFavoriteLeagueStore}>
-        <App />
+        <MyFavoriteLeagueApp />
     </Provider>,
     document.getElementById("root")
 );

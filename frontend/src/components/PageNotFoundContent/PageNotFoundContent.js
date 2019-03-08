@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-class NotFoundContent extends Component {
+class PageNotFoundContent extends Component {
     render() {
         return (
             <div>
@@ -12,4 +12,4 @@ class NotFoundContent extends Component {
     }
 }
 
-export default NotFoundContent;
+export default PageNotFoundContent;

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import ChampionCard from "./ChampionCard";
+import ChampionCard from "../ChampionCard";
 
 const StyledChampionListHeadline = styled.div`
     display: block;
@@ -29,45 +29,66 @@ const StyledChampionList = styled.div`
 `;
 
 class ChampionList extends Component {
-    toggleChampionInCurrentList = (championKey) => {
-        if(this.props.selectedChampionData.indexOf(championKey) > -1) {
+    toggleChampionInCurrentList = championKey => {
+        if (this.props.selectedChampionData.indexOf(championKey) > -1) {
             this.removeChampionFromCurrentListById(championKey);
         } else {
             this.addChampionToCurrentListById(championKey);
         }
-    }
+    };
 
-    addChampionToCurrentListById = (championKey) => {
-        this.props.addChampionToListById(this.props.championListId, championKey);
-    }
+    addChampionToCurrentListById = championKey => {
+        this.props.addChampionToListById(
+            this.props.championListId,
+            championKey
+        );
+    };
 
-    removeChampionFromCurrentListById = (championKey) => {
-        this.props.removeChampionFromListById(this.props.championListId, championKey);
-    }
+    removeChampionFromCurrentListById = championKey => {
+        this.props.removeChampionFromListById(
+            this.props.championListId,
+            championKey
+        );
+    };
 
     render() {
         return (
             <React.Fragment>
                 <StyledStickyWrapper>
-                    <StyledChampionListHeadline>{this.props.championListId}</StyledChampionListHeadline>
+                    <StyledChampionListHeadline>
+                        {this.props.championListId}
+                    </StyledChampionListHeadline>
                     <StyledChampionList>
-                        {this.props.selectedChampionData.map((key) => {
+                        {this.props.selectedChampionData.map(key => {
                             return (
-                                <ChampionCard championData={this.props.completeChampionData[key]}
-                                    toggleChampionSelectedState={this.toggleChampionInCurrentList}
+                                <ChampionCard
+                                    championData={
+                                        this.props.completeChampionData[key]
+                                    }
+                                    toggleChampionSelectedState={
+                                        this.toggleChampionInCurrentList
+                                    }
                                     shouldBeMarked={true}
                                 />
                             );
                         })}
                     </StyledChampionList>
-                    <StyledChampionListHeadline>Select your champions from the complete list:</StyledChampionListHeadline>
+                    <StyledChampionListHeadline>
+                        Select your champions from the complete list:
+                    </StyledChampionListHeadline>
                 </StyledStickyWrapper>
                 <StyledChampionList>
-                    {Object.keys(this.props.completeChampionData).map((key) => {
-                        let isChampionInCurrentList = this.props.selectedChampionData.indexOf(key) > -1;
+                    {Object.keys(this.props.completeChampionData).map(key => {
+                        let isChampionInCurrentList =
+                            this.props.selectedChampionData.indexOf(key) > -1;
                         return (
-                            <ChampionCard championData={this.props.completeChampionData[key]}
-                                toggleChampionSelectedState={this.toggleChampionInCurrentList}
+                            <ChampionCard
+                                championData={
+                                    this.props.completeChampionData[key]
+                                }
+                                toggleChampionSelectedState={
+                                    this.toggleChampionInCurrentList
+                                }
                                 shouldBeMarked={isChampionInCurrentList}
                             />
                         );
@@ -84,6 +105,6 @@ ChampionList.propTypes = {
     selectedChampionData: PropTypes.array.isRequired,
     addChampionToListById: PropTypes.func.isRequired,
     removeChampionFromListById: PropTypes.func.isRequired
-}
+};
 
 export default ChampionList;
