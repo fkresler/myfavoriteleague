@@ -3,6 +3,6 @@ import improvementNotesReducer from "./improvementNotesReducer";
 import championPreferenceListsReducer from "./championPreferenceListsReducer";
 
 export default combineReducers({
-    improvementNotesReducer,
-    championPreferenceListsReducer
+    improvementNotesState: improvementNotesReducer,
+    championPreferenceLists: championPreferenceListsReducer
 });

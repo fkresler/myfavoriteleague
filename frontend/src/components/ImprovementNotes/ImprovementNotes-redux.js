@@ -8,9 +8,11 @@ import {
     removeImprovementNote
 } from "../../actions/improvementNotesActions";
 
-const mapStateToProps = state => ({
-    improvementNotes: state.improvementNotes
-});
+const mapStateToProps = state => {
+    return {
+        improvementNotes: state.improvementNotesState.improvementNotes
+    };
+};
 
 const mapDispatchToProps = dispatch => ({
     addImprovementNote: (title, content) => {

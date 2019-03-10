@@ -5,11 +5,12 @@ const initialState = {
 const improvementNotesReducer = (state = initialState, action) => {
     switch (action.type) {
         case "ADD_IMPROVEMENT_NOTE": {
-            let copiedImprovementNotes = {...state.improvementNotes};
-            copiedImprovementNotes.push(action.payload);
+            let addedImprovementNote = state.improvementNotes.concat(
+                action.payload
+            );
             return {
                 ...state,
-                improvementNotes: copiedImprovementNotes
+                improvementNotes: addedImprovementNote
             };
         }
         case "UPDATE_IMPROVEMENT_NOTE": {
@@ -68,7 +69,7 @@ const improvementNotesReducer = (state = initialState, action) => {
             };
         }
         default:
-            return state;
+            return {...state};
     }
 };
 

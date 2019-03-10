@@ -48,9 +48,9 @@ const App = () => (
         <div>
             <StyledNavigationBar>
                 <Link to="/">Home</Link>
-                <Link to="/notes">My Notes</Link>
-                <Link to="/moodboard">My Championmoodboard</Link>
-                <Link to="/mylists">My Lists</Link>
+                <Link to="/notes">Notes</Link>
+                <Link to="/moodboard">Moodboard</Link>
+                <Link to="/mylists">Lists</Link>
             </StyledNavigationBar>
             <StyledContentWrapper>
                 <Switch>
