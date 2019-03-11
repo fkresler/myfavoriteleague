@@ -13,21 +13,78 @@ const StyledImprovementNoteForm = styled.div`
     border-radius: 10px;
 `;
 
+const StyledImprovementNoteFormSaveButton = styled.div`
+    display: block;
+    width: 10rem;
+    margin: 1rem auto 0 auto;
+    padding: 0.75rem;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+`;
+
 class ImprovementNoteForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            noteInputTitle: "",
-            noteInputContent: ""
+            noteInputTitle: props.noteTitle ? props.noteTitle : "",
+            noteInputContent: props.noteContent ? props.noteContent : "",
+            noteTaglist: props.noteTaglist ? props.noteTaglist : []
         };
     }
 
+    handleImprovementNoteSave = () => {
+        this.props.doOnSave(
+            this.props.noteId,
+            this.state.noteInputTitle,
+            this.state.noteInputContent
+        );
+    };
+
+    handleTitleChange = changeEvent => {
+        this.setState({
+            noteInputTitle: changeEvent.target.value
+        });
+    };
+
+    handleContentChange = changeEvent => {
+        this.setState({
+            noteInputContent: changeEvent.target.value
+        });
+    };
+
     render() {
-        return <StyledImprovementNoteForm />;
+        return (
+            <StyledImprovementNoteForm>
+                <SingleInputField
+                    isArea={false}
+                    labelText={"Title"}
+                    inputPlaceholder={"Your note title"}
+                    inputValue={this.state.noteInputTitle}
+                    doOnChange={this.handleTitleChange}
+                />
+                <SingleInputField
+                    isArea={true}
+                    labelText={"Content"}
+                    inputPlaceholder={"Your note content"}
+                    inputValue={this.state.noteInputContent}
+                    doOnChange={this.handleContentChange}
+                />
+                <StyledImprovementNoteFormSaveButton
+                    onClick={this.handleImprovementNoteSave}
+                >
+                    Save
+                </StyledImprovementNoteFormSaveButton>
+            </StyledImprovementNoteForm>
+        );
     }
 }
 
 ImprovementNoteForm.propTypes = {
+    doOnSave: PropTypes.func.isRequired,
+    noteId: PropTypes.number.isRequired,
     noteTitle: PropTypes.string,
     noteContent: PropTypes.string,
     noteTaglist: PropTypes.arrayOf(PropTypes.string)

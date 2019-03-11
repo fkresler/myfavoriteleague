@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -30,18 +30,21 @@ const StyledImprovementNoteContent = styled.div`
 
 const ImprovementNote = props => {
     return (
-        <StyledImprovementNote>
+        <StyledImprovementNote
+            onClick={() => props.doOnClick(props.noteData.id)}
+        >
             <StyledImprovementNoteHeadline>
-                {props.title}
+                {props.noteData.title}
             </StyledImprovementNoteHeadline>
             <StyledImprovementNoteContent>
-                {props.content}
+                {props.noteData.content}
             </StyledImprovementNoteContent>
         </StyledImprovementNote>
     );
 };
 
 ImprovementNote.propTypes = {
+    doOnClick: PropTypes.func,
     noteData: PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string,

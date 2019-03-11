@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 import ImprovementNote from "./ImprovementNote";
+import ImprovementNoteForm from "./ImprovementNoteForm";
 
 const StyledImprovementNotesWrapper = styled.div`
     display: flex;
@@ -28,19 +29,39 @@ class ImprovementNotes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentEditableImprovementNoteId: "",
+            currentEditableImprovementNote: null,
             playingAsChampionFilter: "",
             playingAgainstChampionFilter: "",
             playingAsRoleFilter: ""
         };
     }
 
+    handleImprovementNoteSave = (noteId, noteTitle, noteContent) => {
+        this.props.updateImprovementNote(noteId, noteTitle, noteContent);
+        this.setState({
+            currentEditableImprovementNote: null
+        });
+    };
+
+    handleImprovementNoteClick = id => {
+        let currentEditableNote = this.props.improvementNotes.filter(note => {
+            return note.id === id;
+        });
+        this.setState({
+            currentEditableImprovementNote: currentEditableNote
+        });
+    };
+
     handleImprovementNotesAddButtonClick = () => {
-        this.props.addImprovementNote("", "");
+        this.props.addImprovementNote("Dummy", "LUL");
     };
 
     render() {
+        console.log("REnder", this.state);
         let currentImprovementNotes = this.props.improvementNotes;
+        let currentEditableImprovementNote = this.state
+            .currentEditableImprovementNote;
+        console.log("After-render", currentEditableImprovementNote);
         return (
             <React.Fragment>
                 <StyledImprovementNotesAddButton
@@ -48,6 +69,15 @@ class ImprovementNotes extends Component {
                 >
                     Add Note
                 </StyledImprovementNotesAddButton>
+                {currentEditableImprovementNote && (
+                    <ImprovementNoteForm
+                        doOnSave={this.handleImprovementNoteSave}
+                        noteId={currentEditableImprovementNote.id}
+                        noteTitle={currentEditableImprovementNote.title}
+                        noteContent={currentEditableImprovementNote.content}
+                        noteTaglist={currentEditableImprovementNote.taglist}
+                    />
+                )}
                 <StyledImprovementNotesWrapper>
                     {currentImprovementNotes &&
                         currentImprovementNotes.map(note => {
@@ -55,6 +85,7 @@ class ImprovementNotes extends Component {
                                 <ImprovementNote
                                     key={note.id}
                                     noteData={note}
+                                    doOnClick={this.handleImprovementNoteClick}
                                 />
                             );
                         })}
