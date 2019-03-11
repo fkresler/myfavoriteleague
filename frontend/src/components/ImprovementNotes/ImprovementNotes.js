@@ -44,7 +44,7 @@ class ImprovementNotes extends Component {
     };
 
     handleImprovementNoteClick = id => {
-        let currentEditableNote = this.props.improvementNotes.filter(note => {
+        let currentEditableNote = this.props.improvementNotes.find(note => {
             return note.id === id;
         });
         this.setState({
@@ -53,15 +53,13 @@ class ImprovementNotes extends Component {
     };
 
     handleImprovementNotesAddButtonClick = () => {
-        this.props.addImprovementNote("Dummy", "LUL");
+        this.props.addImprovementNote("", "");
     };
 
     render() {
-        console.log("REnder", this.state);
         let currentImprovementNotes = this.props.improvementNotes;
         let currentEditableImprovementNote = this.state
             .currentEditableImprovementNote;
-        console.log("After-render", currentEditableImprovementNote);
         return (
             <React.Fragment>
                 <StyledImprovementNotesAddButton

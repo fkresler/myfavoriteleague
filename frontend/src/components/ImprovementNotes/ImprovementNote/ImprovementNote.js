@@ -13,6 +13,7 @@ const StyledImprovementNote = styled.div`
     background-color: #fff6bc;
     background-image: linear-gradient(mix(#fff6bc, white, 90%), #fff6bc);
     box-shadow: 0 1px 0 #b1ab85;
+    cursor: pointer;
 `;
 
 const StyledImprovementNoteHeadline = styled.div`

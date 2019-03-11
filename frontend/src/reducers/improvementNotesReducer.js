@@ -14,17 +14,23 @@ const improvementNotesReducer = (state = initialState, action) => {
             };
         }
         case "UPDATE_IMPROVEMENT_NOTE": {
-            let previousImprovementNote = state.improvementNotes.filter(
+            let previousImprovementNote = state.improvementNotes.find(note => {
+                return note.id === action.payload.id;
+            });
+            let filteredImprovementNotes = state.improvementNotes.filter(
                 note => {
-                    return note.id === action.payload.id;
+                    return note.id !== action.payload.id;
                 }
             );
-            let copiedImprovementNote = {...previousImprovementNote};
-            copiedImprovementNote.title = action.payload.title;
-            copiedImprovementNote.content = action.payload.content;
-            previousImprovementNote = copiedImprovementNote;
+            let newImprovementNote = {...previousImprovementNote};
+            newImprovementNote.title = action.payload.title;
+            newImprovementNote.content = action.payload.content;
+            let newImprovementNotes = filteredImprovementNotes.concat(
+                newImprovementNote
+            );
             return {
-                ...state
+                ...state,
+                improvementNotes: newImprovementNotes
             };
         }
         case "ADD_IMPROVEMENT_NOTE_TAG": {
