@@ -12,25 +12,26 @@ const initialState = {
 const championPreferenceListReducer = (state = initialState, action) => {
     switch (action.type) {
         case "ADD_CHAMPION_TO_LIST":
-            let currentListId = action.payload.listId;
-            let currentChampionId = action.payload.championId;
+            let specifiedListId = action.payload.listId;
+            let specifiedChampionId = action.payload.championId;
             if (
-                !!state.userChampionPreferenceLists.currentListId ||
-                !!state.userChampionPreferenceLists.currentListId.championId
+                !!state.userChampionPreferenceLists.specifiedListId ||
+                !!state.userChampionPreferenceLists.specifiedListId
+                    .specifiedChampionId
             ) {
                 break;
             }
-            let allListsCopy = {...state.userChampionPreferenceLists};
-            let currentListCopy = {
-                ...allListsCopy.currentListId
+            let completeListsCopy = {...state.userChampionPreferenceLists};
+            let specifiedListCopy = {
+                ...completeListsCopy.specifiedListId
             };
-            currentListCopy[currentChampionId] = {
+            specifiedListCopy[specifiedChampionId] = {
                 priority: action.payload.priority
             };
-            allListsCopy.currentListId = currentListCopy;
+            completeListsCopy.specifiedListId = specifiedListCopy;
             return {
                 ...state,
-                userChampionPreferenceLists: allListsCopy
+                userChampionPreferenceLists: completeListsCopy
             };
         case "SET_CHAMPION_PRIORITY":
             break;
