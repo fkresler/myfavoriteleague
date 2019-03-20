@@ -52,6 +52,13 @@ class ImprovementNotes extends Component {
         });
     };
 
+    handleImprovementNoteRemove = noteId => {
+        this.props.removeImprovementNote(noteId);
+        this.setState({
+            currentEditableImprovementNote: null
+        });
+    };
+
     handleImprovementNotesAddButtonClick = () => {
         this.props.addImprovementNote("", "");
     };
@@ -70,6 +77,7 @@ class ImprovementNotes extends Component {
                 {currentEditableImprovementNote && (
                     <ImprovementNoteForm
                         doOnSave={this.handleImprovementNoteSave}
+                        doOnRemove={this.handleImprovementNoteRemove}
                         noteId={currentEditableImprovementNote.id}
                         noteTitle={currentEditableImprovementNote.title}
                         noteContent={currentEditableImprovementNote.content}

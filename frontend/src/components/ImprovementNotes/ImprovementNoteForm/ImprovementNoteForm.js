@@ -25,6 +25,18 @@ const StyledImprovementNoteFormSaveButton = styled.div`
     border-radius: 5px;
 `;
 
+const StyledImprovementNoteFormDeleteButton = styled.div`
+    display: block;
+    width: 10rem;
+    margin: 1rem auto 0 auto;
+    padding: 0.75rem;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+`;
+
 class ImprovementNoteForm extends Component {
     constructor(props) {
         super(props);
@@ -55,6 +67,10 @@ class ImprovementNoteForm extends Component {
         });
     };
 
+    handleImprovementNoteRemove = () => {
+        this.props.doOnRemove(this.props.noteId);
+    };
+
     render() {
         return (
             <StyledImprovementNoteForm>
@@ -77,6 +93,11 @@ class ImprovementNoteForm extends Component {
                 >
                     Save
                 </StyledImprovementNoteFormSaveButton>
+                <StyledImprovementNoteFormDeleteButton
+                    onClick={this.handleImprovementNoteRemove}
+                >
+                    Remove
+                </StyledImprovementNoteFormDeleteButton>
             </StyledImprovementNoteForm>
         );
     }
@@ -84,6 +105,7 @@ class ImprovementNoteForm extends Component {
 
 ImprovementNoteForm.propTypes = {
     doOnSave: PropTypes.func.isRequired,
+    doOnRemove: PropTypes.func.isRequired,
     noteId: PropTypes.number.isRequired,
     noteTitle: PropTypes.string,
     noteContent: PropTypes.string,

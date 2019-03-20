@@ -65,13 +65,14 @@ const improvementNotesReducer = (state = initialState, action) => {
             };
         }
         case "REMOVE_IMPROVEMENT_NOTE": {
-            let copiedImprovementNotes = {...state.improvementNotes};
-            copiedImprovementNotes.filter(note => {
-                return note.id !== action.payload.id;
-            });
+            let afterRemoveImprovementNotes = state.improvementNotes.filter(
+                note => {
+                    return note.id !== action.payload.id;
+                }
+            );
             return {
                 ...state,
-                improvementNotes: copiedImprovementNotes
+                improvementNotes: afterRemoveImprovementNotes
             };
         }
         default:
