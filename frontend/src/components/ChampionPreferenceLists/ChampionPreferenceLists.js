@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import Cookies from "js-cookie";
 
 import ChampionList from "../ChampionList";
 import ChampionListSwitch from "../ChampionListSwitch";
@@ -10,21 +9,12 @@ const StyledChampionListsWrapper = styled.div`
     width: 100%;
 `;
 
-class ChampionListsApp extends Component {
+class ChampionPreferenceLists extends Component {
     constructor(props) {
         super(props);
-        this.COOKIENAME = "myfavoriteleague-mylists";
-        this.DEFAULTLISTIDENTIFIER = "Favorites";
+        this.DEFAULTLISTIDENTIFIER = "Top";
         this.state = {
             championData: {},
-            championLists: {
-                Favorites: [],
-                Top: [],
-                Jungle: [],
-                Mid: [],
-                Bot: [],
-                Support: []
-            },
             activeListIdentifier: this.DEFAULTLISTIDENTIFIER
         };
     }
@@ -45,65 +35,14 @@ class ChampionListsApp extends Component {
         } catch (err) {
             console.log("Error during mounting: " + err);
         }
-        // Get previously saved cookie data
-        let previousCookieData = Cookies.get(this.COOKIENAME);
-        if (previousCookieData) {
-            this.setState({
-                championLists: JSON.parse(previousCookieData)
-            });
-        }
     }
-
-    componentDidUpdate() {
-        Cookies.set(this.COOKIENAME, JSON.stringify(this.state.championLists));
-    }
-
-    addChampionToListById = (listId, championKey, priority = 1, note = "") => {
-        // Deep copy for state management
-        let championLists = JSON.parse(
-            JSON.stringify(this.state.championLists)
-        );
-        if (championLists[listId]) {
-            let specifiedChampionObject = championLists[listId][championKey]
-                ? championLists[listId][championKey]
-                : {};
-            // Set new data
-            specifiedChampionObject["priority"] = priority;
-            specifiedChampionObject["note"] = note;
-            this.setState({
-                championLists: championLists
-            });
-        }
-    };
-
-    removeChampionFromListById = (listId, championKey) => {
-        // Deep copy for state management
-        let championLists = JSON.parse(
-            JSON.stringify(this.state.championlists)
-        );
-        let specifiedChampionObject = championLists[listId][championKey];
-        if (specifiedChampionObject) {
-            specifiedChampionObject = undefined;
-            this.setState({
-                championLists: championLists
-            });
-        }
-    };
-
-    isChampionInList = (listId, championKey) => {
-        // Implement state logic only once in higher order component
-    };
-
-    setChampionPriority = (listId, championKey, priority) => {
-        // Set champion priority only
-    };
-
-    setChampionNote = (listId, championKey, note) => {
-        // Set champion note only
-    };
 
     selectActiveListByIdentifier = identifier => {
-        if (Object.keys(this.state.championLists).indexOf(identifier) > -1) {
+        if (
+            Object.keys(this.props.userChampionPreferenceLists).indexOf(
+                identifier
+            ) > -1
+        ) {
             this.setState({
                 activeListIdentifier: identifier
             });
@@ -113,25 +52,31 @@ class ChampionListsApp extends Component {
     render() {
         let activeListIdentifier = this.state.activeListIdentifier;
         let selectActiveListByIdentifier = this.selectActiveListByIdentifier;
+        let selectedChampionData = this.props.userChampionPreferenceLists[
+            activeListIdentifier
+        ];
+        console.log("ActiveID", activeListIdentifier);
+        console.log("Complete", this.props.userChampionPreferenceLists);
+        console.log("selectedData", selectedChampionData);
         return (
             <StyledChampionListsWrapper>
                 <ChampionListSwitch
-                    availableLists={this.state.championLists}
+                    availableLists={this.props.userChampionPreferenceLists}
                     currentListIdentifier={activeListIdentifier}
                     selectListByIdentifier={selectActiveListByIdentifier}
                 />
                 <ChampionList
                     championListId={activeListIdentifier}
                     completeChampionData={this.state.championData}
-                    selectedChampionData={
-                        this.state.championLists[activeListIdentifier]
+                    selectedChampionData={selectedChampionData}
+                    addChampionToListById={this.props.addChampionToList}
+                    removeChampionFromListById={
+                        this.props.removeChampionFromList
                     }
-                    addChampionToListById={this.addChampionToListById}
-                    removeChampionFromListById={this.removeChampionFromListById}
                 />
             </StyledChampionListsWrapper>
         );
     }
 }
 
-export default ChampionListsApp;
+export default ChampionPreferenceLists;

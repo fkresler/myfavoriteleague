@@ -59,19 +59,21 @@ class ChampionList extends Component {
                         {this.props.championListId}
                     </StyledChampionListHeadline>
                     <StyledChampionList>
-                        {this.props.selectedChampionData.map(key => {
-                            return (
-                                <ChampionCard
-                                    championData={
-                                        this.props.completeChampionData[key]
-                                    }
-                                    toggleChampionSelectedState={
-                                        this.toggleChampionInCurrentList
-                                    }
-                                    shouldBeMarked={true}
-                                />
-                            );
-                        })}
+                        {Object.keys(this.props.selectedChampionData).map(
+                            key => {
+                                return (
+                                    <ChampionCard
+                                        championData={
+                                            this.props.completeChampionData[key]
+                                        }
+                                        toggleChampionSelectedState={
+                                            this.toggleChampionInCurrentList
+                                        }
+                                        shouldBeMarked={true}
+                                    />
+                                );
+                            }
+                        )}
                     </StyledChampionList>
                     <StyledChampionListHeadline>
                         Select your champions from the complete list:
@@ -80,7 +82,9 @@ class ChampionList extends Component {
                 <StyledChampionList>
                     {Object.keys(this.props.completeChampionData).map(key => {
                         let isChampionInCurrentList =
-                            this.props.selectedChampionData.indexOf(key) > -1;
+                            Object.keys(
+                                this.props.selectedChampionData
+                            ).indexOf(key) > -1;
                         return (
                             <ChampionCard
                                 championData={
@@ -102,7 +106,7 @@ class ChampionList extends Component {
 ChampionList.propTypes = {
     championListId: PropTypes.string.isRequired,
     completeChampionData: PropTypes.object.isRequired,
-    selectedChampionData: PropTypes.array.isRequired,
+    selectedChampionData: PropTypes.object.isRequired,
     addChampionToListById: PropTypes.func.isRequired,
     removeChampionFromListById: PropTypes.func.isRequired
 };

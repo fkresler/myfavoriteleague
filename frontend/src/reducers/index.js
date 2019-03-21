@@ -4,5 +4,5 @@ import championPreferenceListsReducer from "./championPreferenceListsReducer";
 
 export default combineReducers({
     improvementNotesState: improvementNotesReducer,
-    championPreferenceLists: championPreferenceListsReducer
+    championPreferenceListsState: championPreferenceListsReducer
 });
