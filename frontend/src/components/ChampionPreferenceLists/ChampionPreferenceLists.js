@@ -55,9 +55,6 @@ class ChampionPreferenceLists extends Component {
         let selectedChampionData = this.props.userChampionPreferenceLists[
             activeListIdentifier
         ];
-        console.log("ActiveID", activeListIdentifier);
-        console.log("Complete", this.props.userChampionPreferenceLists);
-        console.log("selectedData", selectedChampionData);
         return (
             <StyledChampionListsWrapper>
                 <ChampionListSwitch
