@@ -12,17 +12,20 @@ const StyledChampionMoodBoard = styled.div`
 const ChampionMoodBoard = props => {
     return (
         <StyledChampionMoodBoard>
-            {Object.keys(selectedChampionSet).map(key => {
-                return (
-                    !!completeChampionSet[key] && (
+            {Object.keys(props.completeChampionSet).map(key => {
+                let userChampionData = props.selectedChampionSet[key];
+                if (!!userChampionData) {
+                    return (
                         <ChampionMoodSelector
-                            staticChampionData={completeChampionSet[key]}
-                            userChampionData={selectedChampionSet[key]}
+                            staticChampionData={props.completeChampionSet[key]}
+                            userChampionData={userChampionData}
                             setChampionPriority={props.setChampionPriority}
                             setChampionNote={props.setChampionNote}
                         />
-                    )
-                );
+                    );
+                } else {
+                    props.addChampionToList(props.championListId, key);
+                }
             })}
         </StyledChampionMoodBoard>
     );
@@ -31,7 +34,7 @@ const ChampionMoodBoard = props => {
 ChampionMoodBoard.propTypes = {
     championListId: PropTypes.string.isRequired,
     completeChampionSet: PropTypes.object.isRequired,
-    selectedChampionSet: PropTypes.object.isRequired,
+    selectedChampionSet: PropTypes.object,
     addChampionToList: PropTypes.func.isRequired,
     setChampionPriority: PropTypes.func.isRequired,
     setChampionNote: PropTypes.func.isRequired

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import ChampionList from "../ChampionList";
 import ChampionListSwitch from "../ChampionListSwitch";
+import ChampionMoodBoard from "../ChampionMoodBoard";
 
 const StyledChampionListsWrapper = styled.div`
     display: block;
@@ -55,6 +56,7 @@ class ChampionPreferenceLists extends Component {
         let selectedChampionData = this.props.userChampionPreferenceLists[
             activeListIdentifier
         ];
+        console.log("Current state", this.state);
         return (
             <StyledChampionListsWrapper>
                 <ChampionListSwitch
@@ -62,14 +64,13 @@ class ChampionPreferenceLists extends Component {
                     currentListIdentifier={activeListIdentifier}
                     selectListByIdentifier={selectActiveListByIdentifier}
                 />
-                <ChampionList
+                <ChampionMoodBoard
                     championListId={activeListIdentifier}
-                    completeChampionData={this.state.championData}
-                    selectedChampionData={selectedChampionData}
-                    addChampionToListById={this.props.addChampionToList}
-                    removeChampionFromListById={
-                        this.props.removeChampionFromList
-                    }
+                    completeChampionSet={this.state.championData}
+                    selectedChampionSet={selectedChampionData}
+                    addChampionToList={this.props.addChampionToList}
+                    setChampionPriority={this.props.setChampionPriority}
+                    setChampionNote={this.props.setChampionPriority}
                 />
             </StyledChampionListsWrapper>
         );
