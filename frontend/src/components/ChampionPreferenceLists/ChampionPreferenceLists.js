@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 
-import ChampionList from "../ChampionList";
 import ChampionListSwitch from "../ChampionListSwitch";
+import ChampionList from "../ChampionList";
 import ChampionMoodBoard from "../ChampionMoodBoard";
 
 const StyledChampionListsWrapper = styled.div`
@@ -13,30 +13,22 @@ const StyledChampionListsWrapper = styled.div`
 class ChampionPreferenceLists extends Component {
     constructor(props) {
         super(props);
-        this.DEFAULTLISTIDENTIFIER = "Top";
+        this.DEFAULTLISTIDENTIFIER = Object.keys(
+            this.props.userChampionPreferenceLists
+        )[0];
         this.state = {
-            championData: {},
             activeListIdentifier: this.DEFAULTLISTIDENTIFIER
         };
     }
 
-    async componentDidMount() {
-        try {
-            const localApiUrl = "/champion";
-            let localApiResponse = await fetch(localApiUrl);
-            if (localApiResponse.ok) {
-                let localApiResponseJson = await localApiResponse.json();
-                console.log("Data received: " + localApiResponseJson);
-                if (localApiResponseJson.data) {
-                    this.setState({
-                        championData: localApiResponseJson.data
-                    });
-                }
-            }
-        } catch (err) {
-            console.log("Error during mounting: " + err);
-        }
-    }
+    componentDidMount = () => {
+        this.props.fetchStaticChampionDataIfNeeded();
+    };
+
+    isMoodboard = listName => {
+        if (listName) return listName.toLowerCase().indexOf("mood") > 0;
+        return false;
+    };
 
     selectActiveListByIdentifier = identifier => {
         if (
@@ -51,27 +43,35 @@ class ChampionPreferenceLists extends Component {
     };
 
     render() {
+        let completeChampionData = this.props.staticChampionData
+            ? this.props.staticChampionData
+            : {};
         let activeListIdentifier = this.state.activeListIdentifier;
-        let selectActiveListByIdentifier = this.selectActiveListByIdentifier;
-        let selectedChampionData = this.props.userChampionPreferenceLists[
+        let selectedListData = this.props.userChampionPreferenceLists[
             activeListIdentifier
         ];
-        console.log("Current state", this.state);
+        selectedListData = selectedListData ? selectedListData : {};
+        let toBeRenderedListComponent;
+        if (this.isMoodboard(activeListIdentifier)) {
+            toBeRenderedListComponent = (
+                <ChampionMoodBoard
+                    championListId={activeListIdentifier}
+                    completeChampionSet={completeChampionData}
+                    selectedChampionSet={selectedListData}
+                    addChampionToList={this.props.addChampionToList}
+                    setChampionPriority={this.props.setChampionPriority}
+                    setChampionNote={this.props.setChampionPriority}
+                />
+            );
+        }
         return (
             <StyledChampionListsWrapper>
                 <ChampionListSwitch
                     availableLists={this.props.userChampionPreferenceLists}
                     currentListIdentifier={activeListIdentifier}
-                    selectListByIdentifier={selectActiveListByIdentifier}
+                    selectListByIdentifier={this.selectActiveListByIdentifier}
                 />
-                <ChampionMoodBoard
-                    championListId={activeListIdentifier}
-                    completeChampionSet={this.state.championData}
-                    selectedChampionSet={selectedChampionData}
-                    addChampionToList={this.props.addChampionToList}
-                    setChampionPriority={this.props.setChampionPriority}
-                    setChampionNote={this.props.setChampionPriority}
-                />
+                {toBeRenderedListComponent}
             </StyledChampionListsWrapper>
         );
     }

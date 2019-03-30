@@ -1,5 +1,5 @@
 const initialState = {
-    isStaticChampionDataSuccessful: false,
+    isStaticChampionDataCorrect: false,
     staticChampionData: {},
     isFetchingStaticChampionData: false,
     staticChampionDataReceivedAt: null
@@ -15,10 +15,12 @@ const riotApiDataReducer = (state = initialState, action) => {
             };
         }
         case "RECEIVE_STATIC_CHAMPION_DATA": {
-            if (action.payload.isStaticChampionDataSuccessful) {
+            if (action.payload.isStaticChampionDataCorrect) {
                 return {
                     ...state,
-                    staticChampionData: action.payload.championData,
+                    isStaticChampionDataCorrect:
+                        action.payload.isStaticChampionDataCorrect,
+                    staticChampionData: action.payload.staticChampionData,
                     staticChampionDataReceivedAt:
                         action.payload.staticChampionDataReceivedAt,
                     isFetchingStaticChampionData:

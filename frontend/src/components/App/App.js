@@ -10,7 +10,6 @@ import styled from "styled-components";
 import StartingPageContent from "../StartingPageContent";
 import PageNotFoundContent from "../PageNotFoundContent";
 import ImprovementNotes from "../ImprovementNotes";
-import ChampionMoodBoard from "../ChampionMoodBoard";
 import ChampionPreferenceLists from "../ChampionPreferenceLists";
 
 const StyledNavigationBar = styled.div`
@@ -49,18 +48,12 @@ const App = () => (
             <StyledNavigationBar>
                 <Link to="/">Home</Link>
                 <Link to="/notes">Notes</Link>
-                <Link to="/moodboard">Moodboard</Link>
                 <Link to="/mylists">Lists</Link>
             </StyledNavigationBar>
             <StyledContentWrapper>
                 <Switch>
                     <Route exact path="/" component={StartingPageContent} />
                     <Route exact path="/notes" component={ImprovementNotes} />
-                    <Route
-                        exact
-                        path="/moodboard"
-                        component={ChampionMoodBoard}
-                    />
                     <Route
                         exact
                         path="/mylists"

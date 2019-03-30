@@ -1,4 +1,5 @@
 import {applyMiddleware, createStore} from "redux";
+import thunk from "redux-thunk";
 import myfavoriteleaguereduxlogger from "redux-logger";
 import myfavoriteleaguereducer from "./reducers";
 import Cookies from "js-cookie";
@@ -20,6 +21,7 @@ const synchronizeCookieData = ({getState}) => {
 
 // Combine middleware
 const myfavoriteleaguemiddleware = applyMiddleware(
+    thunk,
     myfavoriteleaguereduxlogger,
     synchronizeCookieData
 );

@@ -1,5 +1,6 @@
 import {connect} from "react-redux";
 import ChampionPreferenceLists from "./ChampionPreferenceLists";
+import {fetchStaticChampionDataIfNeeded} from "../../actions/riotApiDataActions";
 import {
     addChampionToList,
     setChampionPriority,
@@ -9,12 +10,16 @@ import {
 
 const mapStateToProps = state => {
     return {
+        staticChampionData: state.riotApiDataState.staticChampionData,
         userChampionPreferenceLists:
             state.championPreferenceListsState.userChampionPreferenceLists
     };
 };
 
 const mapDispatchToProps = dispatch => ({
+    fetchStaticChampionDataIfNeeded: () => {
+        dispatch(fetchStaticChampionDataIfNeeded());
+    },
     addChampionToList: (listId, championId, priority) => {
         dispatch(addChampionToList(listId, championId, priority));
     },
