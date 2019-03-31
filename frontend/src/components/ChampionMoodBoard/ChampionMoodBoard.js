@@ -10,16 +10,24 @@ const StyledChampionMoodBoard = styled.div`
 `;
 
 const ChampionMoodBoard = props => {
+    const handleChampionPriorityChange = (championKey, championPriority) => {
+        props.setChampionPriority(
+            props.championListId,
+            championKey,
+            championPriority
+        );
+    };
+
     return (
         <StyledChampionMoodBoard>
             {Object.keys(props.completeChampionSet).map(key => {
                 let userChampionData = props.selectedChampionSet[key];
-                if (!!userChampionData) {
+                if (userChampionData) {
                     return (
                         <ChampionMoodSelector
                             staticChampionData={props.completeChampionSet[key]}
                             userChampionData={userChampionData}
-                            setChampionPriority={props.setChampionPriority}
+                            setChampionPriority={handleChampionPriorityChange}
                             setChampionNote={props.setChampionNote}
                         />
                     );

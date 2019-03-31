@@ -14,6 +14,8 @@ previousState = previousState ? JSON.parse(previousState) : {};
 const synchronizeCookieData = ({getState}) => {
     return next => action => {
         const result = next(action);
+        const currentState = getState();
+        const jsonCurrentState = JSON.stringify(currentState);
         Cookies.set(MY_FAVORITE_LEAGUE_COOKIE_NAME, JSON.stringify(getState()));
         return result;
     };

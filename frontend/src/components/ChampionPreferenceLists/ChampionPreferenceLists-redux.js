@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(addChampionToList(listId, championId, priority));
     },
     setChampionPriority: (listId, championId, priority) => {
-        dispatch(addChampionToList(listId, championId, priority));
+        dispatch(setChampionPriority(listId, championId, priority));
     },
     setChampionNote: (listId, championId, championNote) => {
         dispatch(setChampionNote(listId, championId, championNote));

@@ -26,7 +26,7 @@ class ChampionPreferenceLists extends Component {
     };
 
     isMoodboard = listName => {
-        if (listName) return listName.toLowerCase().indexOf("mood") > 0;
+        if (listName) return listName.toLowerCase().indexOf("mood") >= 0;
         return false;
     };
 
@@ -60,7 +60,7 @@ class ChampionPreferenceLists extends Component {
                     selectedChampionSet={selectedListData}
                     addChampionToList={this.props.addChampionToList}
                     setChampionPriority={this.props.setChampionPriority}
-                    setChampionNote={this.props.setChampionPriority}
+                    setChampionNote={this.props.setChampionNote}
                 />
             );
         }

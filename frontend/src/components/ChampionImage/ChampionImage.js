@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const StyledChampionImage = styled.div`
-    width: 100%;
     height: 100%;
 
     img {
-        width: 100%;
+        width: auto;
         height: 100%;
     }
 `;
@@ -15,15 +14,15 @@ const StyledChampionImage = styled.div`
 const ChampionImage = props => {
     let imageUrlPrefix =
         "http://ddragon.leagueoflegends.com/cdn/" +
-        this.props.championData.version +
+        props.championData.version +
         "/img/champion/";
-    let championId = this.props.championData.id;
+    let championId = props.championData.id;
     return (
         <StyledChampionImage>
             <img
-                src={imageUrlPrefix + this.props.championData.image.full}
-                title={this.props.championData.name}
-                alt={this.props.championData.name}
+                src={imageUrlPrefix + props.championData.image.full}
+                title={props.championData.name}
+                alt={props.championData.name}
             />
         </StyledChampionImage>
     );
