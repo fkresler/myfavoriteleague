@@ -6,12 +6,25 @@ import ChampionImage from "../../ChampionImage";
 
 const StyledChampionMoodSelectorWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
     width: 100%;
     height: 5rem;
     padding: 1rem;
+`;
+
+const StyledChampionMoodImage = styled.div`
+    flex: 0 0 20%;
+`;
+
+const StyledChampionMoodSelection = styled.div`
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 `;
 
 const StyledChampionMoodSelectionBox = styled.div`
@@ -33,25 +46,29 @@ const ChampionMoodSelector = props => {
 
     return (
         <StyledChampionMoodSelectorWrapper>
-            <ChampionImage championData={props.staticChampionData} />
-            <StyledChampionMoodSelectionBox
-                isActive={currentPriority === 1}
-                onClick={() => props.setChampionPriority(championKey, 1)}
-            >
-                1
-            </StyledChampionMoodSelectionBox>
-            <StyledChampionMoodSelectionBox
-                isActive={currentPriority === 2}
-                onClick={() => props.setChampionPriority(championKey, 2)}
-            >
-                2
-            </StyledChampionMoodSelectionBox>
-            <StyledChampionMoodSelectionBox
-                isActive={currentPriority === 3}
-                onClick={() => props.setChampionPriority(championKey, 3)}
-            >
-                3
-            </StyledChampionMoodSelectionBox>
+            <StyledChampionMoodImage>
+                <ChampionImage championData={props.staticChampionData} />
+            </StyledChampionMoodImage>
+            <StyledChampionMoodSelection>
+                <StyledChampionMoodSelectionBox
+                    isActive={currentPriority === 1}
+                    onClick={() => props.setChampionPriority(championKey, 1)}
+                >
+                    1
+                </StyledChampionMoodSelectionBox>
+                <StyledChampionMoodSelectionBox
+                    isActive={currentPriority === 2}
+                    onClick={() => props.setChampionPriority(championKey, 2)}
+                >
+                    2
+                </StyledChampionMoodSelectionBox>
+                <StyledChampionMoodSelectionBox
+                    isActive={currentPriority === 3}
+                    onClick={() => props.setChampionPriority(championKey, 3)}
+                >
+                    3
+                </StyledChampionMoodSelectionBox>
+            </StyledChampionMoodSelection>
         </StyledChampionMoodSelectorWrapper>
     );
 };

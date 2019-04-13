@@ -1,32 +1,55 @@
-import React from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import fetch from "cross-fetch";
 
 const StyledChampionImage = styled.div`
-    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+    background-color: grey;
 
     img {
-        width: auto;
-        height: 100%;
+        height: auto;
+        width: 100%;
     }
 `;
 
-const ChampionImage = props => {
-    let imageUrlPrefix =
-        "http://ddragon.leagueoflegends.com/cdn/" +
-        props.championData.version +
-        "/img/champion/";
-    let championId = props.championData.id;
-    return (
-        <StyledChampionImage>
-            <img
-                src={imageUrlPrefix + props.championData.image.full}
-                title={props.championData.name}
-                alt={props.championData.name}
-            />
-        </StyledChampionImage>
-    );
-};
+class ChampionImage extends Component {
+    constructor(props) {
+        super(props);
+        this.imageUrl =
+            "http://ddragon.leagueoflegends.com/cdn/" +
+            props.championData.version +
+            "/img/champion/" +
+            props.championData.image.full;
+        this.state = {
+            championImage: null
+        };
+    }
+
+    componentDidMount = async () => {
+        try {
+            const championImage = await fetch(this.imageUrl);
+            this.setState({
+                championImage: championImage
+            });
+        } catch (err) {
+            console.error(
+                "ChampionImage for " + this.imageUrl + " could not be loaded"
+            );
+        }
+    };
+
+    render() {
+        let displayedImage;
+        if (this.state.championImage) {
+            displayedImage = this.state.championImage;
+        } else {
+            displayedImage = this.props.championData.name;
+        }
+        return <StyledChampionImage>{displayedImage}</StyledChampionImage>;
+    }
+}
 
 ChampionImage.propTypes = {
     championData: PropTypes.shape({
