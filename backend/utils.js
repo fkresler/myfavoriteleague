@@ -1,48 +1,62 @@
 const fs = require("fs");
 
+async function getJsonDataByApiUrl(apiUrl) {
+    let response = await fetch(apiUrl);
+    let jsonData;
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error(
+            "API call to " +
+                apiUrl +
+                " returned with status code " +
+                response.status
+        );
+    }
+}
+
+async function getLatestApiVersionByIdentifier(apiIdentifier) {
+    const apiVersionUrl = "https://ddragon.leagueoflegends.com/realms/euw.json";
+    let apiVersionsData = await getJsonDataByApiUrl(apiVersionUrl);
+    if (apiVersionsData.n[apiIdentifier]) {
+        return apiVersionsData.n[apiIdentifier];
+    } else {
+        throw new Error(
+            "Version for the API " + apiIdentifier + " was not found"
+        );
+    }
+}
+
+function getLocalVersion(localData) {
+    if (localData && localData["version"]) {
+        return localData["version"];
+    } else {
+        throw new Error("No local data available!");
+    }
+}
+
+function getLocalData(name) {
+    const fileName = "data/" + name + ".json";
+    let data = fs.readFileSync(fileName, "utf8");
+    return JSON.parse(data);
+}
+
+function setLocalData(name, data) {
+    const fileName = "data/" + name + ".json";
+    let jsonData = JSON.stringify(data);
+    fs.writeFileSync(fileName, jsonData);
+}
+
+function clearLocalData(name) {
+    const fileName = "data/" + name + ".json";
+    fs.unlinkSync(fileName);
+}
+
 module.exports = {
-	getCurrentVersionByApiIdentifier: async function(apiIdentifier) {
-		try {
-			const apiVersionUrl = "https://ddragon.leagueoflegends.com/realms/euw.json";
-			let apiVersionsResponse = await fetch(apiVersionUrl);
-			let apiVersionsData = await apiVersionsResponse.json();
-			if(apiVersionsData.n[apiIdentifier]) {
-				return apiVersionsData.n[apiIdentifier];
-			} else {
-				throw new Error("Version for the API " + apiIdentifier + " was not found!");
-			}
-		} catch(err) {
-			console.log("getCurrentVersionByApiIdentifier: " + err);
-		}
-	},
-	getLocalData: function(name) {
-		const fileName = "data/" + name + ".json";
-		try {
-			var data = fs.readFileSync(fileName, "utf8");
-			var jsonData = JSON.parse(data);
-			return jsonData;
-		} catch (fileReadingError) {
-			console.log("Error: while trying to read data from local data file for " + fileName);
-			console.log(fileReadingError);
-		}
-	},
-	setLocalData: function(name, data) {
-		const fileName = "data/" + name + ".json";
-		try {
-			var jsonData = JSON.stringify(data);
-			fs.writeFileSync(fileName, jsonData);
-		} catch (fileWriteError) {
-			console.log("Error: while trying to write data to local data file for " + fileName);
-			console.log(fileWriteError);
-		}
-	},
-	clearLocalData: function(name) {
-		const fileName = "data/" + name + ".json";
-		try {
-			fs.unlinkSync(fileName);
-		} catch (fileDeletionError) {
-			console.log("Error: while trying to clear data from local data file for " + fileName);
-			console.log(fileDeletionError);
-		}
-	}
+    getJsonDataByApiUrl: getJsonDataByApiUrl,
+    getLatestApiVersionByIdentifier: getLatestApiVersionByIdentifier,
+    getLocalVersion: getLocalVersion,
+    getLocalData: getLocalData,
+    setLocalData: setLocalData,
+    clearLocalData: clearLocalData
 };

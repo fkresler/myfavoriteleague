@@ -43,7 +43,7 @@ const shouldFetchStaticChampionData = state => {
 };
 
 const fetchStaticChampionData = () => dispatch => {
-    const staticChampionDataApiUrl = "/champion";
+    const staticChampionDataApiUrl = "/api/champion";
     dispatch(requestStaticChampionData);
     return fetch(staticChampionDataApiUrl)
         .then(response => response.json())
