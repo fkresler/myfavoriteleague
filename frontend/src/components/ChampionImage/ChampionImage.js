@@ -7,6 +7,7 @@ const StyledChampionImage = styled.div`
     width: 100%;
     border: 1px solid black;
     background-color: grey;
+    text-align: center;
 
     img {
         height: auto;

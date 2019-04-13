@@ -6,21 +6,28 @@ import ChampionImage from "../../ChampionImage";
 
 const StyledChampionMoodSelectorWrapper = styled.div`
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
-    height: 5rem;
-    padding: 1rem;
+    box-sizing: border-box;
+    padding: 0.75rem;
+
+    @media (min-width: 400px) {
+        flex-direction: row;
+        justify-content: space-around;
+    }
 `;
 
 const StyledChampionMoodImage = styled.div`
-    flex: 0 0 20%;
+    flex: 0 0 30%;
+    max-width: 5rem;
+    max-height: 5rem;
 `;
 
 const StyledChampionMoodSelection = styled.div`
     flex: 1 1 auto;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
