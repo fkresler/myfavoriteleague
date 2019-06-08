@@ -14,37 +14,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/api/userdata/:userId', (req, res) => {
-  const { userId } = req.params;
-  let userData;
-  try {
-    userData = utils.getLocalData(userId);
-  } catch (err) {
-    console.error(err);
-    userData = {};
-  }
-  res.send(userData);
-});
-
-app.post('/api/userdata/', (req, res) => {
-  let userData;
-  let userId;
-  let localUserData;
-  try {
-    userData = req.body;
-    userId = userData.userDataState.userId;
-    if (userId && userData) {
-      utils.setLocalData(userId, userData);
-    } else {
-      throw new Error('No user ID or user data submitted');
-    }
-    localUserData = utils.getLocalData(userId);
-    res.send(localUserData);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
 app.get('/api/champion', async (req, res) => {
   const CHAMPIONAPIIDENTIFIER = 'champion';
   let localChampionData;
@@ -55,7 +24,6 @@ app.get('/api/champion', async (req, res) => {
     localChampionData = utils.getLocalData(CHAMPIONAPIIDENTIFIER);
     localChampionVersion = utils.getLocalVersion(localChampionData);
   } catch (err) {
-    console.error(err);
     localChampionData = localChampionData || {};
     localChampionVersion = localChampionVersion || 0;
   }
@@ -76,7 +44,6 @@ app.get('/api/champion', async (req, res) => {
       res.send(localChampionData);
     }
   } catch (err) {
-    console.error(err);
     res.send(localChampionData);
   }
 });

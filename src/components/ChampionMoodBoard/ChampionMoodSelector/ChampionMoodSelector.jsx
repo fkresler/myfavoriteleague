@@ -48,30 +48,29 @@ const StyledChampionMoodSelectionBox = styled.div`
 `;
 
 const ChampionMoodSelector = (props) => {
-  const championKey = props.staticChampionData.id;
-  const currentPriority = props.userChampionData.priority;
+  const { staticChampionData, userChampionData, setChampionPriority } = props;
 
   return (
     <StyledChampionMoodSelectorWrapper>
       <StyledChampionMoodImage>
-        <ChampionImage championData={props.staticChampionData} />
+        <ChampionImage championData={staticChampionData} />
       </StyledChampionMoodImage>
       <StyledChampionMoodSelection>
         <StyledChampionMoodSelectionBox
-          isActive={currentPriority === 1}
-          onClick={() => props.setChampionPriority(championKey, 1)}
+          isActive={userChampionData.priority === 1}
+          onClick={() => setChampionPriority(staticChampionData.id, 1)}
         >
                     1
         </StyledChampionMoodSelectionBox>
         <StyledChampionMoodSelectionBox
-          isActive={currentPriority === 2}
-          onClick={() => props.setChampionPriority(championKey, 2)}
+          isActive={userChampionData.priority === 2}
+          onClick={() => setChampionPriority(staticChampionData.id, 2)}
         >
                     2
         </StyledChampionMoodSelectionBox>
         <StyledChampionMoodSelectionBox
-          isActive={currentPriority === 3}
-          onClick={() => props.setChampionPriority(championKey, 3)}
+          isActive={userChampionData.priority === 3}
+          onClick={() => setChampionPriority(staticChampionData.id, 3)}
         >
                     3
         </StyledChampionMoodSelectionBox>
@@ -80,11 +79,15 @@ const ChampionMoodSelector = (props) => {
   );
 };
 
+ChampionMoodSelector.defaultProps = {
+  staticChampionData: {},
+  userChampionData: {},
+};
+
 ChampionMoodSelector.propTypes = {
-  staticChampionData: PropTypes.object.isRequired,
-  userChampionData: PropTypes.object.isRequired,
+  staticChampionData: PropTypes.shape(),
+  userChampionData: PropTypes.shape(),
   setChampionPriority: PropTypes.func.isRequired,
-  setChampionNote: PropTypes.func.isRequired,
 };
 
 export default ChampionMoodSelector;

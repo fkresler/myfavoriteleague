@@ -34,19 +34,14 @@ class ChampionImage extends Component {
         championImage,
       });
     } catch (err) {
-      console.error(
-        `ChampionImage for ${this.imageUrl} could not be loaded`,
-      );
+      throw new Error(err);
     }
   }
 
   render() {
-    let displayedImage;
-    if (this.state.championImage) {
-      displayedImage = this.state.championImage;
-    } else {
-      displayedImage = this.props.championData.name;
-    }
+    const { championImage } = this.state;
+    const { championData } = this.props;
+    const displayedImage = championImage || championData.name;
     return <StyledChampionImage>{displayedImage}</StyledChampionImage>;
   }
 }
@@ -58,7 +53,7 @@ ChampionImage.propTypes = {
     version: PropTypes.string.isRequired,
     image: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 
 export default ChampionImage;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -28,82 +28,82 @@ const StyledChampionList = styled.div`
     flex-wrap: wrap;
 `;
 
-class ChampionList extends Component {
-  toggleChampionInCurrentList(championKey) {
-    if (this.props.selectedChampionData.indexOf(championKey) > -1) {
-      this.removeChampionFromCurrentListById(championKey);
+const ChampionList = (props) => {
+  const {
+    championListId,
+    completeChampionData,
+    selectedChampionData,
+    addChampionToListById,
+    removeChampionFromListById,
+  } = props;
+  const addChampionToCurrentListById = (championKey) => {
+    addChampionToListById(
+      championListId,
+      championKey,
+    );
+  };
+  const removeChampionFromCurrentListById = (championKey) => {
+    removeChampionFromListById(
+      championListId,
+      championKey,
+    );
+  };
+  const toggleChampionInCurrentList = (championKey) => {
+    if (selectedChampionData.indexOf(championKey) > -1) {
+      removeChampionFromCurrentListById(championKey);
     } else {
-      this.addChampionToCurrentListById(championKey);
+      addChampionToCurrentListById(championKey);
     }
-  }
+  };
 
-  addChampionToCurrentListById(championKey) {
-    this.props.addChampionToListById(
-      this.props.championListId,
-      championKey,
-    );
-  }
-
-  removeChampionFromCurrentListById(championKey) {
-    this.props.removeChampionFromListById(
-      this.props.championListId,
-      championKey,
-    );
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <StyledStickyWrapper>
-          <StyledChampionListHeadline>
-            {this.props.championListId}
-          </StyledChampionListHeadline>
-          <StyledChampionList>
-            {Object.keys(this.props.selectedChampionData).map(
-              key => (
-                <ChampionCard
-                  championData={
-                                            this.props.completeChampionData[key]
-                                        }
-                  toggleChampionSelectedState={
-                                            this.toggleChampionInCurrentList
-                                        }
-                  shouldBeMarked
-                />
-              ),
-            )}
-          </StyledChampionList>
-          <StyledChampionListHeadline>
-                        Select your champions from the complete list:
-          </StyledChampionListHeadline>
-        </StyledStickyWrapper>
+  return (
+    <React.Fragment>
+      <StyledStickyWrapper>
+        <StyledChampionListHeadline>
+          {championListId}
+        </StyledChampionListHeadline>
         <StyledChampionList>
-          {Object.keys(this.props.completeChampionData).map((key) => {
-            const isChampionInCurrentList = Object.keys(
-              this.props.selectedChampionData,
-            ).indexOf(key) > -1;
-            return (
+          {Object.keys(selectedChampionData).map(
+            key => (
               <ChampionCard
-                championData={
-                                    this.props.completeChampionData[key]
-                                }
-                toggleChampionSelectedState={
-                                    this.toggleChampionInCurrentList
-                                }
-                shouldBeMarked={isChampionInCurrentList}
+                championData={completeChampionData[key]}
+                toggleChampionSelectedState={toggleChampionInCurrentList}
+                shouldBeMarked
               />
-            );
-          })}
+            ),
+          )}
         </StyledChampionList>
-      </React.Fragment>
-    );
-  }
-}
+        <StyledChampionListHeadline>
+          Select your champions from the complete list:
+        </StyledChampionListHeadline>
+      </StyledStickyWrapper>
+      <StyledChampionList>
+        {Object.keys(completeChampionData).map((key) => {
+          const isChampionInCurrentList = Object.keys(
+            selectedChampionData,
+          ).indexOf(key) > -1;
+          return (
+            <ChampionCard
+              championData={completeChampionData[key]}
+              toggleChampionSelectedState={toggleChampionInCurrentList}
+              shouldBeMarked={isChampionInCurrentList}
+            />
+          );
+        })}
+      </StyledChampionList>
+    </React.Fragment>
+  );
+};
+
+ChampionList.defaultProps = {
+  completeChampionData: {},
+  selectedChampionData: {},
+};
 
 ChampionList.propTypes = {
   championListId: PropTypes.string.isRequired,
-  completeChampionData: PropTypes.object.isRequired,
-  selectedChampionData: PropTypes.object.isRequired,
+  completeChampionData: PropTypes.shape(),
+  selectedChampionData: PropTypes.shape(),
   addChampionToListById: PropTypes.func.isRequired,
   removeChampionFromListById: PropTypes.func.isRequired,
 };

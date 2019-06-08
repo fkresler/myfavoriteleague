@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -23,25 +23,30 @@ const StyledChampionListSwitchButton = styled.div`
     user-select: none;
 `;
 
-class ChampionListSwitch extends Component {
-  render() {
-    const { currentListIdentifier } = this.props;
-    const { selectListByIdentifier } = this.props;
-    return (
-      <StyledChampionListSwitch>
-        {Object.keys(this.props.availableLists).map(key => (
-          <StyledChampionListSwitchButton isActive={key === currentListIdentifier} onClick={() => selectListByIdentifier(key)}>
-            {key}
-          </StyledChampionListSwitchButton>
-        ))}
-      </StyledChampionListSwitch>
-    );
-  }
-}
+const ChampionListSwitch = (props) => {
+  const { availableLists, currentListIdentifier, selectListByIdentifier } = props;
+  return (
+    <StyledChampionListSwitch>
+      {Object.keys(availableLists).map(key => (
+        <StyledChampionListSwitchButton
+          isActive={key === currentListIdentifier}
+          onClick={() => selectListByIdentifier(key)}
+        >
+          {key}
+        </StyledChampionListSwitchButton>
+      ))}
+    </StyledChampionListSwitch>
+  );
+};
+
+ChampionListSwitch.defaultProps = {
+  availableLists: {},
+  currentListIdentifier: null,
+};
 
 ChampionListSwitch.propTypes = {
-  availableLists: PropTypes.object.isRequired,
-  currentListIdentifier: PropTypes.string.isRequired,
+  availableLists: PropTypes.shape(),
+  currentListIdentifier: PropTypes.string,
   selectListByIdentifier: PropTypes.func.isRequired,
 };
 

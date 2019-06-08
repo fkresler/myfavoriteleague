@@ -10,8 +10,16 @@ const StyledChampionMoodBoard = styled.div`
 `;
 
 const ChampionMoodBoard = (props) => {
+  const {
+    championListId,
+    completeChampionSet,
+    selectedChampionSet,
+    addChampionToList,
+    setChampionPriority,
+    setChampionNote,
+  } = props;
   const handleChampionPriorityChange = (championKey, championPriority) => {
-    props.setChampionPriority(
+    setChampionPriority(
       props.championListId,
       championKey,
       championPriority,
@@ -20,28 +28,35 @@ const ChampionMoodBoard = (props) => {
 
   return (
     <StyledChampionMoodBoard>
-      {Object.keys(props.completeChampionSet).map((key) => {
-        const userChampionData = props.selectedChampionSet[key];
-        if (userChampionData) {
-          return (
-            <ChampionMoodSelector
-              staticChampionData={props.completeChampionSet[key]}
-              userChampionData={userChampionData}
-              setChampionPriority={handleChampionPriorityChange}
-              setChampionNote={props.setChampionNote}
-            />
-          );
+      {Object.keys(completeChampionSet).map((key) => {
+        const userChampionData = selectedChampionSet[key];
+        if (!userChampionData) {
+          addChampionToList(championListId, key);
         }
-        props.addChampionToList(props.championListId, key);
+        return (
+          !!userChampionData && (
+          <ChampionMoodSelector
+            staticChampionData={completeChampionSet[key]}
+            userChampionData={userChampionData}
+            setChampionPriority={handleChampionPriorityChange}
+            setChampionNote={setChampionNote}
+          />
+          )
+        );
       })}
     </StyledChampionMoodBoard>
   );
 };
 
+ChampionMoodBoard.defaultProps = {
+  completeChampionSet: {},
+  selectedChampionSet: {},
+};
+
 ChampionMoodBoard.propTypes = {
   championListId: PropTypes.string.isRequired,
-  completeChampionSet: PropTypes.object.isRequired,
-  selectedChampionSet: PropTypes.object,
+  completeChampionSet: PropTypes.shape(),
+  selectedChampionSet: PropTypes.shape(),
   addChampionToList: PropTypes.func.isRequired,
   setChampionPriority: PropTypes.func.isRequired,
   setChampionNote: PropTypes.func.isRequired,

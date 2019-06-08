@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -15,17 +15,26 @@ const StyledChampionCard = styled.div`
     }
 `;
 
-class ChampionCard extends Component {
-  render() {
-    const imageUrlPrefix = `http://ddragon.leagueoflegends.com/cdn/${this.props.championData.version}/img/champion/`;
-    const championId = this.props.championData.id;
-    return (
-      <StyledChampionCard shouldBeMarked={!!this.props.shouldBeMarked} onClick={() => this.props.toggleChampionSelectedState(championId)}>
-        <img src={imageUrlPrefix + this.props.championData.image.full} title={this.props.championData.name} alt={this.props.championData.name} />
-      </StyledChampionCard>
-    );
-  }
-}
+const ChampionCard = (props) => {
+  const { championData, shouldBeMarked, toggleChampionSelectedState } = props;
+  const imageUrlPrefix = `http://ddragon.leagueoflegends.com/cdn/${championData.version}/img/champion/`;
+  return (
+    <StyledChampionCard
+      shouldBeMarked={!!shouldBeMarked}
+      onClick={() => toggleChampionSelectedState(championData.id)}
+    >
+      <img
+        src={imageUrlPrefix + championData.image.full}
+        title={championData.name}
+        alt={championData.name}
+      />
+    </StyledChampionCard>
+  );
+};
+
+ChampionCard.defaultProps = {
+  shouldBeMarked: false,
+};
 
 ChampionCard.propTypes = {
   championData: PropTypes.shape({
@@ -34,7 +43,7 @@ ChampionCard.propTypes = {
     version: PropTypes.string.isRequired,
     image: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   toggleChampionSelectedState: PropTypes.func.isRequired,
   shouldBeMarked: PropTypes.bool,
 };

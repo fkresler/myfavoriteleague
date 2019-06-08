@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import ChampionListSwitch from '../ChampionListSwitch';
-import ChampionList from '../ChampionList';
 import ChampionMoodBoard from '../ChampionMoodBoard';
 
 const StyledChampionListsWrapper = styled.div`
@@ -11,30 +11,32 @@ const StyledChampionListsWrapper = styled.div`
 `;
 
 class ChampionPreferenceLists extends Component {
-  constructor(props) {
-    super(props);
-    this.DEFAULTLISTIDENTIFIER = Object.keys(
-      this.props.userChampionPreferenceLists,
-    )[0];
-    this.state = {
-      activeListIdentifier: this.DEFAULTLISTIDENTIFIER,
-    };
-  }
-
-  componentDidMount() {
-    this.props.fetchStaticChampionDataIfNeeded();
-  }
-
-  isMoodboard(listName) {
-    if (listName) return listName.toLowerCase().indexOf('mood') >= 0;
+  static isMoodboard(listName) {
+    if (listName) {
+      return listName.toLowerCase().indexOf('mood') >= 0;
+    }
     return false;
   }
 
+  constructor(props) {
+    super(props);
+    const { userChampionPreferenceLists } = this.props;
+    const [firstIdentifier] = Object.keys(userChampionPreferenceLists);
+    this.state = {
+      activeListIdentifier: firstIdentifier,
+    };
+    this.selectActiveListByIdentifier = this.selectActiveListByIdentifier.bind(this);
+  }
+
+  componentDidMount() {
+    const { fetchStaticChampionDataIfNeeded } = this.props;
+    fetchStaticChampionDataIfNeeded();
+  }
+
   selectActiveListByIdentifier(identifier) {
+    const { userChampionPreferenceLists } = this.props;
     if (
-      Object.keys(this.props.userChampionPreferenceLists).indexOf(
-        identifier,
-      ) > -1
+      Object.keys(userChampionPreferenceLists).indexOf(identifier) > -1
     ) {
       this.setState({
         activeListIdentifier: identifier,
@@ -43,31 +45,34 @@ class ChampionPreferenceLists extends Component {
   }
 
   render() {
-    const completeChampionData = this.props.staticChampionData
-      ? this.props.staticChampionData
-      : {};
+    const {
+      staticChampionData,
+      userChampionPreferenceLists,
+      addChampionToList,
+      setChampionPriority,
+      setChampionNote,
+    } = this.props;
+    const completeChampionData = staticChampionData || {};
     const { activeListIdentifier } = this.state;
-    let selectedListData = this.props.userChampionPreferenceLists[
-      activeListIdentifier
-    ];
+    let selectedListData = userChampionPreferenceLists[activeListIdentifier];
     selectedListData = selectedListData || {};
     let toBeRenderedListComponent;
-    if (this.isMoodboard(activeListIdentifier)) {
+    if (ChampionPreferenceLists.isMoodboard(activeListIdentifier)) {
       toBeRenderedListComponent = (
         <ChampionMoodBoard
           championListId={activeListIdentifier}
           completeChampionSet={completeChampionData}
           selectedChampionSet={selectedListData}
-          addChampionToList={this.props.addChampionToList}
-          setChampionPriority={this.props.setChampionPriority}
-          setChampionNote={this.props.setChampionNote}
+          addChampionToList={addChampionToList}
+          setChampionPriority={setChampionPriority}
+          setChampionNote={setChampionNote}
         />
       );
     }
     return (
       <StyledChampionListsWrapper>
         <ChampionListSwitch
-          availableLists={this.props.userChampionPreferenceLists}
+          availableLists={userChampionPreferenceLists}
           currentListIdentifier={activeListIdentifier}
           selectListByIdentifier={this.selectActiveListByIdentifier}
         />
@@ -76,5 +81,19 @@ class ChampionPreferenceLists extends Component {
     );
   }
 }
+
+ChampionPreferenceLists.defaultProps = {
+  staticChampionData: {},
+  userChampionPreferenceLists: {},
+};
+
+ChampionPreferenceLists.propTypes = {
+  staticChampionData: PropTypes.shape(),
+  userChampionPreferenceLists: PropTypes.shape(),
+  fetchStaticChampionDataIfNeeded: PropTypes.func.isRequired,
+  addChampionToList: PropTypes.func.isRequired,
+  setChampionPriority: PropTypes.func.isRequired,
+  setChampionNote: PropTypes.func.isRequired,
+};
 
 export default ChampionPreferenceLists;
