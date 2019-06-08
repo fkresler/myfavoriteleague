@@ -1,19 +1,7 @@
 {
     "name": "my-favourite-league",
     "version": "0.0.1",
-    "description": "An application to keep track of your favorite or strongest champions in the MOBA League of Legends",
-    "scripts": {
-        "setup": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ..",
-        "clean": "rm -rf ./backend/build && rm -rf ./frontend/build",
-        "prepare-deploy": "npm run clean && cd frontend && npm run build && cd .. && cp -R ./frontend/build ./backend/build",
-        "server": "cd backend && node server.js",
-        "client": "cd frontend && npm run start",
-        "start-dev": "concurrently \"npm run server\" \"npm run client\"",
-        "setup-heroku": "npm install && cd ./backend && npm install && cd ..",
-        "heroku-postbuild": "npm run setup && npm run prepare-deploy",
-        "start-heroku": "npm run setup-heroku && npm run server",
-        "start": "npm run start-heroku"
-    },
+    "description": "An application to keep track of your favorite or strongest champions in the MOBA game called League of Legends",
     "keywords": [
         "league",
         "of",
@@ -21,12 +9,55 @@
         "league",
         "lol",
         "champion",
-        "tier",
         "list"
     ],
     "author": "Fabian Kresler",
     "license": "ISC",
+    "main": "index.js",
+    "scripts": {
+        "start": "npm run build && node server.js",
+        "build": "npm run clean && react-scripts build",
+        "clean": "rm -rf ./build",
+        "start-dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+        "backend": "node server.js",
+        "frontend": "react-scripts start",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "airbnb"
+    },
     "dependencies": {
-        "concurrently": "^4.1.0"
-    }
+        "cross-fetch": "^3.0.2",
+        "express": "^4.16.4",
+        "isomorphic-fetch": "^2.2.1",
+        "js-cookie": "^2.2.0",
+        "morgan": "^1.9.1",
+        "path": "^0.12.7",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-redux": "7.0.3",
+        "react-router-dom": "5.0.1",
+        "react-scripts": "3.0.1",
+        "redux": "^4.0.1",
+        "redux-logger": "^3.0.6",
+        "redux-thunk": "^2.3.0",
+        "styled-components": "^4.2.0"
+    },
+    "proxy": "http://localhost:3001",
+    "devDependencies": {
+        "concurrently": "^4.1.0",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-plugin-import": "^2.17.3",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.13.0"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
 }
