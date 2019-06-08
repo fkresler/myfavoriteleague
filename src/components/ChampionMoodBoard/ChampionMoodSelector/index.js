@@ -1,3 +1,3 @@
-import ChampionMoodSelector from "./ChampionMoodSelector";
+import ChampionMoodSelector from './ChampionMoodSelector';
 
 export default ChampionMoodSelector;

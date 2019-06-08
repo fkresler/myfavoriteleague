@@ -1,3 +1,3 @@
-import ImprovementNotes from "./ImprovementNotes-redux";
+import ImprovementNotes from './ImprovementNotes-redux';
 
 export default ImprovementNotes;

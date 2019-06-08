@@ -1,3 +1,3 @@
-import PageNotFoundContent from "./PageNotFoundContent";
+import PageNotFoundContent from './PageNotFoundContent';
 
 export default PageNotFoundContent;

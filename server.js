@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/userdata/:userId', (req, res) => {
-  const userId = req.params.userId;
+  const { userId } = req.params;
   let userData;
   try {
     userData = utils.getLocalData(userId);

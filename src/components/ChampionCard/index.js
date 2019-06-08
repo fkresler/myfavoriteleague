@@ -1,3 +1,3 @@
-import ChampionCard from "./ChampionCard";
+import ChampionCard from './ChampionCard';
 
 export default ChampionCard;

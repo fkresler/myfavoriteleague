@@ -1,3 +1,3 @@
-import SingleInputField from "./SingleInputField";
+import SingleInputField from './SingleInputField';
 
 export default SingleInputField;

@@ -1,3 +1,3 @@
-import ChampionPreferenceLists from "./ChampionPreferenceLists-redux";
+import ChampionPreferenceLists from './ChampionPreferenceLists-redux';
 
 export default ChampionPreferenceLists;

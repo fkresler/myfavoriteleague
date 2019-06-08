@@ -1,3 +1,3 @@
-import StartingPageContent from "./StartingPageContent";
+import StartingPageContent from './StartingPageContent';
 
 export default StartingPageContent;

@@ -1,3 +1,3 @@
-import ChampionListSwitch from "./ChampionListSwitch";
+import ChampionListSwitch from './ChampionListSwitch';
 
 export default ChampionListSwitch;
