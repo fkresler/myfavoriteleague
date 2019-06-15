@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ImprovementNote from './ImprovementNote';
-import ImprovementNoteForm from './ImprovementNoteForm';
 
 const StyledImprovementNotesWrapper = styled.div`
     display: flex;
@@ -25,75 +25,33 @@ const StyledImprovementNotesAddButton = styled.div`
     border-radius: 5px;
 `;
 
-class ImprovementNotes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentEditableImprovementNote: null,
-      playingAsChampionFilter: '',
-      playingAgainstChampionFilter: '',
-      playingAsRoleFilter: '',
-    };
-  }
+const ImprovementNotes = (props) => {
+  const { improvementNotes, addImprovementNote } = props;
 
-  handleImprovementNoteSave(noteId, noteTitle, noteContent) {
-    this.props.updateImprovementNote(noteId, noteTitle, noteContent);
-    this.setState({
-      currentEditableImprovementNote: null,
-    });
-  }
+  return (
+    <React.Fragment>
+      <StyledImprovementNotesAddButton onClick={addImprovementNote}>
+        Add note
+      </StyledImprovementNotesAddButton>
+      <StyledImprovementNotesWrapper>
+        {improvementNotes && improvementNotes.map(note => (
+          <ImprovementNote
+            key={note.id}
+            noteData={note}
+          />
+        ))}
+      </StyledImprovementNotesWrapper>
+    </React.Fragment>
+  );
+};
 
-  handleImprovementNoteClick(id) {
-    const currentEditableNote = this.props.improvementNotes.find(note => note.id === id);
-    this.setState({
-      currentEditableImprovementNote: currentEditableNote,
-    });
-  }
+ImprovementNotes.defaultProps = {
+  improvementNotes: [],
+};
 
-  handleImprovementNoteRemove(noteId) {
-    this.props.removeImprovementNote(noteId);
-    this.setState({
-      currentEditableImprovementNote: null,
-    });
-  }
-
-  handleImprovementNotesAddButtonClick() {
-    this.props.addImprovementNote('', '');
-  }
-
-  render() {
-    const currentImprovementNotes = this.props.improvementNotes;
-    const { currentEditableImprovementNote } = this.state;
-    return (
-      <React.Fragment>
-        <StyledImprovementNotesAddButton
-          onClick={this.handleImprovementNotesAddButtonClick}
-        >
-                    Add Note
-        </StyledImprovementNotesAddButton>
-        {currentEditableImprovementNote && (
-        <ImprovementNoteForm
-          doOnSave={this.handleImprovementNoteSave}
-          doOnRemove={this.handleImprovementNoteRemove}
-          noteId={currentEditableImprovementNote.id}
-          noteTitle={currentEditableImprovementNote.title}
-          noteContent={currentEditableImprovementNote.content}
-          noteTaglist={currentEditableImprovementNote.taglist}
-        />
-        )}
-        <StyledImprovementNotesWrapper>
-          {currentImprovementNotes
-                        && currentImprovementNotes.map(note => (
-                          <ImprovementNote
-                            key={note.id}
-                            noteData={note}
-                            doOnClick={this.handleImprovementNoteClick}
-                          />
-                        ))}
-        </StyledImprovementNotesWrapper>
-      </React.Fragment>
-    );
-  }
-}
+ImprovementNotes.propTypes = {
+  improvementNotes: PropTypes.arrayOf(PropTypes.shape()),
+  addImprovementNote: PropTypes.func.isRequired,
+};
 
 export default ImprovementNotes;

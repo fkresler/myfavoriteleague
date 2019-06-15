@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import useLongPress from '../../../utils/useLongPress';
 
 const StyledImprovementNote = styled.div`
     display: flex-block;
@@ -16,39 +17,38 @@ const StyledImprovementNote = styled.div`
     cursor: pointer;
 `;
 
-const StyledImprovementNoteHeadline = styled.div`
-    display: block;
-    font-size: 120%;
-    font-weight: bold;
-    line-height: 150%;
-`;
-
 const StyledImprovementNoteContent = styled.div`
     display: block;
     min-height: 5rem;
     line-height: 120%;
 `;
 
-const ImprovementNote = props => (
-  <StyledImprovementNote
-    onClick={() => props.doOnClick(props.noteData.id)}
-  >
-    <StyledImprovementNoteHeadline>
-      {props.noteData.title}
-    </StyledImprovementNoteHeadline>
-    <StyledImprovementNoteContent>
-      {props.noteData.content}
-    </StyledImprovementNoteContent>
-  </StyledImprovementNote>
-);
+const ImprovementNote = (props) => {
+  const [isEditable, setEditable] = useState(false);
+  const holdToToggleEditableState = useLongPress(() => setEditable(!isEditable), 1000);
+  const { id, noteData } = props;
+  const { content } = noteData;
+  return (
+    <StyledImprovementNote {...holdToToggleEditableState}>
+      <StyledImprovementNoteContent>
+        {isEditable && 'LULZ'}
+        {content}
+      </StyledImprovementNoteContent>
+    </StyledImprovementNote>
+  );
+};
+
+ImprovementNote.defaultProps = {
+  noteData: {
+    content: '',
+  },
+};
 
 ImprovementNote.propTypes = {
-  doOnClick: PropTypes.func,
+  id: PropTypes.string.isRequired,
   noteData: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    title: PropTypes.string,
     content: PropTypes.string,
-    taglist: PropTypes.arrayOf(PropTypes.string),
   }),
 };
 

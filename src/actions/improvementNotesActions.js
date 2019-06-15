@@ -1,23 +1,31 @@
-export function addImprovementNote(title, content) {
+export function addImprovementNote(content) {
   const computedNoteId = new Date().getTime();
   return {
     type: 'ADD_IMPROVEMENT_NOTE',
     payload: {
       id: computedNoteId,
-      title,
       content,
-      taglist: [],
     },
   };
 }
 
-export function updateImprovementNote(noteId, title, content) {
+export function updateImprovementNote(noteId, content) {
+  const updatedNoteId = new Date().getTime();
   return {
     type: 'UPDATE_IMPROVEMENT_NOTE',
     payload: {
       id: noteId,
-      title,
+      updatedId: updatedNoteId,
       content,
+    },
+  };
+}
+
+export function toggleImprovementNoteAsCurrentObjective(noteId) {
+  return {
+    type: 'TOGGLE_IMPROVEMENT_NOTE_AS_OBJECTIVE',
+    payload: {
+      id: noteId,
     },
   };
 }
@@ -27,7 +35,7 @@ export function addImprovementNoteTag(noteId, tag) {
     type: 'ADD_IMPROVEMENT_NOTE_TAG',
     payload: {
       id: noteId,
-      tag,
+      tag: tag.toLowerCase(),
     },
   };
 }
@@ -37,7 +45,27 @@ export function removeImprovementNoteTag(noteId, tag) {
     type: 'REMOVE_IMPROVEMENT_NOTE_TAG',
     payload: {
       id: noteId,
-      tag,
+      tag: tag.toLowerCase(),
+    },
+  };
+}
+
+export function toggleImprovementNotePlayingAsTag(noteId, playingAsTag) {
+  return {
+    type: 'TOGGLE_IMPROVEMENT_NOTE_PLAYING_AS_TAG',
+    payload: {
+      id: noteId,
+      playingAsTag,
+    },
+  };
+}
+
+export function toggleImprovementNotePlayingAgainstTag(noteId, playingAgainstTag) {
+  return {
+    type: 'TOGGLE_IMPROVEMENT_NOTE_PLAYING_AGAINST_TAG',
+    payload: {
+      id: noteId,
+      playingAgainstTag,
     },
   };
 }
