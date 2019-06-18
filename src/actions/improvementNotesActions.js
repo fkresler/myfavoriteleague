@@ -1,16 +1,20 @@
-export function addImprovementNote(content) {
-  const computedNoteId = new Date().getTime();
+function computeNoteId() {
+  return new Date().getTime();
+}
+
+export function addImprovementNote() {
+  const computedNoteId = computeNoteId();
   return {
     type: 'ADD_IMPROVEMENT_NOTE',
     payload: {
       id: computedNoteId,
-      content,
+      content: '',
     },
   };
 }
 
 export function updateImprovementNote(noteId, content) {
-  const updatedNoteId = new Date().getTime();
+  const updatedNoteId = computeNoteId();
   return {
     type: 'UPDATE_IMPROVEMENT_NOTE',
     payload: {
@@ -30,19 +34,9 @@ export function toggleImprovementNoteAsCurrentObjective(noteId) {
   };
 }
 
-export function addImprovementNoteTag(noteId, tag) {
+export function toggleImprovementNoteTag(noteId, tag) {
   return {
-    type: 'ADD_IMPROVEMENT_NOTE_TAG',
-    payload: {
-      id: noteId,
-      tag: tag.toLowerCase(),
-    },
-  };
-}
-
-export function removeImprovementNoteTag(noteId, tag) {
-  return {
-    type: 'REMOVE_IMPROVEMENT_NOTE_TAG',
+    type: 'TOGGLE_IMPROVEMENT_NOTE_TAG',
     payload: {
       id: noteId,
       tag: tag.toLowerCase(),

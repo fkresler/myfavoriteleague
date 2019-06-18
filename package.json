@@ -30,7 +30,7 @@
             "browser": true,
             "node": true,
             "jest": true
-          }                                                                      
+        }
     },
     "dependencies": {
         "cross-fetch": "^3.0.2",
