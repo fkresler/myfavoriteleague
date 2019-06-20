@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import ContentEditable from 'react-contenteditable';
+
 const StyledInputWrapper = styled.div`
     display: flex-block;
     flex-direction: column;
@@ -21,14 +23,12 @@ const StyledTextInputField = styled.input.attrs({
     width: 100%;
 `;
 
-const StyledTextAreaInputField = styled.input.attrs({
-  type: 'textarea',
-  placeholder: props => props.inputPlaceholder,
-  value: props => props.inputValue,
-})`
-    display: block;
-    width: 100%;
-    resize: none;
+const StyledTextAreaInputField = styled.div`
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 5rem;
+  margin: 0.5rem 0;
 `;
 
 const StatefulInputField = (props) => {
@@ -36,20 +36,25 @@ const StatefulInputField = (props) => {
     isArea,
     labelText,
     inputPlaceholder,
-    inputValue,
-    doOnChange,
+    initialInputValue,
+    onSubmit,
   } = props;
+  const doOnSave = (newValue) => {
+    onSubmit(newValue);
+  };
   const inputElement = isArea ? (
-    <StyledTextAreaInputField
-      placeholder={inputPlaceholder}
-      value={inputValue}
-      onChange={doOnChange}
-    />
+    <StyledTextAreaInputField>
+      <ContentEditable
+        onChange={evt => doOnSave(evt.target.value)}
+        disabled={false}
+        html={initialInputValue}
+      />
+    </StyledTextAreaInputField>
   ) : (
     <StyledTextInputField
       placeholder={inputPlaceholder}
-      value={inputValue}
-      onChange={doOnChange}
+      value={initialInputValue}
+      onChange={evt => doOnSave(evt.target.value)}
     />
   );
   return (
@@ -64,15 +69,18 @@ const StatefulInputField = (props) => {
 
 StatefulInputField.defaultProps = {
   isArea: false,
-  inputValue: '',
+  labelText: '',
+  inputPlaceholder: '',
+  initialInputValue: '',
+  onSubmit: () => {},
 };
 
 StatefulInputField.propTypes = {
   isArea: PropTypes.bool,
-  labelText: PropTypes.string.isRequired,
-  inputPlaceholder: PropTypes.string.isRequired,
-  inputValue: PropTypes.string,
-  doOnChange: PropTypes.func.isRequired,
+  labelText: PropTypes.string,
+  inputPlaceholder: PropTypes.string,
+  initialInputValue: PropTypes.string,
+  onSubmit: PropTypes.func,
 };
 
 export default StatefulInputField;

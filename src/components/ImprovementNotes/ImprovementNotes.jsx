@@ -27,6 +27,7 @@ const StyledImprovementNotesAddButton = styled.div`
 
 const ImprovementNotes = (props) => {
   const { improvementNotes, addImprovementNote } = props;
+  improvementNotes.sort((a, b) => b.id - a.id);
 
   return (
     <React.Fragment>

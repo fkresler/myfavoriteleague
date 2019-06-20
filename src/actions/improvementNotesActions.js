@@ -14,12 +14,10 @@ export function addImprovementNote() {
 }
 
 export function updateImprovementNote(noteId, content) {
-  const updatedNoteId = computeNoteId();
   return {
     type: 'UPDATE_IMPROVEMENT_NOTE',
     payload: {
       id: noteId,
-      updatedId: updatedNoteId,
       content,
     },
   };

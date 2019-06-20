@@ -10,7 +10,9 @@ function addOrRemoveTagImmutable(tagArr, tag) {
 }
 
 const improvementNotesReducer = (state = initialState, action) => {
-  const toBeUpdatedImprovementNote = state.improvementNotes.find(note => note.id === action.payload.id);
+  const toBeUpdatedImprovementNote = state.improvementNotes.find(
+    note => note.id === action.payload.id,
+  );
   const filteredImprovementNotes = state.improvementNotes.filter(
     note => note.id !== action.payload.id,
   );
@@ -50,7 +52,9 @@ const improvementNotesReducer = (state = initialState, action) => {
     }
     case 'TOGGLE_IMPROVEMENT_NOTE_TAG': {
       const toBeToggledTag = action.payload.tag;
-      const updatedTagList = addOrRemoveTagImmutable(toBeUpdatedImprovementNote.tags, toBeToggledTag);
+      const updatedTagList = addOrRemoveTagImmutable(
+        toBeUpdatedImprovementNote.tags, toBeToggledTag,
+      );
       const newImprovementNote = {
         ...toBeUpdatedImprovementNote,
         tags: updatedTagList,
@@ -62,7 +66,9 @@ const improvementNotesReducer = (state = initialState, action) => {
     }
     case 'TOGGLE_IMPROVEMENT_NOTE_PLAYING_AS_TAG': {
       const toBeToggledTag = action.payload.playingAsTag;
-      const updatedTagList = addOrRemoveTagImmutable(toBeUpdatedImprovementNote.playingAs, toBeToggledTag);
+      const updatedTagList = addOrRemoveTagImmutable(
+        toBeUpdatedImprovementNote.playingAs, toBeToggledTag,
+      );
       const newImprovementNote = {
         ...toBeUpdatedImprovementNote,
         playingAs: updatedTagList,
@@ -74,7 +80,9 @@ const improvementNotesReducer = (state = initialState, action) => {
     }
     case 'TOGGLE_IMPROVEMENT_NOTE_PLAYING_AGAINST_TAG': {
       const toBeToggledTag = action.payload.playingAgainst;
-      const updatedTagList = addOrRemoveTagImmutable(toBeUpdatedImprovementNote.playingAgainst, toBeToggledTag);
+      const updatedTagList = addOrRemoveTagImmutable(
+        toBeUpdatedImprovementNote.playingAgainst, toBeToggledTag,
+      );
       const newImprovementNote = {
         ...toBeUpdatedImprovementNote,
         playingAgainst: updatedTagList,

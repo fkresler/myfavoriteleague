@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useLongPress from '../../../utils/useLongPress';
+
+import SingleInputField from '../../SingleInputField';
 
 const StyledImprovementNote = styled.div`
     display: flex-block;
@@ -14,7 +16,6 @@ const StyledImprovementNote = styled.div`
     background-color: #fff6bc;
     background-image: linear-gradient(mix(#fff6bc, white, 90%), #fff6bc);
     box-shadow: 0 1px 0 #b1ab85;
-    cursor: pointer;
 `;
 
 const StyledImprovementNoteContent = styled.div`
@@ -23,17 +24,46 @@ const StyledImprovementNoteContent = styled.div`
     line-height: 120%;
 `;
 
+const StyledImprovementNoteRemoveButton = styled.button`
+    display: block;
+    border-radius: 5px;
+    background-color: red;
+    cursor: pointer;
+`;
+
 const ImprovementNote = (props) => {
-  const [isEditable, setEditable] = useState(false);
-  const holdToToggleEditableState = useLongPress(() => setEditable(!isEditable), 1000);
-  const { id, noteData } = props;
-  const { content } = noteData;
+  const {
+    noteData,
+    updateImprovementNote,
+    toggleImprovementNoteAsCurrentObjective,
+    toggleImprovementNoteTag,
+    toggleImprovementNotePlayingAsTag,
+    toggleImprovementNotePlayingAgainstTag,
+    removeImprovementNote,
+  } = props;
+  const { id, content, isCurrentObjective } = noteData;
+  const holdToToggleEditableState = useLongPress(
+    () => toggleImprovementNoteAsCurrentObjective(id),
+    1000,
+  );
+
+  const updateNoteByContent = (newContent) => {
+    updateImprovementNote(id, newContent);
+  };
+
   return (
     <StyledImprovementNote {...holdToToggleEditableState}>
       <StyledImprovementNoteContent>
-        {isEditable && 'LULZ'}
-        {content}
+        <SingleInputField
+          isArea
+          inputPlaceholder="Your note content"
+          initialInputValue={content}
+          onSubmit={updateNoteByContent}
+        />
       </StyledImprovementNoteContent>
+      <StyledImprovementNoteRemoveButton onClick={() => removeImprovementNote(id)}>
+        Delete
+      </StyledImprovementNoteRemoveButton>
     </StyledImprovementNote>
   );
 };
@@ -41,15 +71,22 @@ const ImprovementNote = (props) => {
 ImprovementNote.defaultProps = {
   noteData: {
     content: '',
+    isCurrentObjective: false,
   },
 };
 
 ImprovementNote.propTypes = {
-  id: PropTypes.string.isRequired,
   noteData: PropTypes.shape({
     id: PropTypes.number.isRequired,
     content: PropTypes.string,
+    isCurrentObjective: PropTypes.bool,
   }),
+  updateImprovementNote: PropTypes.func.isRequired,
+  toggleImprovementNoteAsCurrentObjective: PropTypes.func.isRequired,
+  toggleImprovementNoteTag: PropTypes.func.isRequired,
+  toggleImprovementNotePlayingAsTag: PropTypes.func.isRequired,
+  toggleImprovementNotePlayingAgainstTag: PropTypes.func.isRequired,
+  removeImprovementNote: PropTypes.func.isRequired,
 };
 
 export default ImprovementNote;
