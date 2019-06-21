@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import fetch from 'cross-fetch';
 
 const StyledChampionImage = styled.div`
     width: 100%;
@@ -15,36 +14,24 @@ const StyledChampionImage = styled.div`
     }
 `;
 
-class ChampionImage extends Component {
-  constructor(props) {
-    super(props);
-    this.imageUrl = `http://ddragon.leagueoflegends.com/cdn/${
-      props.championData.version
-    }/img/champion/${
-      props.championData.image.full}`;
-    this.state = {
-      championImage: null,
-    };
-  }
+const ChampionImage = (props) => {
+  const { championData } = props;
+  const { name, version, image } = championData;
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${image.full}`;
 
-  async componentDidMount() {
-    try {
-      const championImage = await fetch(this.imageUrl);
-      this.setState({
-        championImage,
-      });
-    } catch (err) {
-      throw new Error(err);
-    }
-  }
-
-  render() {
-    const { championImage } = this.state;
-    const { championData } = this.props;
-    const displayedImage = championImage || championData.name;
-    return <StyledChampionImage>{displayedImage}</StyledChampionImage>;
-  }
-}
+  return (
+    <StyledChampionImage>
+      <img
+        src={imageUrl}
+        alt={name}
+        onLoad={() => setIsLoading(false)}
+        onError={() => setIsError(true)}
+      />
+    </StyledChampionImage>
+  );
+};
 
 ChampionImage.propTypes = {
   championData: PropTypes.shape({

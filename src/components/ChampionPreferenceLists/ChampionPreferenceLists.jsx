@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -10,81 +10,55 @@ const StyledChampionListsWrapper = styled.div`
     width: 100%;
 `;
 
-class ChampionPreferenceLists extends Component {
-  static isMoodboard(listName) {
-    if (listName) {
-      return listName.toLowerCase().indexOf('mood') >= 0;
+const ChampionPreferenceLists = (props) => {
+  const {
+    staticChampionData,
+    userChampionPreferenceLists,
+    fetchStaticChampionDataIfNeeded,
+    addChampionToList,
+    setChampionPriority,
+    setChampionNote,
+  } = props;
+  const [defaultUserListIdentifier] = Object.keys(userChampionPreferenceLists);
+  const [activeUserListIdentifier, setActiveUserListIdentifier] = useState(defaultUserListIdentifier);
+
+  const isMoodBoard = userListName => userListName && userListName.toLowerCase().indexOf('mood') >= 0;
+
+  const selectActiveUserListWhenPossible = (identifier) => {
+    if (Object.keys(userChampionPreferenceLists).indexOf(identifier) > -1) {
+      setActiveUserListIdentifier(identifier);
     }
-    return false;
-  }
+  };
 
-  constructor(props) {
-    super(props);
-    const { userChampionPreferenceLists } = this.props;
-    const [firstIdentifier] = Object.keys(userChampionPreferenceLists);
-    this.state = {
-      activeListIdentifier: firstIdentifier,
-    };
-    this.selectActiveListByIdentifier = this.selectActiveListByIdentifier.bind(this);
-  }
-
-  componentDidMount() {
-    const { fetchStaticChampionDataIfNeeded } = this.props;
+  useEffect(() => {
     fetchStaticChampionDataIfNeeded();
-  }
+    return () => {};
+  }, []);
 
-  selectActiveListByIdentifier(identifier) {
-    const { userChampionPreferenceLists } = this.props;
-    if (
-      Object.keys(userChampionPreferenceLists).indexOf(identifier) > -1
-    ) {
-      this.setState({
-        activeListIdentifier: identifier,
-      });
-    }
-  }
-
-  render() {
-    const {
-      staticChampionData,
-      userChampionPreferenceLists,
-      addChampionToList,
-      setChampionPriority,
-      setChampionNote,
-    } = this.props;
-    const completeChampionData = staticChampionData || {};
-    const { activeListIdentifier } = this.state;
-    let selectedListData = userChampionPreferenceLists[activeListIdentifier];
-    selectedListData = selectedListData || {};
-    let toBeRenderedListComponent;
-    if (ChampionPreferenceLists.isMoodboard(activeListIdentifier)) {
-      toBeRenderedListComponent = (
-        <ChampionMoodBoard
-          championListId={activeListIdentifier}
-          completeChampionSet={completeChampionData}
-          selectedChampionSet={selectedListData}
-          addChampionToList={addChampionToList}
-          setChampionPriority={setChampionPriority}
-          setChampionNote={setChampionNote}
-        />
-      );
-    }
-    return (
-      <StyledChampionListsWrapper>
-        <ChampionListSwitch
-          availableLists={userChampionPreferenceLists}
-          currentListIdentifier={activeListIdentifier}
-          selectListByIdentifier={this.selectActiveListByIdentifier}
-        />
-        {toBeRenderedListComponent}
-      </StyledChampionListsWrapper>
-    );
-  }
-}
+  return (
+    <StyledChampionListsWrapper>
+      <ChampionListSwitch
+        availableLists={userChampionPreferenceLists}
+        currentListIdentifier={activeUserListIdentifier}
+        selectListByIdentifier={selectActiveUserListWhenPossible}
+      />
+      <ChampionMoodBoard
+        championListId={activeUserListIdentifier}
+        completeChampionSet={staticChampionData}
+        selectedChampionSet={userChampionPreferenceLists[activeUserListIdentifier]}
+        addChampionToList={addChampionToList}
+        setChampionPriority={setChampionPriority}
+        setChampionNote={setChampionNote}
+      />
+    </StyledChampionListsWrapper>
+  );
+};
 
 ChampionPreferenceLists.defaultProps = {
   staticChampionData: {},
-  userChampionPreferenceLists: {},
+  userChampionPreferenceLists: {
+    default: {},
+  },
 };
 
 ChampionPreferenceLists.propTypes = {
