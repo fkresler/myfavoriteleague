@@ -7,9 +7,11 @@
     "@types/node": "12.6.8",
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
+    "@types/styled-components": "^4.1.18",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
+    "styled-components": "^4.3.2",
     "typescript": "3.5.3"
   },
   "scripts": {
@@ -19,7 +21,9 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "npm run test:cra -- --coverage",
-    "test:cra": "react-scripts test"
+    "test:latest": "react-scripts test",
+    "storybook": "start-storybook -p 9009 -s public",
+    "storybook:build": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -34,20 +38,29 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@storybook/addon-actions": "^5.1.10",
+    "@storybook/addon-info": "^5.1.10",
+    "@storybook/addon-links": "^5.1.10",
+    "@storybook/addons": "^5.1.10",
+    "@storybook/react": "^5.1.10",
+    "@types/storybook__react": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
+    "babel-loader": "^8.0.6",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "react-docgen-typescript-loader": "^3.1.0"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "!src/index.{js,jsx,ts,tsx}",
+      "!**/*.test.{js,jsx,ts,tsx}",
       "!**/*.stories.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/"
     ]
