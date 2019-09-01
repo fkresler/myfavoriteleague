@@ -1,15 +1,23 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import myfavoriteleaguereduxlogger from 'redux-logger';
-import myfavoriteleaguereducer from './reducers';
-import { getPreviousStateData } from './utils/stateUtils';
+import throttle from 'lodash/throttle';
+import myfavoriteleaguereducer, { toBeSavedData } from './reducers';
+import { loadState, filterAndSaveState } from './utils/storageUtils';
 
-const previousState = getPreviousStateData();
+const previousState = loadState();
+
+const permanentStorageMiddleware = store => nextState => (action) => {
+  nextState(action).then(throttle(() => {
+    filterAndSaveState(store.getState(), toBeSavedData);
+  }), 2000);
+};
 
 // Combine middleware
 const myfavoriteleaguemiddleware = applyMiddleware(
   thunk,
   myfavoriteleaguereduxlogger,
+  permanentStorageMiddleware,
 );
 
 // Create store

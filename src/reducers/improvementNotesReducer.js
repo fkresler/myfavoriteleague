@@ -1,3 +1,5 @@
+export const IMPROVEMENT_NOTES_DATA_NAME = 'improvementNotesData';
+
 const initialState = {
   improvementNotes: [],
 };
