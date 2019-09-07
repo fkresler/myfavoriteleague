@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import ChampionCard from '../ChampionCard';
+import ChampionCard from 'Components/ChampionCard';
 
 const StyledChampionListHeadline = styled.div`
     display: block;

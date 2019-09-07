@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import ChampionListSwitch from '../ChampionListSwitch';
-import ChampionMoodBoard from '../ChampionMoodBoard';
+import ChampionListSwitch from 'Components/ChampionListSwitch';
+import ChampionMoodBoard from 'Components/ChampionMoodBoard';
 
 const StyledChampionListsWrapper = styled.div`
     display: block;
@@ -32,7 +32,7 @@ const ChampionPreferenceLists = (props) => {
 
   useEffect(() => {
     fetchStaticChampionDataIfNeeded();
-    return () => {};
+    return () => { };
   }, []);
 
   return (

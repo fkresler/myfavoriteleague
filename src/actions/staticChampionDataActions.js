@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch';
+import { STATIC_CHAMPION_DATA_NAME } from 'Reducers';
 
 export const requestStaticChampionData = () => ({
   type: 'REQUEST_STATIC_CHAMPION_DATA',
@@ -18,17 +19,15 @@ export const receiveStaticChampionData = (isSuccessful, json) => ({
 });
 
 const shouldFetchStaticChampionData = (state) => {
-  const riotApiState = state.riotApiDataState;
-  if (riotApiState) {
+  const staticChampionDataState = state[STATIC_CHAMPION_DATA_NAME];
+  if (staticChampionDataState) {
     const currentDate = new Date();
-    const lastSuccessfulChampionDataFetch = riotApiState.staticChampionDataReceivedAt;
-    const { isFetchingStaticChampionData } = riotApiState;
+    const { staticChampionDataReceivedAt, isFetchingStaticChampionData } = staticChampionDataState;
     if (isFetchingStaticChampionData) {
       return false;
     }
-    if (
-      lastSuccessfulChampionDataFetch
-            && Math.abs(currentDate - lastSuccessfulChampionDataFetch) / 36e5 > 2
+    if (staticChampionDataReceivedAt
+      && Math.abs(currentDate - staticChampionDataReceivedAt) / 36e5 > 2
     ) {
       return false;
     }
@@ -42,11 +41,12 @@ const fetchStaticChampionData = () => (dispatch) => {
   return fetch(staticChampionDataApiUrl)
     .then(response => response.json())
     .then(json => dispatch(receiveStaticChampionData(true, json)))
-    .catch(error => dispatch(receiveStaticChampionData(false, {})));
+    .catch(() => dispatch(receiveStaticChampionData(false, {})));
 };
 
 export const fetchStaticChampionDataIfNeeded = () => (dispatch, getState) => {
   if (shouldFetchStaticChampionData(getState())) {
     return dispatch(fetchStaticChampionData());
   }
+  return null;
 };

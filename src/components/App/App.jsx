@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import StartingPageContent from '../StartingPageContent';
-import PageNotFoundContent from '../PageNotFoundContent';
-import ImprovementNotes from '../ImprovementNotes';
-import ChampionPreferenceLists from '../ChampionPreferenceLists';
+import StartingPageContent from 'Components/StartingPageContent';
+import PageNotFoundContent from 'Components/PageNotFoundContent';
+import ImprovementNotes from 'Components/ImprovementNotes';
+import ChampionPreferenceLists from 'Components/ChampionPreferenceLists';
 
 const StyledNavigationBar = styled.div`
     position: fixed;

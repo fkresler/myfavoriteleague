@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import ChampionImage from '../../ChampionImage';
+import ChampionImage from 'Components/ChampionImage';
 
 const StyledChampionMoodSelectorWrapper = styled.div`
     display: flex;
@@ -60,19 +60,19 @@ const ChampionMoodSelector = (props) => {
           isActive={userChampionData.priority === 1}
           onClick={() => setChampionPriority(staticChampionData.id, 1)}
         >
-                    1
+          1
         </StyledChampionMoodSelectionBox>
         <StyledChampionMoodSelectionBox
           isActive={userChampionData.priority === 2}
           onClick={() => setChampionPriority(staticChampionData.id, 2)}
         >
-                    2
+          2
         </StyledChampionMoodSelectionBox>
         <StyledChampionMoodSelectionBox
           isActive={userChampionData.priority === 3}
           onClick={() => setChampionPriority(staticChampionData.id, 3)}
         >
-                    3
+          3
         </StyledChampionMoodSelectionBox>
       </StyledChampionMoodSelection>
     </StyledChampionMoodSelectorWrapper>

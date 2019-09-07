@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
-const utils = require('./scripts/utils');
+const utils = require('./server/utils');
 
 const app = express();
 const port = process.env.PORT || 3001;
