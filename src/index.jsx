@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
-import MyFavoriteLeagueApp from './components/App';
+import MyFavoriteLeagueApp from './Components/App';
 import myFavoriteLeagueStore from './myFavoriteLeagueStore';
 import * as serviceWorker from './serviceWorker';
 

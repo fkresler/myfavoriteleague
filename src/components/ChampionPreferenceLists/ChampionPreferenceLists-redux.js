@@ -1,31 +1,24 @@
 import { connect } from 'react-redux';
 import ChampionPreferenceLists from './ChampionPreferenceLists';
-import { fetchStaticChampionDataIfNeeded } from '../../actions/riotApiDataActions';
+import { fetchStaticChampionDataIfNeeded } from '../../Actions/staticChampionDataActions';
+import { STATIC_CHAMPION_DATA_NAME, USER_CHAMPION_LIST_DATA_NAME } from '../../Reducers';
 import {
-  addChampionToList,
   setChampionPriority,
-  setChampionNote,
   removeChampionFromList,
-} from '../../actions/championPreferenceListsActions';
+} from '../../Actions/userChampionListsActions';
 
 const mapStateToProps = state => ({
-  staticChampionData: state.riotApiDataState.staticChampionData,
+  staticChampionData: state.staticChampionData[STATIC_CHAMPION_DATA_NAME],
   userChampionPreferenceLists:
-            state.championPreferenceListsState.userChampionPreferenceLists,
+    state.userChampionListData[USER_CHAMPION_LIST_DATA_NAME],
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchStaticChampionDataIfNeeded: () => {
     dispatch(fetchStaticChampionDataIfNeeded());
   },
-  addChampionToList: (listId, championId, priority) => {
-    dispatch(addChampionToList(listId, championId, priority));
-  },
   setChampionPriority: (listId, championId, priority) => {
     dispatch(setChampionPriority(listId, championId, priority));
-  },
-  setChampionNote: (listId, championId, championNote) => {
-    dispatch(setChampionNote(listId, championId, championNote));
   },
   removeChampionFromList: (listId, championId) => {
     dispatch(removeChampionFromList(listId, championId));

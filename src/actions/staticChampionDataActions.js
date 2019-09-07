@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import { STATIC_CHAMPION_DATA_NAME } from '../reducers';
+import { STATIC_CHAMPION_DATA_NAME } from '../Reducers';
 
 export const requestStaticChampionData = () => ({
   type: 'REQUEST_STATIC_CHAMPION_DATA',

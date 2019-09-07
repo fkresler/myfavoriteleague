@@ -7,7 +7,7 @@ import {
   toggleImprovementNotePlayingAsTag,
   toggleImprovementNotePlayingAgainstTag,
   removeImprovementNote,
-} from '../../../actions/improvementNotesActions';
+} from '../../../Actions/improvementNotesActions';
 
 const mapDispatchToProps = dispatch => ({
   updateImprovementNote: (noteId, content) => {
