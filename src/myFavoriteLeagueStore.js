@@ -2,8 +2,8 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import myfavoriteleaguereduxlogger from 'redux-logger';
 import throttle from 'lodash/throttle';
-import myfavoriteleaguereducer, { toBeSavedData } from './reducers';
-import { loadState, filterAndSaveState } from './utils/storageUtils';
+import myfavoriteleaguereducer, { toBeSavedData } from './Reducers';
+import { loadState, filterAndSaveState } from './Utils/storageUtils';
 
 const previousState = loadState();
 

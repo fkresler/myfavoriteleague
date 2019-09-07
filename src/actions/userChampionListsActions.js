@@ -1,13 +1,4 @@
-export const addChampionToList = (listId, championId, priority = 0) => ({
-  type: 'ADD_CHAMPION_TO_LIST',
-  payload: {
-    listId,
-    championId,
-    priority,
-  },
-});
-
-export const setChampionPriority = (listId, championId, priority) => ({
+export const setChampionPriority = (listId, championId, priority = 0) => ({
   type: 'SET_CHAMPION_PRIORITY',
   payload: {
     listId,

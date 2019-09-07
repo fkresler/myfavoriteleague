@@ -1,5 +1,23 @@
 export const USER_CHAMPION_LIST_DATA_NAME = 'userChampionListData';
 
+const defaultChampionListStructure = [
+  {
+    priority: 0,
+    name: 'S-Tier',
+    champions: [],
+  },
+  {
+    priority: 1,
+    name: 'A-Tier',
+    champions: [],
+  },
+  {
+    priority: 2,
+    name: 'B-Tier',
+    champions: [],
+  },
+];
+
 const initialState = {
   userChampionLists: [
     {
@@ -7,210 +25,135 @@ const initialState = {
       name: 'Top',
       patchVersion: '',
       createdAt: '',
-      data: [
-        {
-          priority: 0,
-          name: 'S-Tier',
-          champions: [],
-        },
-        {
-          priority: 1,
-          name: 'A-Tier',
-          champions: [],
-        },
-        {
-          priority: 2,
-          name: 'B-Tier',
-          champions: [],
-        },
-      ],
+      data: defaultChampionListStructure,
     },
     {
       id: 'defaultjng',
       name: 'Jungle',
       patchVersion: '',
       createdAt: '',
-      data: [
-        {
-          priority: 0,
-          name: 'S-Tier',
-          champions: [],
-        },
-        {
-          priority: 1,
-          name: 'A-Tier',
-          champions: [],
-        },
-        {
-          priority: 2,
-          name: 'B-Tier',
-          champions: [],
-        },
-      ],
+      data: defaultChampionListStructure,
     },
     {
       id: 'defaultmid',
       name: 'Mid',
       patchVersion: '',
       createdAt: '',
-      data: [
-        {
-          priority: 0,
-          name: 'S-Tier',
-          champions: [],
-        },
-        {
-          priority: 1,
-          name: 'A-Tier',
-          champions: [],
-        },
-        {
-          priority: 2,
-          name: 'B-Tier',
-          champions: [],
-        },
-      ],
+      data: defaultChampionListStructure,
     },
     {
       id: 'defaultbot',
       name: 'Bot',
       patchVersion: '',
       createdAt: '',
-      data: [
-        {
-          priority: 0,
-          name: 'S-Tier',
-          champions: [],
-        },
-        {
-          priority: 1,
-          name: 'A-Tier',
-          champions: [],
-        },
-        {
-          priority: 2,
-          name: 'B-Tier',
-          champions: [],
-        },
-      ],
+      data: defaultChampionListStructure,
     },
     {
       id: 'defaultsup',
       name: 'Sup',
       patchVersion: '',
       createdAt: '',
-      data: [
-        {
-          priority: 0,
-          name: 'S-Tier',
-          champions: [],
-        },
-        {
-          priority: 1,
-          name: 'A-Tier',
-          champions: [],
-        },
-        {
-          priority: 2,
-          name: 'B-Tier',
-          champions: [],
-        },
-      ],
+      data: defaultChampionListStructure,
     },
   ],
 };
 
-const doesListContainChampion = (championList, championName) => {
-  const isChampionInList = false;
-  if (championList) { return Object.keys(championList).indexOf(championName) >= 0; }
-  return false;
+const removeChampionFromListImmutable = (listObject, championId) => {
+  const previousListData = listObject.data;
+  let mutatedListData;
+  if (previousListData) {
+    mutatedListData = previousListData.map(tierList => ({
+      ...tierList,
+      champions: tierList.champions.filter(
+        tierListChampionId => tierListChampionId !== championId,
+      ),
+    }));
+  } else {
+    mutatedListData = defaultChampionListStructure;
+  }
+  const mutatedListObject = {
+    ...listObject,
+    data: mutatedListData,
+  };
+  return mutatedListObject;
+};
+
+const addChampionToChampionListImmutable = (listObject, championId, priority) => {
+  const previousListData = listObject.data
+    ? listObject.data
+    : defaultChampionListStructure;
+  let mutatedListData;
+  const specifiedTierListIndex = previousListData.findIndex(
+    tierList => tierList.priority === priority,
+  );
+  if (specifiedTierListIndex >= 0) {
+    const mutatedTierListChampions = previousListData[specifiedTierListIndex]
+      .champions
+      .concat(championId);
+    const mutatedTierList = {
+      ...previousListData[specifiedTierListIndex],
+      champions: mutatedTierListChampions,
+    };
+    mutatedListData = [...previousListData];
+    mutatedListData[specifiedTierListIndex] = mutatedTierList;
+  } else {
+    mutatedListData = previousListData;
+  }
+  const mutatedListObject = {
+    ...listObject,
+    data: mutatedListData,
+  };
+  return mutatedListObject;
 };
 
 const userChampionListsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_CHAMPION_TO_LIST': {
-      const specifiedListId = action.payload.listId;
-      const specifiedChampionId = action.payload.championId;
-      const specifiedChampionPrio = action.payload.priority;
-      if (
-        !(specifiedListId in state.userChampionPreferenceLists)
-        || doesListContainChampion(
-          state.userChampionPreferenceLists[specifiedListId],
-          specifiedChampionId,
-        )
-      ) {
-        break;
-      }
-      const completeListsCopy = { ...state.userChampionPreferenceLists };
-      const specifiedListCopy = {
-        ...completeListsCopy[specifiedListId],
-      };
-      specifiedListCopy[specifiedChampionId] = {
-        priority: action.payload.priority,
-      };
-      completeListsCopy[specifiedListId] = specifiedListCopy;
-      return {
-        ...state,
-        userChampionPreferenceLists: completeListsCopy,
-      };
-    }
     case 'SET_CHAMPION_PRIORITY': {
-      const specifiedListId = action.payload.listId;
-      const specifiedChampionId = action.payload.championId;
-      const specifiedChampionPrio = action.payload.priority;
-      if (
-        !(specifiedListId in state.userChampionPreferenceLists)
-        || !doesListContainChampion(
-          state.userChampionPreferenceLists[specifiedListId],
-          specifiedChampionId,
-        )
-      ) {
-        break;
+      const { listId, championId, priority } = action.payload;
+      const specifiedChampionListIndex = state.userChampionLists.findIndex(
+        championList => championList.id === listId,
+      );
+      if (specifiedChampionListIndex >= 0) {
+        const filteredChampionList = removeChampionFromListImmutable(
+          state.userChampionLists[specifiedChampionListIndex],
+          championId,
+        );
+        const mutatedChampionList = addChampionToChampionListImmutable(
+          filteredChampionList,
+          championId,
+          priority,
+        );
+        const mutatedChampionLists = { ...state.userChampionLists };
+        mutatedChampionLists[specifiedChampionListIndex] = mutatedChampionList;
+        return {
+          ...state,
+          userChampionPreferenceLists: mutatedChampionLists,
+        };
       }
-      const completeListsCopy = { ...state.userChampionPreferenceLists };
-      const specifiedChampionCopy = {
-        ...state.userChampionPreferenceLists[specifiedListId][
-          specifiedChampionId
-        ],
-      };
-      specifiedChampionCopy.priority = action.payload.priority;
-      completeListsCopy[specifiedListId][
-        specifiedChampionId
-      ] = specifiedChampionCopy;
-      return {
-        ...state,
-        userChampionPreferenceLists: completeListsCopy,
-      };
+      return state;
     }
     case 'REMOVE_CHAMPION_FROM_LIST': {
-      const specifiedListId = action.payload.listId;
-      const specifiedChampionId = action.payload.championId;
-      if (
-        !!state.userChampionPreferenceLists.specifiedListId
-        || !!state.userChampionPreferenceLists.specifiedListId
-          .specifiedChampionId
-      ) {
-        break;
+      const { listId, championId } = action.payload;
+      const specifiedChampionListIndex = state.userChampionLists.findIndex(
+        championList => championList.id === listId,
+      );
+      if (specifiedChampionListIndex >= 0) {
+        const mutatedChampionList = removeChampionFromListImmutable(
+          state.userChampionLists[specifiedChampionListIndex],
+          championId,
+        );
+        const mutatedChampionLists = { ...state.userChampionLists };
+        mutatedChampionLists[specifiedChampionListIndex] = mutatedChampionList;
+        return {
+          ...state,
+          userChampionPreferenceLists: mutatedChampionLists,
+        };
       }
-      const completeListsCopy = { ...state.userChampionPreferenceLists };
-      const specifiedListCopy = Object.keys(
-        completeListsCopy.specifiedListId,
-      ).reduce((object, key) => {
-        if (key !== specifiedChampionId) {
-          object[specifiedChampionId] = completeListsCopy.specifiedListId[specifiedChampionId];
-        }
-        return object;
-      }, {});
-      completeListsCopy[specifiedListId] = specifiedListCopy;
-      return {
-        ...state,
-        userChampionPreferenceLists: completeListsCopy,
-      };
+      return state;
     }
     default:
       return state;
   }
-  return state;
 };
 
 export default userChampionListsReducer;
