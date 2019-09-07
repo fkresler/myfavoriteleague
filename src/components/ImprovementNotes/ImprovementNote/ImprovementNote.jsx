@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import useLongPress from '../../../Utils/useLongPress';
+import useLongPress from 'Utils/useLongPress';
 
-import SingleInputField from '../../SingleInputField';
+import SingleInputField from 'Components/SingleInputField';
 
 const StyledImprovementNote = styled.div`
     display: flex-block;

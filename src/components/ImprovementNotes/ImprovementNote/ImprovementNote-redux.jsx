@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import ImprovementNote from './ImprovementNote';
 import {
   updateImprovementNote,
   toggleImprovementNoteAsCurrentObjective,
@@ -7,7 +6,8 @@ import {
   toggleImprovementNotePlayingAsTag,
   toggleImprovementNotePlayingAgainstTag,
   removeImprovementNote,
-} from '../../../Actions/improvementNotesActions';
+} from 'Actions/improvementNotesActions';
+import ImprovementNote from './ImprovementNote';
 
 const mapDispatchToProps = dispatch => ({
   updateImprovementNote: (noteId, content) => {

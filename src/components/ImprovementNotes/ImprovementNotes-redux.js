@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import ImprovementNotes from './ImprovementNotes';
-import { IMPROVEMENT_NOTES_DATA_NAME } from '../../Reducers';
 import {
   addImprovementNote,
-} from '../../Actions/improvementNotesActions';
+} from 'Actions/improvementNotesActions';
+import { IMPROVEMENT_NOTES_DATA_NAME } from 'Reducers';
+import ImprovementNotes from './ImprovementNotes';
 
 const mapStateToProps = state => ({
   improvementNotes: state.improvementNotesData[IMPROVEMENT_NOTES_DATA_NAME],

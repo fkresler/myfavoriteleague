@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import SingleInputField from '../../SingleInputField';
+import SingleInputField from 'Components/SingleInputField';
 
 const StyledImprovementNoteForm = styled.div`
     display: flex-block;
@@ -91,12 +91,12 @@ class ImprovementNoteForm extends Component {
         <StyledImprovementNoteFormSaveButton
           onClick={this.handleImprovementNoteSave}
         >
-                    Save
+          Save
         </StyledImprovementNoteFormSaveButton>
         <StyledImprovementNoteFormDeleteButton
           onClick={this.handleImprovementNoteRemove}
         >
-                    Remove
+          Remove
         </StyledImprovementNoteFormDeleteButton>
       </StyledImprovementNoteForm>
     );
