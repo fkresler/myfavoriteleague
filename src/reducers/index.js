@@ -1,15 +1,11 @@
 import { combineReducers } from 'redux';
 import staticChampionDataReducer from './staticChampionDataReducer';
-import improvementNotesReducer, {
-  IMPROVEMENT_NOTES_DATA_NAME,
-} from './improvementNotesReducer';
-import userChampionListsReducer, {
-  USER_CHAMPION_LIST_DATA_NAME,
-} from './userChampionListsReducer';
+import improvementNotesReducer from './improvementNotesReducer';
+import userChampionListsReducer from './userChampionListsReducer';
 
-export { STATIC_CHAMPION_DATA_NAME } from './staticChampionDataReducer';
-export { IMPROVEMENT_NOTES_DATA_NAME } from './improvementNotesReducer';
-export { USER_CHAMPION_LIST_DATA_NAME } from './userChampionListsReducer';
+export const STATIC_CHAMPION_DATA_NAME = 'staticChampionData';
+export const IMPROVEMENT_NOTES_DATA_NAME = 'improvementNotesData';
+export const USER_CHAMPION_LIST_DATA_NAME = 'userChampionListData';
 
 export const toBeSavedData = [
   IMPROVEMENT_NOTES_DATA_NAME,
