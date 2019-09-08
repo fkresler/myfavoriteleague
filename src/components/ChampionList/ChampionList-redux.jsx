@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
-import { fetchStaticChampionDataIfNeeded } from 'Actions/staticChampionDataActions';
-import { STATIC_CHAMPION_DATA_NAME, USER_CHAMPION_LIST_DATA_NAME } from 'Reducers';
+
+import { STATIC_CHAMPION_DATA_NAME } from 'Reducers';
 import {
   setChampionPriority,
   removeChampionFromList,
 } from 'Actions/userChampionListsActions';
-import ChampionPreferenceLists from './ChampionPreferenceLists';
+import {
+  fetchStaticChampionDataIfNeeded,
+} from 'Actions/staticChampionDataActions';
+
+import ChampionList from './ChampionList';
 
 const mapStateToProps = state => ({
-  staticChampionData: state.staticChampionData[STATIC_CHAMPION_DATA_NAME],
-  userChampionPreferenceLists:
-    state.userChampionListData[USER_CHAMPION_LIST_DATA_NAME],
+  staticChampionData: state[STATIC_CHAMPION_DATA_NAME],
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -28,4 +30,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ChampionPreferenceLists);
+)(ChampionList);

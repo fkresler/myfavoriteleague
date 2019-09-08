@@ -27,8 +27,9 @@ const ChampionListSwitch = (props) => {
   const { availableLists, currentListIdentifier, selectListByIdentifier } = props;
   return (
     <StyledChampionListSwitch>
-      {Object.keys(availableLists).map(key => (
+      {availableLists.map(key => (
         <StyledChampionListSwitchButton
+          key={key}
           isActive={key === currentListIdentifier}
           onClick={() => selectListByIdentifier(key)}
         >
@@ -40,12 +41,12 @@ const ChampionListSwitch = (props) => {
 };
 
 ChampionListSwitch.defaultProps = {
-  availableLists: {},
+  availableLists: [],
   currentListIdentifier: null,
 };
 
 ChampionListSwitch.propTypes = {
-  availableLists: PropTypes.shape(),
+  availableLists: PropTypes.arrayOf(PropTypes.string),
   currentListIdentifier: PropTypes.string,
   selectListByIdentifier: PropTypes.func.isRequired,
 };

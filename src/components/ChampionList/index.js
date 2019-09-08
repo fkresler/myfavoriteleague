@@ -1,3 +1,3 @@
-import ChampionList from './ChampionList';
+import ChampionList from './ChampionList-redux';
 
 export default ChampionList;
