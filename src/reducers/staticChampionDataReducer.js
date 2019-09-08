@@ -1,5 +1,3 @@
-export const STATIC_CHAMPION_DATA_NAME = 'staticChampionData';
-
 const initialState = {
   isStaticChampionDataCorrect: false,
   staticChampionData: {},
