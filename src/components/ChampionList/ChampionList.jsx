@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import TierList from 'Components/TierList';
 
 const ChampionList = ({
   data,
@@ -7,9 +9,23 @@ const ChampionList = ({
   setChampionPriority,
   removeChampionFromList,
 }) => {
-  console.log('lul', data);
+  useEffect(() => {
+    fetchStaticChampionDataIfNeeded();
+  }, []);
+  const {
+    createdAt,
+    data: tierListData,
+    name,
+    id,
+    patchVersion,
+  } = data;
   return (
-    <div>This is a championlist</div>
+    <>
+      <div>{name}</div>
+      {tierListData.map(tierList => (
+        <TierList key={tierList.priority} data={tierList} />
+      ))}
+    </>
   );
 };
 
