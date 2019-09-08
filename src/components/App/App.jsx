@@ -9,8 +9,7 @@ import styled from 'styled-components';
 
 import StartingPageContent from 'Components/StartingPageContent';
 import PageNotFoundContent from 'Components/PageNotFoundContent';
-import ImprovementNotes from 'Components/ImprovementNotes';
-import ChampionPreferenceLists from 'Components/ChampionPreferenceLists';
+import ChampionListApp from 'Components/ChampionListApp';
 
 const StyledNavigationBar = styled.div`
     position: fixed;
@@ -47,18 +46,12 @@ const App = () => (
     <div>
       <StyledNavigationBar>
         <Link to="/">Home</Link>
-        <Link to="/notes">Notes</Link>
-        <Link to="/mylists">Lists</Link>
+        <Link to="/tierlists">Lists</Link>
       </StyledNavigationBar>
       <StyledContentWrapper>
         <Switch>
           <Route exact path="/" component={StartingPageContent} />
-          <Route exact path="/notes" component={ImprovementNotes} />
-          <Route
-            exact
-            path="/mylists"
-            component={ChampionPreferenceLists}
-          />
+          <Route exact path="/tierlists" component={ChampionListApp} />
           <Route component={PageNotFoundContent} />
         </Switch>
       </StyledContentWrapper>
