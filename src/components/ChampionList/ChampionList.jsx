@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-
+import { DndContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import TierList from 'Components/TierList';
 
 const ChampionList = ({
@@ -13,11 +14,8 @@ const ChampionList = ({
     fetchStaticChampionDataIfNeeded();
   }, []);
   const {
-    createdAt,
     data: tierListData,
     name,
-    id,
-    patchVersion,
   } = data;
   return (
     <>
