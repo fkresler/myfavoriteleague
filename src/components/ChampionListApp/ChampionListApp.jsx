@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import ChampionListSwitch from 'Components/ChampionListSwitch';
 import ChampionList from 'Components/ChampionList';
 
@@ -20,6 +20,14 @@ const ChampionListApp = ({ userChampionListData }) => {
       <ChampionList data={currentlySelectedChampionListData} />
     </>
   );
+};
+
+ChampionListApp.propTypes = {
+  userChampionListData: PropTypes.arrayOf(PropTypes.object),
+};
+
+ChampionListApp.defaultProps = {
+  userChampionListData: [],
 };
 
 export default ChampionListApp;
