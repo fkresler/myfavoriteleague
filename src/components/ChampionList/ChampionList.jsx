@@ -1,82 +1,77 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DndProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import TierList from 'Components/TierList';
-import ChampionBadge from 'Components/ChampionBadge/ChampionBadge';
+import { useDrop } from 'react-dnd';
+import ChampionBadge from 'Components/ChampionBadge';
+
 
 const StyledChampionList = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  display: block;
+  margin: 1rem 0;
 `;
 
-const StyledDraggableContainer = styled.div`
+const ChampionListHeadline = styled.div`
+  display: block;
+  font-size: 125%;
+  font-weight: bold;
+`;
+
+const ChampionListWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  background-color: orange;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 5rem;
+  padding: 0.5rem;
+  border: ${({ hovered }) => (hovered ? '1px solid red' : '1px solid grey')};
+
+  & > * {
+    margin: 0.5rem;
+  }
 `;
 
 const ChampionList = ({
-  data,
-  staticChampionData,
-  fetchStaticChampionDataIfNeeded,
-  setChampionPriority,
-  removeChampionFromList,
+  id, name, isDroppable, onDrop, champions,
 }) => {
-  useEffect(() => {
-    fetchStaticChampionDataIfNeeded();
-  }, []);
-  const completeChampionList = ['Akali', 'Ahri', 'Azir'];
-  const {
-    id,
-    data: tierListData,
-  } = data;
-  const setChampionPriorityForCurrentList = (priority, champion) => {
-    setChampionPriority(id, champion, priority);
-  };
+  const [additionalProps, dropRef] = useDrop({
+    accept: 'champion-badge',
+    drop: (champion) => {
+      if (isDroppable) {
+        onDrop(id, champion.identifier);
+      }
+    },
+    collect: monitor => ({
+      hovered: monitor.isOver(),
+    }),
+  });
   return (
-    <>
-      <DndProvider backend={HTML5Backend}>
-        <StyledChampionList>
-          {tierListData.map(tierList => (
-            <TierList {...tierList} id={tierList.priority} onDrop={setChampionPriorityForCurrentList} key={tierList.name} />
-          ))}
-        </StyledChampionList>
-        <StyledDraggableContainer>
-          {completeChampionList.map(champion => (
-            <ChampionBadge key={champion} identifier={champion} />
-          ))}
-        </StyledDraggableContainer>
-      </DndProvider>
-    </>
+    <StyledChampionList>
+      {name && (
+        <ChampionListHeadline>
+          {name}
+        </ChampionListHeadline>
+      )}
+      <ChampionListWrapper hovered={additionalProps.hovered} ref={dropRef}>
+        {champions.map(champion => (
+          <ChampionBadge key={champion} identifier={champion} />
+        ))}
+      </ChampionListWrapper>
+    </StyledChampionList>
   );
 };
 
 ChampionList.propTypes = {
-  data: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  }).isRequired,
-  staticChampionData: PropTypes.shape({
-    isStaticChampionDataCorrect: PropTypes.bool,
-    staticChampionData: PropTypes.object,
-    staticChampionDataReceivedAt: PropTypes.number,
-    isFetchingStaticChampionData: PropTypes.bool,
-  }),
-  fetchStaticChampionDataIfNeeded: PropTypes.func.isRequired,
-  setChampionPriority: PropTypes.func.isRequired,
-  removeChampionFromList: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  isDroppable: PropTypes.bool,
+  onDrop: PropTypes.func,
+  champions: PropTypes.arrayOf(PropTypes.string),
 };
 
 ChampionList.defaultProps = {
-  staticChampionData: {
-    isStaticChampionDataCorrect: false,
-    staticChampionData: {},
-    staticChampionDataReceivedAt: '',
-    isFetchingStaticChampionData: false,
-  },
+  name: '',
+  isDroppable: false,
+  onDrop: () => { },
+  champions: [],
 };
 
 export default ChampionList;

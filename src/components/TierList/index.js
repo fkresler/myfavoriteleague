@@ -1,3 +1,3 @@
-import TierList from './TierList';
+import TierList from './TierList.redux';
 
 export default TierList;

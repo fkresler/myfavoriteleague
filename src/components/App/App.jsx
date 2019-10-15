@@ -28,9 +28,11 @@ const FixedNavigationBar = styled.div`
     }
 
     @media(max-width: 768px) {
+      flex-direction: row;
+      justify-content: space-around;
       bottom: 0;
       width: 100%;
-      padding: 1rem;
+      padding: 0.5rem;
       box-shadow: 5px 0 10px 0 rgba(0,0,0,.5);
     }
 
@@ -47,11 +49,14 @@ const StyledContentWrapper = styled.div`
     display: block;
     width: 100%;
     height: 100%;
-    padding: 1rem;
     box-sizing: border-box;
 
+    @media(max-width: 768px) {
+      padding-bottom: 5rem;
+    }
+
     @media(min-width: 769px) {
-      margin-left: 7rem;
+      padding-left: 7rem;
     }
 `;
 

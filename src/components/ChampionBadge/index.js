@@ -1,3 +1,3 @@
-import ChampionBadge from './ChampionBadge';
+import ChampionBadge from './ChampionBadge.redux';
 
 export default ChampionBadge;

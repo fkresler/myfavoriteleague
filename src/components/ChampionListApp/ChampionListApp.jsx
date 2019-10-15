@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ChampionListSwitch from 'Components/ChampionListSwitch';
-import ChampionList from 'Components/ChampionList';
+import TierList from 'Components/TierList';
 
 const ChampionListApp = ({ userChampionListData }) => {
   const availableChampionLists = userChampionListData.map(championList => championList.name);
@@ -17,7 +17,7 @@ const ChampionListApp = ({ userChampionListData }) => {
         currentListIdentifier={selectedList}
         selectListByIdentifier={selectList}
       />
-      <ChampionList data={currentlySelectedChampionListData} />
+      <TierList data={currentlySelectedChampionListData} />
     </>
   );
 };
