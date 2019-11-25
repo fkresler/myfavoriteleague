@@ -9,28 +9,39 @@ import styled from 'styled-components';
 
 import StartingPageContent from 'Components/StartingPageContent';
 import PageNotFoundContent from 'Components/PageNotFoundContent';
-import ImprovementNotes from 'Components/ImprovementNotes';
-import ChampionPreferenceLists from 'Components/ChampionPreferenceLists';
+import ChampionListApp from 'Components/ChampionListApp';
 
-const StyledNavigationBar = styled.div`
+const FixedNavigationBar = styled.div`
     position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 1rem 2rem;
     display: flex;
     box-sizing: border-box;
     background-color: green;
-    color: #fff;
-    font-weight: bold;
     z-index: 9999;
 
-    a {
-        margin: 0 0.5rem;
-        text-decoration: none;
+    @media(min-width: 769px) {
+      flex-direction: column;
+      top: 0;
+      height: 100%;
+      width: 7rem;
+      padding: 2rem 0;
+      box-shadow: 5px 0 10px 0 rgba(0,0,0,.5);
     }
 
-    a:first-child {
-        margin-right: auto;
+    @media(max-width: 768px) {
+      flex-direction: row;
+      justify-content: space-around;
+      bottom: 0;
+      width: 100%;
+      padding: 0.5rem;
+      box-shadow: 5px 0 10px 0 rgba(0,0,0,.5);
+    }
+
+    & > * {
+      display: block;
+      margin: 1rem auto;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
     }
 `;
 
@@ -38,27 +49,28 @@ const StyledContentWrapper = styled.div`
     display: block;
     width: 100%;
     height: 100%;
-    margin-top: 3rem;
     box-sizing: border-box;
+
+    @media(max-width: 768px) {
+      padding-bottom: 5rem;
+    }
+
+    @media(min-width: 769px) {
+      padding-left: 7rem;
+    }
 `;
 
 const App = () => (
   <Router>
     <div>
-      <StyledNavigationBar>
+      <FixedNavigationBar>
         <Link to="/">Home</Link>
-        <Link to="/notes">Notes</Link>
-        <Link to="/mylists">Lists</Link>
-      </StyledNavigationBar>
+        <Link to="/tierlists">Lists</Link>
+      </FixedNavigationBar>
       <StyledContentWrapper>
         <Switch>
           <Route exact path="/" component={StartingPageContent} />
-          <Route exact path="/notes" component={ImprovementNotes} />
-          <Route
-            exact
-            path="/mylists"
-            component={ChampionPreferenceLists}
-          />
+          <Route exact path="/tierlists" component={ChampionListApp} />
           <Route component={PageNotFoundContent} />
         </Switch>
       </StyledContentWrapper>

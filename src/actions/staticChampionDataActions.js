@@ -48,5 +48,5 @@ export const fetchStaticChampionDataIfNeeded = () => (dispatch, getState) => {
   if (shouldFetchStaticChampionData(getState())) {
     return dispatch(fetchStaticChampionData());
   }
-  return null;
+  return Promise.resolve();
 };

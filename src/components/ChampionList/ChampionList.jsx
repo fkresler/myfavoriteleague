@@ -1,111 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useDrop } from 'react-dnd';
+import ChampionBadge from 'Components/ChampionBadge';
 
-import ChampionCard from 'Components/ChampionCard';
-
-const StyledChampionListHeadline = styled.div`
-    display: block;
-    background-color: green;
-    color: white;
-    padding: 2rem;
-    font-weight: bold;
-`;
-
-const StyledStickyWrapper = styled.div`
-    display: block;
-    background-color: #fff;
-    max-height: 75vh;
-    overflow-y: scroll;
-    position: sticky;
-    top: 0;
-`;
 
 const StyledChampionList = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    flex-wrap: wrap;
+  display: block;
+  margin: 1rem 0;
 `;
 
-const ChampionList = (props) => {
-  const {
-    championListId,
-    completeChampionData,
-    selectedChampionData,
-    addChampionToListById,
-    removeChampionFromListById,
-  } = props;
-  const addChampionToCurrentListById = (championKey) => {
-    addChampionToListById(
-      championListId,
-      championKey,
-    );
-  };
-  const removeChampionFromCurrentListById = (championKey) => {
-    removeChampionFromListById(
-      championListId,
-      championKey,
-    );
-  };
-  const toggleChampionInCurrentList = (championKey) => {
-    if (selectedChampionData.indexOf(championKey) > -1) {
-      removeChampionFromCurrentListById(championKey);
-    } else {
-      addChampionToCurrentListById(championKey);
-    }
-  };
+const ChampionListHeadline = styled.div`
+  display: block;
+  font-size: 125%;
+  font-weight: bold;
+`;
 
+const ChampionListWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 5rem;
+  padding: 0.5rem;
+  border: ${({ hovered }) => (hovered ? '1px solid red' : '1px solid grey')};
+
+  & > * {
+    margin: 0.5rem;
+  }
+`;
+
+const ChampionList = ({
+  id, name, isDroppable, onDrop, champions,
+}) => {
+  const [additionalProps, dropRef] = useDrop({
+    accept: 'champion-badge',
+    drop: (champion) => {
+      if (isDroppable) {
+        onDrop(id, champion.identifier);
+      }
+    },
+    collect: monitor => ({
+      hovered: monitor.isOver(),
+    }),
+  });
   return (
-    <React.Fragment>
-      <StyledStickyWrapper>
-        <StyledChampionListHeadline>
-          {championListId}
-        </StyledChampionListHeadline>
-        <StyledChampionList>
-          {Object.keys(selectedChampionData).map(
-            key => (
-              <ChampionCard
-                championData={completeChampionData[key]}
-                toggleChampionSelectedState={toggleChampionInCurrentList}
-                shouldBeMarked
-              />
-            ),
-          )}
-        </StyledChampionList>
-        <StyledChampionListHeadline>
-          Select your champions from the complete list:
-        </StyledChampionListHeadline>
-      </StyledStickyWrapper>
-      <StyledChampionList>
-        {Object.keys(completeChampionData).map((key) => {
-          const isChampionInCurrentList = Object.keys(
-            selectedChampionData,
-          ).indexOf(key) > -1;
-          return (
-            <ChampionCard
-              championData={completeChampionData[key]}
-              toggleChampionSelectedState={toggleChampionInCurrentList}
-              shouldBeMarked={isChampionInCurrentList}
-            />
-          );
-        })}
-      </StyledChampionList>
-    </React.Fragment>
+    <StyledChampionList>
+      {name && (
+        <ChampionListHeadline>
+          {name}
+        </ChampionListHeadline>
+      )}
+      <ChampionListWrapper hovered={additionalProps.hovered} ref={dropRef}>
+        {champions.map(champion => (
+          <ChampionBadge key={champion} identifier={champion} />
+        ))}
+      </ChampionListWrapper>
+    </StyledChampionList>
   );
 };
 
-ChampionList.defaultProps = {
-  completeChampionData: {},
-  selectedChampionData: {},
+ChampionList.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  isDroppable: PropTypes.bool,
+  onDrop: PropTypes.func,
+  champions: PropTypes.arrayOf(PropTypes.string),
 };
 
-ChampionList.propTypes = {
-  championListId: PropTypes.string.isRequired,
-  completeChampionData: PropTypes.shape(),
-  selectedChampionData: PropTypes.shape(),
-  addChampionToListById: PropTypes.func.isRequired,
-  removeChampionFromListById: PropTypes.func.isRequired,
+ChampionList.defaultProps = {
+  name: '',
+  isDroppable: false,
+  onDrop: () => { },
+  champions: [],
 };
 
 export default ChampionList;
