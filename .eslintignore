@@ -1,0 +1,2 @@
+# Ignore default service worker for now
+src/utils/serviceWorker*
