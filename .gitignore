@@ -6,7 +6,6 @@
 .pnp.js
 
 # testing
-/storybook-static
 /coverage
 
 # production
