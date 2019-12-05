@@ -15,9 +15,10 @@ const GeneralLayout = styled.div<{ isNavbarOpen: boolean }>`
   grid-template-columns: ${({ isNavbarOpen }) => isNavbarOpen ? '20% auto' : '0 auto'};
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "header header"
+    "sidebar header"
     "sidebar content"
-    "footer footer";
+    "sidebar footer";
+  overflow: hidden;
   transition: 2s ease-out;
 `;
 
@@ -27,10 +28,15 @@ const HeaderBar = styled.div`
   padding: 1rem;
 `;
 
+const Logo = styled.div`
+  display: inline-block;
+  cursor: pointer;
+`;
+
 const SideNavigationBar = styled.div`
   background-color: green;
   grid-area: sidebar;
-  padding: 1rem;
+  overflow: hidden;
 `;
 
 const ContentWrapper = styled.div`
@@ -51,8 +57,8 @@ const NavigationLayout: React.FC = ({
   return (
     <GeneralLayout isNavbarOpen={isNavbarOpen}>
       <GlobalStyle />
-      <HeaderBar onClick={() => setNavbarOpen(!isNavbarOpen)}>
-        Header
+      <HeaderBar>
+        <Logo onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</Logo>
       </HeaderBar>
       <SideNavigationBar>
         Sidebar
