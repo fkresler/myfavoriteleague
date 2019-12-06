@@ -39,6 +39,11 @@ const SideNavigationBar = styled.div`
   overflow: hidden;
 `;
 
+const NavigationLink = styled.div`
+  display: block;
+  border: 3px solid green;
+`;
+
 const ContentWrapper = styled.div`
   background-color: orange;
   grid-area: content;
@@ -50,7 +55,12 @@ const FooterBar = styled.div`
   padding: 1rem;
 `;
 
-const NavigationLayout: React.FC = ({
+interface INavigationLayout {
+  navLinks?: JSX.Element[];
+}
+
+const NavigationLayout: React.FC<INavigationLayout> = ({
+  navLinks,
   children
 }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(true);
@@ -60,9 +70,15 @@ const NavigationLayout: React.FC = ({
       <HeaderBar>
         <Logo onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</Logo>
       </HeaderBar>
-      <SideNavigationBar>
-        Sidebar
-      </SideNavigationBar>
+      {navLinks && (
+        <SideNavigationBar>
+          {navLinks.map(navLink => (
+            <NavigationLink>
+              {navLink}
+            </NavigationLink>
+          ))}
+        </SideNavigationBar>
+      )}
       <ContentWrapper>
         {children}
       </ContentWrapper>
