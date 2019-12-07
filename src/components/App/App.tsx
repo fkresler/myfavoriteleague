@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import NavigationLayout from '@/components/NavigationLayout';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
+import PageHome from '@/components/PageHome';
 import PageChampionList from '@/components/PageChampionList';
 
 const App: React.FC = () => {
@@ -14,7 +15,7 @@ const App: React.FC = () => {
       <NavigationLayout navLinks={navigationLinks}>
         <Switch>
           <Route exact path="/">
-            Homepage
+            <PageHome />
           </Route>
           <Route exact path="/lists">
             <StaticLeagueProvider>
