@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { FaTimes } from 'react-icons/fa';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -92,7 +93,7 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) =
       <GlobalStyle />
       {navLinks && (
         <SideNavigationBar isNavbarOpen={isNavbarOpen}>
-          <CloseButton onClick={() => setNavbarOpen(false)}>X</CloseButton>
+          <CloseButton onClick={() => setNavbarOpen(false)}><FaTimes /></CloseButton>
           {navLinks.map((navLink) => (
             <NavigationLink>{navLink}</NavigationLink>
           ))}
