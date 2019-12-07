@@ -7,7 +7,7 @@ import ChampionListApp from '@/components/ChampionListApp';
 const App: React.FC = () => {
   const navigationLinks: JSX.Element[] = [
     <Link to="/">Home</Link>,
-    <Link to="/lists">My Lists</Link>
+    <Link to="/lists">My Lists</Link>,
   ];
   return (
     <Router>
@@ -21,9 +21,7 @@ const App: React.FC = () => {
               <ChampionListApp />
             </StaticLeagueProvider>
           </Route>
-          <Route path="*">
-            404
-          </Route>
+          <Route path="*">404</Route>
         </Switch>
       </NavigationLayout>
     </Router>
