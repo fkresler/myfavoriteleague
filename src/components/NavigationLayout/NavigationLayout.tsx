@@ -93,7 +93,9 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) =
       <GlobalStyle />
       {navLinks && (
         <SideNavigationBar isNavbarOpen={isNavbarOpen}>
-          <CloseButton onClick={() => setNavbarOpen(false)}><FaTimes /></CloseButton>
+          <CloseButton onClick={() => setNavbarOpen(false)}>
+            <FaTimes />
+          </CloseButton>
           {navLinks.map((navLink) => (
             <NavigationLink>{navLink}</NavigationLink>
           ))}
