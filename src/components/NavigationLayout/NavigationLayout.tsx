@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import { AuthenticationContext } from '@/providers/AuthenticationProvider';
+import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -88,6 +90,8 @@ interface INavigationLayout {
 
 const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
+  const { currentUser } = useContext(AuthenticationContext);
+  const Firebase = useContext(FirebaseContext);
   return (
     <GeneralLayout>
       <GlobalStyle />
@@ -99,6 +103,9 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) =
           {navLinks.map((navLink) => (
             <NavigationLink>{navLink}</NavigationLink>
           ))}
+          {currentUser && (
+            <NavigationLink onClick={() => Firebase.doSignOut()}>Logout</NavigationLink>
+          )}
         </SideNavigationBar>
       )}
       <ContentLayout>

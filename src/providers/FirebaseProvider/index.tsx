@@ -1,10 +1,12 @@
 import React from 'react';
 import Firebase from './firebase';
 
-export const FirebaseContext = React.createContext<Firebase | null>(null);
+const FirebaseApp = new Firebase();
+
+export const FirebaseContext = React.createContext<Firebase>(FirebaseApp);
 
 export const FirebaseProvider: React.FunctionComponent = ({ children }) => {
-  return <FirebaseContext.Provider value={new Firebase()}>{children}</FirebaseContext.Provider>;
+  return <FirebaseContext.Provider value={FirebaseApp}>{children}</FirebaseContext.Provider>;
 };
 
 export default FirebaseProvider;

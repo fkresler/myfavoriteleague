@@ -4,6 +4,7 @@ import NavigationLayout from '@/components/NavigationLayout';
 import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
+import AuthenticationProvider from '@/providers/AuthenticationProvider';
 import PageHome from '@/pages/Home';
 import PageChampionList from '@/pages/ChampionLists';
 import PageSignUp from '@/pages/SignUp';
@@ -22,21 +23,23 @@ const App: React.FC = () => {
   ];
   return (
     <FirebaseProvider>
-      <StaticLeagueProvider>
-        <Router>
-          <NavigationLayout navLinks={navigationLinks}>
-            <Switch>
-              <Route exact path={Routes.LANDING} component={PageHome} />
-              <Route exact path={Routes.HOME} component={PageHome} />
-              <Route exact path={Routes.SIGN_UP} component={PageSignUp} />
-              <Route exact path={Routes.SIGN_IN} component={PageSignIn} />
-              <Route exact path={Routes.PASSWORD_FORGET} component={PageResetPassword} />
-              <Route exact path={Routes.CHAMPION_LISTS} component={PageChampionList} />
-              <Route path="*" component={PageNotFound} />
-            </Switch>
-          </NavigationLayout>
-        </Router>
-      </StaticLeagueProvider>
+      <AuthenticationProvider>
+        <StaticLeagueProvider>
+          <Router>
+            <NavigationLayout navLinks={navigationLinks}>
+              <Switch>
+                <Route exact path={Routes.LANDING} component={PageHome} />
+                <Route exact path={Routes.HOME} component={PageHome} />
+                <Route exact path={Routes.SIGN_UP} component={PageSignUp} />
+                <Route exact path={Routes.SIGN_IN} component={PageSignIn} />
+                <Route exact path={Routes.PASSWORD_FORGET} component={PageResetPassword} />
+                <Route exact path={Routes.CHAMPION_LISTS} component={PageChampionList} />
+                <Route path="*" component={PageNotFound} />
+              </Switch>
+            </NavigationLayout>
+          </Router>
+        </StaticLeagueProvider>
+      </AuthenticationProvider>
     </FirebaseProvider>
   );
 };

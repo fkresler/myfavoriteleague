@@ -12,17 +12,19 @@ const firebaseConfig = {
 };
 
 class Firebase {
+  auth: app.auth.Auth;
+
   constructor() {
     app.initializeApp(firebaseConfig);
+
+    this.auth = app.auth();
   }
 
-  doCreateUserWithEmailAndPassword = (email: string, password: string) => {
+  doCreateUserWithEmailAndPassword = (email: string, password: string) =>
     app.auth().createUserWithEmailAndPassword(email, password);
-  };
 
-  doSigninWithEmailAndPassword = (email: string, password: string) => {
+  doSigninWithEmailAndPassword = (email: string, password: string) =>
     app.auth().signInWithEmailAndPassword(email, password);
-  };
 
   doSignOut = () => app.auth().signOut();
 
@@ -31,8 +33,9 @@ class Firebase {
   doPasswordUpdate = (password: string) => {
     const { currentUser } = app.auth();
     if (currentUser) {
-      currentUser.updatePassword(password);
+      return currentUser.updatePassword(password);
     }
+    return Promise.reject(new Error('Currently no user logged in!'));
   };
 }
 
