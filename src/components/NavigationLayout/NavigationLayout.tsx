@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
-import { AuthenticationContext } from '@/providers/AuthenticationProvider';
+import useAuthentication from '@/hooks/useAuthentication';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const GlobalStyle = createGlobalStyle`
@@ -74,6 +74,12 @@ const CloseButton = styled.div`
 const NavigationLink = styled.div`
   display: block;
   margin-top: 4rem;
+  white-space: nowrap;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: #fff;
+  cursor: pointer;
 
   & * {
     white-space: nowrap;
@@ -81,6 +87,7 @@ const NavigationLink = styled.div`
     font-weight: bold;
     text-decoration: underline;
     text-decoration-color: #fff;
+    cursor: pointer;
   }
 `;
 
@@ -90,8 +97,8 @@ interface INavigationLayout {
 
 const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
-  const { currentUser } = useContext(AuthenticationContext);
   const Firebase = useContext(FirebaseContext);
+  const currentUser = useAuthentication();
   return (
     <GeneralLayout>
       <GlobalStyle />

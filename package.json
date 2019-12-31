@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "rm node_modules/@",
+    "preinstall": "rm -f node_modules/@",
     "postinstall": "ln -s `pwd`/src node_modules/@",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "lint": "yarn eslint src --ext js,ts,jsx,tsx",
