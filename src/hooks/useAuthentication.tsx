@@ -3,7 +3,6 @@ import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const useAuthentication = () => {
   const Firebase = useContext(FirebaseContext);
-  
   const [authUser, setAuthUser] = useState<firebase.User | null>(null);
 
   useEffect(() => {

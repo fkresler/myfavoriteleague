@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
 import useAuthentication from '@/hooks/useAuthentication';
+import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const GlobalStyle = createGlobalStyle`
@@ -99,11 +100,12 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) =
   const [isNavbarOpen, setNavbarOpen] = useState(false);
   const Firebase = useContext(FirebaseContext);
   const currentUser = useAuthentication();
+  const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
   return (
     <GeneralLayout>
       <GlobalStyle />
       {navLinks && (
-        <SideNavigationBar isNavbarOpen={isNavbarOpen}>
+        <SideNavigationBar isNavbarOpen={isNavbarOpen} ref={clickOutsideRef}>
           <CloseButton onClick={() => setNavbarOpen(false)}>
             <FaTimes />
           </CloseButton>
