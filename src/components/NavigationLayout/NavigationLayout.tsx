@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { FaTimes } from 'react-icons/fa';
+import useAuthentication from '@/hooks/useAuthentication';
+import useClickOutside from '@/hooks/useClickOutside';
+import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -72,6 +75,12 @@ const CloseButton = styled.div`
 const NavigationLink = styled.div`
   display: block;
   margin-top: 4rem;
+  white-space: nowrap;
+  color: #fff;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: #fff;
+  cursor: pointer;
 
   & * {
     white-space: nowrap;
@@ -79,6 +88,7 @@ const NavigationLink = styled.div`
     font-weight: bold;
     text-decoration: underline;
     text-decoration-color: #fff;
+    cursor: pointer;
   }
 `;
 
@@ -88,17 +98,23 @@ interface INavigationLayout {
 
 const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
+  const Firebase = useContext(FirebaseContext);
+  const currentUser = useAuthentication();
+  const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
   return (
     <GeneralLayout>
       <GlobalStyle />
       {navLinks && (
-        <SideNavigationBar isNavbarOpen={isNavbarOpen}>
+        <SideNavigationBar isNavbarOpen={isNavbarOpen} ref={clickOutsideRef}>
           <CloseButton onClick={() => setNavbarOpen(false)}>
             <FaTimes />
           </CloseButton>
           {navLinks.map((navLink) => (
             <NavigationLink>{navLink}</NavigationLink>
           ))}
+          {currentUser && (
+            <NavigationLink onClick={() => Firebase.doSignOut()}>Logout</NavigationLink>
+          )}
         </SideNavigationBar>
       )}
       <ContentLayout>
