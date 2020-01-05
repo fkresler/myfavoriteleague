@@ -19,8 +19,8 @@ const GeneralLayout = styled.div`
 
 const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
   background-color: #5b5f97;
-  width: ${({ isNavbarOpen }) => (isNavbarOpen ? '300px' : '0')};
-  max-width: 80%;
+  width: ${({ isNavbarOpen }) => (isNavbarOpen ? '500px' : '0')};
+  max-width: 90%;
   overflow: hidden;
   transition: all 0.5s ease-out;
   display: flex;
@@ -38,7 +38,7 @@ const ContentLayout = styled.div`
 const HeaderBar = styled.div`
   background-color: #f8ffe7;
   flex: 0 0 auto;
-  padding: 1rem;
+  padding: 1.5rem;
 `;
 
 const ContentWrapper = styled.div`
@@ -64,8 +64,8 @@ const Logo = styled.div`
 
 const CloseButton = styled.div`
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 1.5rem;
+  left: 1.5rem;
   color: #fff;
   font-weight: bold;
   font-size: 200%;
@@ -110,10 +110,17 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) =
             <FaTimes />
           </CloseButton>
           {navLinks.map((navLink) => (
-            <NavigationLink>{navLink}</NavigationLink>
+            <NavigationLink onClick={() => setNavbarOpen(false)}>{navLink}</NavigationLink>
           ))}
           {currentUser && (
-            <NavigationLink onClick={() => Firebase.doSignOut()}>Logout</NavigationLink>
+            <NavigationLink
+              onClick={() => {
+                setNavbarOpen(false);
+                Firebase.doSignOut();
+              }}
+            >
+              Logout
+            </NavigationLink>
           )}
         </SideNavigationBar>
       )}
