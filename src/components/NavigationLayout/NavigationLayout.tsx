@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const GeneralLayout = styled.div`
-  width: 100vw;
+  min-width: 100vw;
   min-height: 100vh;
   display: flex;
 `;
@@ -30,6 +30,8 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
 `;
 
 const ContentLayout = styled.div`
+  width: 100vw;
+  overflow: hidden;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
