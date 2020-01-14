@@ -1,14 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { TierList } from '@/types/tierLists';
 
-const useTierLists = (userId: string) => {
+const useTierLists = (user: firebase.User | null) => {
   const Firebase = React.useContext(FirebaseContext);
+  const userId = user ? user.uid : null;
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<Error | null>(null);
   const [tierlists, setTierLists] = React.useState<TierList[]>([]);
 
-  const setTierList = (authorId: string, name: string, order: number) => {
+  const createTierList = (authorId: string, name: string, order: number) => {
     return Firebase.firestore.collection('tierlists').add({
       authorId,
       name,
@@ -56,7 +57,7 @@ const useTierLists = (userId: string) => {
 
   return {
     methods: {
-      setTierList,
+      createTierList,
       updateTierList,
       deleteTierList,
     },
