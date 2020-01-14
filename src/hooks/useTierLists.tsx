@@ -1,14 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react';
+import * as React from 'react';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { TierList } from '@/types/tierLists';
 
-const useTierLists = (userId: number) => {
-  const Firebase = useContext(FirebaseContext);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-  const [tierlists, setTierLists] = useState<TierList[]>([]);
+const useTierLists = (userId: string) => {
+  const Firebase = React.useContext(FirebaseContext);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<Error | null>(null);
+  const [tierlists, setTierLists] = React.useState<TierList[]>([]);
 
-  useEffect(() => {
+  const setTierList = (authorId: string, name: string, order: number) => {
+    return Firebase.firestore.collection('tierlists').add({
+      authorId,
+      name,
+      order,
+    });
+  };
+
+  const updateTierList = (tierListId: string, name: string, order: number) => {
+    return Firebase.firestore
+      .collection('tierlists')
+      .doc(tierListId)
+      .update({
+        name,
+        order,
+      });
+  };
+
+  const deleteTierList = (tierListId: string) => {
+    return Firebase.firestore
+      .collection('tierlists')
+      .doc(tierListId)
+      .delete();
+  };
+
+  React.useEffect(() => {
     const unsubscribe = Firebase.firestore
       .collection('tierlists')
       .where('authorId', '==', userId)
@@ -29,7 +54,16 @@ const useTierLists = (userId: number) => {
     return () => unsubscribe();
   }, []);
 
-  return { loading, error, tierlists };
+  return {
+    methods: {
+      setTierList,
+      updateTierList,
+      deleteTierList,
+    },
+    loading,
+    error,
+    tierlists,
+  };
 };
 
 export default useTierLists;

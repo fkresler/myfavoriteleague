@@ -1,16 +1,16 @@
 export type TierList = {
   id: string;
-  authorId: number;
+  authorId: string;
   name: string;
   order: number;
-  lists?: number[];
+  lists?: string[];
 };
 
 export type ChampionList = {
   id: string;
   name: string;
   order: number;
-  champions?: number[];
+  champions?: string[];
 };
 
 export type ChampionEntry = {
