@@ -53,7 +53,7 @@ const useTierLists = (user: firebase.User | null) => {
       );
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   return {
     methods: {
