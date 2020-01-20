@@ -5,7 +5,7 @@ import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
 import PageHome from '@/pages/Home';
-import PageChampionList from '@/pages/ChampionLists';
+import PageChampionList from '@/pages/TierLists';
 import PageSignUp from '@/pages/SignUp';
 import PageSignIn from '@/pages/SignIn';
 import PageResetPassword from '@/pages/ResetPassword';

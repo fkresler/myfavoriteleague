@@ -6,15 +6,26 @@ export type TierList = {
   lists?: string[];
 };
 
-export type ChampionList = {
-  id: string;
-  name: string;
+export type IChampionListData = {
+  championListId: string;
   order: number;
-  champions?: string[];
+  name: string;
+  description?: string;
+  champions: IChampionEntryData[];
 };
 
-export type ChampionEntry = {
-  id: string;
+export type IChampionList = IChampionListData & {
+  updateChampionList: () => void;
+  deleteChampionList: (championListId: string) => void;
+};
+
+export type IChampionEntryData = {
+  championEntryId: string;
   championId: string;
   note?: string;
+};
+
+export type IChampionEntry = IChampionEntryData & {
+  updateChampionEntry: (note?: string) => void;
+  deleteChampionEntry: (championEntryId: string) => void;
 };
