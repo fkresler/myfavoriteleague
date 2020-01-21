@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { IChampionEntry } from '@/types/tierLists';
 import ChampionBox from '@/components/ChampionBox';
 
-const ChampionEntry = ({
+const ChampionEntry: React.FC<IChampionEntry> = ({
   championEntryId,
   championId,
   note,

@@ -3,25 +3,26 @@ import styled from 'styled-components';
 import { IChampionList } from '@/types/tierLists';
 import ChampionEntry from '@/components/ChampionEntry';
 
-const ChampionList = ({
+const ChampionList: React.FC<IChampionList> = ({
   championListId,
-  order,
   name,
   description,
-  champions,
+  entries,
   updateChampionList,
   deleteChampionList,
-}: IChampionList) => {
+}) => {
   return (
     <div>
       <div>{name}</div>
       {description && <div>{description}</div>}
       <div>
-        {champions.map((champion) => (
+        {entries.map((champion) => (
           <ChampionEntry
             championEntryId={champion.championEntryId}
             championId={champion.championId}
             note={champion.note}
+            updateChampionEntry={() => { }}
+            deleteChampionEntry={() => { }}
           />
         ))}
       </div>

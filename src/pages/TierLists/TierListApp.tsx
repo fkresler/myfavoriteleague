@@ -1,33 +1,24 @@
 import React from 'react';
-import useAuthentication from '@/hooks/useAuthentication';
-import useTierLists from '@/hooks/useTierLists';
+import TierList from '@/components/TierList';
+import TierListMock from '@/mocks/TierListMock';
 
 const ChampionListApp: React.FC = () => {
-  const currentUser = useAuthentication();
-  const {
-    methods: { createTierList, updateTierList, deleteTierList },
-    loading,
-    error,
-    tierlists,
-  } = useTierLists(currentUser);
-
-  const loadingContent = <div>Loading ...</div>;
-
-  const errorContent = <div>Error on reading tierlist data!</div>;
+  const tierListData = TierListMock;
 
   return (
     <>
-      {loading && loadingContent}
-      {error && errorContent}
-      {currentUser && (
-        <button type="button" onClick={() => createTierList(currentUser.uid, 'Testname', 0)}>
-          Create Test!
-        </button>
-      )}
-      {tierlists.map((tierlist) => (
+      {tierListData.map((tierList) => (
         <>
-          <div>Tierlist: {tierlist.name}</div>
-          <div>Author: {tierlist.authorId}</div>
+          <div>Tierlist: {tierList.name}</div>
+          <div>Author: {tierList.authorId}</div>
+          <TierList
+            tierListId={tierList.tierListId}
+            authorId={tierList.authorId}
+            name={tierList.name}
+            lists={tierList.lists}
+            updateTierList={() => { }}
+            deleteTierList={() => { }}
+          />
         </>
       ))}
     </>
