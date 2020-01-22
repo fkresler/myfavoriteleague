@@ -8,14 +8,16 @@ interface IChampionBox {
 
 const StyledChampionBox = styled.div`
   display: inline-block;
+  max-width: 5rem;
   max-height: 5rem;
   border-radius: 100%;
   border: 1px solid grey;
+  box-sizing: border-box;
   overflow: hidden;
 
   img {
-    height: 5rem;
-    width: auto;
+    width: 5rem;
+    height: auto;
   }
 `;
 
