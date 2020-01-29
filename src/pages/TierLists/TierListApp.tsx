@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TierList from '@/components/TierList';
 import TierListMock from '@/mocks/TierListMock';
+import SegmentedSelect from '@/components/SegmentedSelect';
 
 const ChampionListApp: React.FC = () => {
   const tierListData = TierListMock;
-
+  const availableTierLists = tierListData.map((tierList) => tierList.name);
+  const defaultSelectedTierList = availableTierLists ? availableTierLists[0] : undefined;
+  const [selectedList, selectList] = useState(defaultSelectedTierList);
+  const currentTierListData = tierListData.find((tierList) => tierList.name === selectedList);
   return (
     <>
-      {tierListData.map((tierList) => (
-        <>
-          <div>Tierlist: {tierList.name}</div>
-          <div>Author: {tierList.authorId}</div>
-          <TierList
-            tierListId={tierList.tierListId}
-            authorId={tierList.authorId}
-            name={tierList.name}
-            lists={tierList.lists}
-            updateTierList={() => { }}
-            deleteTierList={() => { }}
-          />
-        </>
-      ))}
+      <SegmentedSelect
+        choices={availableTierLists}
+        currentlySelectedChoice={selectedList}
+        onChoiceSelection={selectList}
+      />
+      {currentTierListData && (
+        <TierList
+          tierListId={currentTierListData.tierListId}
+          authorId={currentTierListData.authorId}
+          name={currentTierListData.name}
+          lists={currentTierListData.lists}
+          updateTierList={() => {}}
+          deleteTierList={() => {}}
+        />
+      )}
     </>
   );
 };

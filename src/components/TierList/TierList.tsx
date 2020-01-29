@@ -12,7 +12,6 @@ const TierList: React.FC<ITierList> = ({
 }) => {
   return (
     <>
-      <div>{name}</div>
       {lists &&
         lists.map((championList) => (
           <ChampionList
@@ -20,8 +19,8 @@ const TierList: React.FC<ITierList> = ({
             name={championList.name}
             description={championList.description}
             entries={championList.entries}
-            updateChampionList={() => { }}
-            deleteChampionList={() => { }}
+            updateChampionList={() => {}}
+            deleteChampionList={() => {}}
           />
         ))}
     </>
