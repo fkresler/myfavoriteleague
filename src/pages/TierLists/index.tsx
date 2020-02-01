@@ -1,3 +1,6 @@
 import TierListApp from './TierListApp';
+import TierListAppFirestore from './TierListApp-firestore';
 
-export default TierListApp;
+export { TierListApp };
+
+export default TierListAppFirestore;

@@ -29,15 +29,16 @@ const ChampionList: React.FC<IChampionList> = ({
       <div>{name}</div>
       {description && <div>{description}</div>}
       <StyledChampionContainer>
-        {entries.map((champion) => (
-          <ChampionEntry
-            championEntryId={champion.championEntryId}
-            championId={champion.championId}
-            note={champion.note}
-            updateChampionEntry={() => { }}
-            deleteChampionEntry={() => { }}
-          />
-        ))}
+        {entries &&
+          entries.map((champion) => (
+            <ChampionEntry
+              championEntryId={champion.championEntryId}
+              championId={champion.championId}
+              note={champion.note}
+              updateChampionEntry={() => {}}
+              deleteChampionEntry={() => {}}
+            />
+          ))}
       </StyledChampionContainer>
     </div>
   );

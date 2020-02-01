@@ -13,7 +13,7 @@ const useAuthentication = (): firebase.User | null => {
         setAuthUser(null);
       }
     });
-    return unlisten;
+    return () => unlisten();
   });
 
   return authUser;
