@@ -23,6 +23,9 @@ const TierList: React.FC<ITierList> = ({
             deleteChampionList={() => {}}
           />
         ))}
+      <button type="button" onClick={() => deleteTierList(tierListId)}>
+        Delete this list
+      </button>
     </>
   );
 };
