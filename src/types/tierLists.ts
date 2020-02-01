@@ -7,7 +7,12 @@ export type ITierListData = {
 };
 
 export type ITierList = ITierListData & {
-  updateTierList: (tierListId: string) => void;
+  updateTierList: (
+    tierListId: string,
+    name: string,
+    order: number,
+    lists: IChampionListData[],
+  ) => void;
   deleteTierList: (tierListId: string) => void;
 };
 

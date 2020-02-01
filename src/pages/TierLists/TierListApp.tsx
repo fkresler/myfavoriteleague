@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import TierList from '@/components/TierList';
 import SegmentedSelect from '@/components/SegmentedSelect';
-import { ITierListData } from '@/types/tierLists';
+import { ITierListData, IChampionListData } from '@/types/tierLists';
 
 interface IChampionListApp {
   data: ITierListData[];
   methods: {
-    createTierList: (name?: string, description?: string, order?: number) => void;
-    updateTierList: (id: string, name?: string, description?: string, order?: number) => void;
+    createTierList: (name: string, order: number) => void;
+    updateTierList: (id: string, name: string, order: number, lists: IChampionListData[]) => void;
     deleteTierList: (id: string) => void;
   };
 }
@@ -16,14 +16,17 @@ const ChampionListApp: React.FC<IChampionListApp> = ({
   data: tierListData,
   methods: { createTierList, updateTierList, deleteTierList },
 }) => {
-  const defaultSelectedTierList = tierListData ? tierListData[0].name : undefined;
+  const defaultSelectedTierList = tierListData ? tierListData[0].tierListId : undefined;
   const [selectedList, selectList] = useState<string | undefined>(defaultSelectedTierList);
 
-  const availableTierLists = tierListData.map((tierList) => tierList.name);
-  const currentTierListData = tierListData.find((tierList) => tierList.name === selectedList);
+  const tierListSelectData = tierListData.map((tierList) => ({
+    id: tierList.tierListId,
+    name: tierList.name,
+  }));
+  const currentTierListData = tierListData.find((tierList) => tierList.tierListId === selectedList);
 
   const AddTierListButton: JSX.Element = (
-    <button type="button" onClick={() => createTierList('Test')}>
+    <button type="button" onClick={() => createTierList('Test', 0)}>
       Add TierList!
     </button>
   );
@@ -34,7 +37,7 @@ const ChampionListApp: React.FC<IChampionListApp> = ({
         {AddTierListButton}
         {tierListData && (
           <SegmentedSelect
-            choices={availableTierLists}
+            choices={tierListSelectData}
             currentlySelectedChoice={selectedList}
             onChoiceSelection={selectList}
           />

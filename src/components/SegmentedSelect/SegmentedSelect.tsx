@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 export interface ISegmentedSelect {
-  choices?: string[];
+  choices?: {
+    id: string;
+    name: string;
+  }[];
   currentlySelectedChoice?: string;
   onChoiceSelection?: (toBeSelectedChoice: string) => void;
 }
@@ -38,11 +41,11 @@ const SegmentedSelect: React.FC<ISegmentedSelect> = ({
       {choices &&
         choices.map((choice) => (
           <StyledSegmentedOption
-            key={choice}
-            isActive={choice === currentlySelectedChoice}
-            onClick={() => onChoiceSelection(choice)}
+            key={choice.id}
+            isActive={choice.id === currentlySelectedChoice}
+            onClick={() => onChoiceSelection(choice.id)}
           >
-            {choice}
+            {choice.name}
           </StyledSegmentedOption>
         ))}
     </StyledSegmentedSelect>
