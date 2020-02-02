@@ -1,15 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import ChampionList from '@/components/ChampionList';
-import { ITierList } from '@/types/tierLists';
+import { ITierList, ITierListData } from '@/types/tierLists';
+import TierListReducer from './TierListReducer';
 
 const TierList: React.FC<ITierList> = ({
   tierListId,
+  authorId,
   name,
-  lists,
+  order = 0,
+  lists = [],
   updateTierList,
   deleteTierList,
 }) => {
+  const tierListData: ITierListData = {
+    tierListId,
+    authorId,
+    name,
+    order,
+    lists,
+  };
+  const [tierListState, dispatch] = React.useReducer(TierListReducer, tierListData);
   return (
     <>
       {lists &&
@@ -23,6 +34,9 @@ const TierList: React.FC<ITierList> = ({
             deleteChampionList={() => {}}
           />
         ))}
+      <button type="button" onClick={() => updateTierList(tierListId, name, order, lists)}>
+        Save this list! (Call this on tear down and whenever tierListId changes)
+      </button>
       <button type="button" onClick={() => deleteTierList(tierListId)}>
         Delete this list
       </button>
