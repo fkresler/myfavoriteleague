@@ -17,7 +17,7 @@ export type IUpdateTierListInfoAction = {
   };
 };
 
-export const updateTierListInfo = (name: string, order: number) => {
+export const updateTierListInfo = (name: string, order: number): TierListAction => {
   return {
     type: 'UPDATE_TIERLIST_INFO',
     payload: {
@@ -42,7 +42,7 @@ export const createChampionList = (
   name: string = 'New List',
   description: string,
   order: number = 0,
-) => {
+): TierListAction => {
   return {
     type: 'CREATE_CHAMPIONLIST',
     payload: {
@@ -70,7 +70,7 @@ export const updateChampionListInfo = (
   name: string,
   description: string,
   order: number,
-) => {
+): TierListAction => {
   return {
     type: 'UPDATE_CHAMPIONLIST_INFO',
     payload: {
@@ -89,7 +89,7 @@ export type IDeleteChampionListAction = {
   };
 };
 
-export const deleteChampionList = (championListId: string) => {
+export const deleteChampionList = (championListId: string): TierListAction => {
   return {
     type: 'DELETE_CHAMPIONLIST',
     payload: {
@@ -108,7 +108,11 @@ export type IAddChampionEntryAction = {
   };
 };
 
-export const addChampionEntry = (championListId: string, championId: string, note: string) => {
+export const addChampionEntry = (
+  championListId: string,
+  championId: string,
+  note: string,
+): TierListAction => {
   return {
     type: 'ADD_CHAMPIONENTRY',
     payload: {
@@ -133,7 +137,7 @@ export const updateChampionEntry = (
   championListId: string,
   championEntryId: string,
   note: string,
-) => {
+): TierListAction => {
   return {
     type: 'UPDATE_CHAMPIONENTRY',
     payload: {
@@ -152,7 +156,10 @@ export type IDeleteChampionEntryAction = {
   };
 };
 
-export const deleteChampionEntry = (championListId: string, championEntryId: string) => {
+export const deleteChampionEntry = (
+  championListId: string,
+  championEntryId: string,
+): TierListAction => {
   return {
     type: 'DELETE_CHAMPIONENTRY',
     payload: {

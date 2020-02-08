@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import ChampionList from '@/components/ChampionList';
 import { ITierList, ITierListData } from '@/types/tierLists';
 import TierListReducer from './TierListReducer';
+import {
+  updateChampionListInfo,
+  deleteChampionList,
+  addChampionEntry,
+  updateChampionEntry,
+  deleteChampionEntry,
+} from './TierListActions';
 
 const TierList: React.FC<ITierList> = ({
   tierListId,
@@ -13,29 +20,68 @@ const TierList: React.FC<ITierList> = ({
   updateTierList,
   deleteTierList,
 }) => {
-  const tierListData: ITierListData = {
+  const initialTierListData: ITierListData = {
     tierListId,
     authorId,
     name,
     order,
     lists,
   };
-  const [tierListState, dispatch] = React.useReducer(TierListReducer, tierListData);
+  const [tierListState, dispatch] = React.useReducer(TierListReducer, initialTierListData);
+  const {
+    tierListId: currentTierListId,
+    name: currentTierListName,
+    order: currentTierListOrder = 0,
+    lists: currentTierListLists = [],
+  } = tierListState;
+  const doUpdateChampionList = (
+    listId: string,
+    listName: string,
+    listDescription: string,
+    listOrder: number,
+  ) => {
+    dispatch(updateChampionListInfo(listId, listName, listDescription, listOrder));
+  };
+  const doDeleteChampionList = (listId: string) => {
+    dispatch(deleteChampionList(listId));
+  };
+  const doAddChampionEntry = (listId: string, championId: string, note: string) => {
+    dispatch(addChampionEntry(listId, championId, note));
+  };
+  const doUpdateChampionEntry = (listId: string, entryId: string, note: string) => {
+    dispatch(updateChampionEntry(listId, entryId, note));
+  };
+  const doDeleteChampionEntry = (listId: string, entryId: string) => {
+    dispatch(deleteChampionEntry(listId, entryId));
+  };
   return (
     <>
-      {lists &&
-        lists.map((championList) => (
+      {currentTierListLists &&
+        currentTierListLists.map((championList) => (
           <ChampionList
             championListId={championList.championListId}
             name={championList.name}
             description={championList.description}
             entries={championList.entries}
-            updateChampionList={() => {}}
-            deleteChampionList={() => {}}
+            updateChampionList={doUpdateChampionList}
+            deleteChampionList={doDeleteChampionList}
+            addChampionEntry={doAddChampionEntry}
+            updateChampionEntry={doUpdateChampionEntry}
+            deleteChampionEntry={doDeleteChampionEntry}
           />
         ))}
-      <button type="button" onClick={() => updateTierList(tierListId, name, order, lists)}>
-        Save this list! (Call this on tear down and whenever tierListId changes)
+      <button
+        type="button"
+        onClick={() =>
+          updateTierList(
+            currentTierListId,
+            currentTierListName,
+            currentTierListOrder,
+            currentTierListLists,
+          )
+        }
+      >
+        Save this list!
       </button>
       <button type="button" onClick={() => deleteTierList(tierListId)}>
         Delete this list

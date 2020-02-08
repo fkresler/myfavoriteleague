@@ -25,8 +25,17 @@ export type IChampionListData = {
 };
 
 export type IChampionList = IChampionListData & {
-  updateChampionList: (championListId: string) => void;
+  updateChampionList: (
+    championListId: string,
+    name: string,
+    description: string,
+    order: number,
+    entries: IChampionEntryData[],
+  ) => void;
   deleteChampionList: (championListId: string) => void;
+  addChampionEntry: (championListId: string, championId: string, note: string) => void;
+  updateChampionEntry: (championListId: string, championEntryId: string, note: string) => void;
+  deleteChampionEntry: (championListId: string, championEntryId: string) => void;
 };
 
 export type IChampionEntryData = {

@@ -23,6 +23,9 @@ const ChampionList: React.FC<IChampionList> = ({
   entries,
   updateChampionList,
   deleteChampionList,
+  addChampionEntry,
+  updateChampionEntry,
+  deleteChampionEntry,
 }) => {
   return (
     <div>
