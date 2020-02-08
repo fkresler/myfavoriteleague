@@ -1,13 +1,20 @@
-export type TierListAction = {
-  type:
-    | 'UPDATE_TIERLIST_INFO'
-    | 'CREATE_CHAMPIONLIST'
-    | 'UPDATE_CHAMPIONLIST_INFO'
-    | 'DELETE_CHAMPIONLIST'
-    | 'ADD_CHAMPIONENTRY'
-    | 'UPDATE_CHAMPIONENTRY'
-    | 'DELETE_CHAMPIONENTRY';
-  payload: any;
+import { IChampionEntryData } from '@/types/tierLists';
+
+export type TierListAction =
+  | IUpdateTierListInfoAction
+  | ICreateChampionListAction
+  | IUpdateChampionListInfoAction
+  | IDeleteChampionListAction
+  | IAddChampionEntryAction
+  | IUpdateChampionEntryAction
+  | IDeleteChampionEntryAction;
+
+export type IUpdateTierListInfoAction = {
+  type: 'UPDATE_TIERLIST_INFO';
+  payload: {
+    name: string;
+    order: number;
+  };
 };
 
 export const updateTierListInfo = (name: string, order: number) => {
@@ -17,6 +24,17 @@ export const updateTierListInfo = (name: string, order: number) => {
       name,
       order,
     },
+  };
+};
+
+export type ICreateChampionListAction = {
+  type: 'CREATE_CHAMPIONLIST';
+  payload: {
+    championListId: string;
+    name: string;
+    description: string;
+    order: number;
+    entries: IChampionEntryData[];
   };
 };
 
@@ -37,6 +55,16 @@ export const createChampionList = (
   };
 };
 
+export type IUpdateChampionListInfoAction = {
+  type: 'UPDATE_CHAMPIONLIST_INFO';
+  payload: {
+    championListId: string;
+    name: string;
+    description: string;
+    order: number;
+  };
+};
+
 export const updateChampionListInfo = (
   championListId: string,
   name: string,
@@ -54,12 +82,29 @@ export const updateChampionListInfo = (
   };
 };
 
+export type IDeleteChampionListAction = {
+  type: 'DELETE_CHAMPIONLIST';
+  payload: {
+    championListId: string;
+  };
+};
+
 export const deleteChampionList = (championListId: string) => {
   return {
     type: 'DELETE_CHAMPIONLIST',
     payload: {
       championListId,
     },
+  };
+};
+
+export type IAddChampionEntryAction = {
+  type: 'ADD_CHAMPIONENTRY';
+  payload: {
+    championEntryId: string;
+    championListId: string;
+    championId: string;
+    note: string;
   };
 };
 
@@ -75,6 +120,15 @@ export const addChampionEntry = (championListId: string, championId: string, not
   };
 };
 
+export type IUpdateChampionEntryAction = {
+  type: 'UPDATE_CHAMPIONENTRY';
+  payload: {
+    championEntryId: string;
+    championListId: string;
+    note: string;
+  };
+};
+
 export const updateChampionEntry = (
   championListId: string,
   championEntryId: string,
@@ -87,6 +141,14 @@ export const updateChampionEntry = (
       championListId,
       note,
     },
+  };
+};
+
+export type IDeleteChampionEntryAction = {
+  type: 'DELETE_CHAMPIONENTRY';
+  payload: {
+    championListId: string;
+    championEntryId: string;
   };
 };
 
