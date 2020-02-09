@@ -4,6 +4,7 @@ import ChampionList from '@/components/ChampionList';
 import { ITierList, ITierListData } from '@/types/tierLists';
 import TierListReducer from './TierListReducer';
 import {
+  setTierListInfo,
   updateChampionListInfo,
   deleteChampionList,
   addChampionEntry,
@@ -28,6 +29,9 @@ const TierList: React.FC<ITierList> = ({
     lists,
   };
   const [tierListState, dispatch] = React.useReducer(TierListReducer, initialTierListData);
+  React.useEffect(() => {
+    dispatch(setTierListInfo(tierListId, authorId, name, order, lists));
+  }, [tierListId]);
   const {
     tierListId: currentTierListId,
     name: currentTierListName,

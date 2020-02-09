@@ -1,6 +1,7 @@
-import { IChampionEntryData } from '@/types/tierLists';
+import { IChampionEntryData, IChampionListData } from '@/types/tierLists';
 
 export type TierListAction =
+  | ISetTierListInfoAction
   | IUpdateTierListInfoAction
   | ICreateChampionListAction
   | IUpdateChampionListInfoAction
@@ -8,6 +9,36 @@ export type TierListAction =
   | IAddChampionEntryAction
   | IUpdateChampionEntryAction
   | IDeleteChampionEntryAction;
+
+export type ISetTierListInfoAction = {
+  type: 'SET_TIERLIST_INFO';
+  payload: {
+    tierListId: string;
+    authorId: string;
+    name: string;
+    order: number;
+    lists: IChampionListData[];
+  };
+};
+
+export const setTierListInfo = (
+  tierListId: string,
+  authorId: string,
+  name: string,
+  order: number,
+  lists: IChampionListData[],
+): TierListAction => {
+  return {
+    type: 'SET_TIERLIST_INFO',
+    payload: {
+      tierListId,
+      authorId,
+      name,
+      order,
+      lists,
+    },
+  };
+};
 
 export type IUpdateTierListInfoAction = {
   type: 'UPDATE_TIERLIST_INFO';

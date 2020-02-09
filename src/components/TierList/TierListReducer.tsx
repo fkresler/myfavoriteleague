@@ -3,6 +3,16 @@ import { TierListAction } from '@/components/TierList/TierListActions';
 
 const tierListReducer = (state: ITierListData, action: TierListAction): ITierListData => {
   switch (action.type) {
+    case 'SET_TIERLIST_INFO': {
+      const { tierListId, authorId, name, order, lists } = action.payload;
+      return {
+        tierListId,
+        authorId,
+        name,
+        order,
+        lists,
+      };
+    }
     case 'UPDATE_TIERLIST_INFO': {
       const { name, order } = action.payload;
       return {
