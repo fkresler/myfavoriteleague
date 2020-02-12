@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from 'react-rainbow-components';
 import ChampionList from '@/components/ChampionList';
-import { ITierList, ITierListData } from '@/types/tierLists';
+import usePrevious from '@/hooks/usePrevious';
+import { ITierList } from '@/types/tierLists';
 import TierListReducer from './TierListReducer';
 import {
   setTierListInfo,
@@ -21,23 +23,25 @@ const TierList: React.FC<ITierList> = ({
   updateTierList,
   deleteTierList,
 }) => {
-  const initialTierListData: ITierListData = {
+  const [tierListState, dispatch] = React.useReducer(TierListReducer, {
     tierListId,
     authorId,
     name,
     order,
     lists,
-  };
-  const [tierListState, dispatch] = React.useReducer(TierListReducer, initialTierListData);
+  });
+  const prevTierListState = usePrevious(tierListState);
   React.useEffect(() => {
+    if (prevTierListState) {
+      updateTierList(
+        prevTierListState.tierListId,
+        prevTierListState.name,
+        prevTierListState.order || 0,
+        prevTierListState.lists || [],
+      );
+    }
     dispatch(setTierListInfo(tierListId, authorId, name, order, lists));
   }, [tierListId]);
-  const {
-    tierListId: currentTierListId,
-    name: currentTierListName,
-    order: currentTierListOrder = 0,
-    lists: currentTierListLists = [],
-  } = tierListState;
   const doUpdateChampionList = (
     listId: string,
     listName: string,
@@ -60,8 +64,9 @@ const TierList: React.FC<ITierList> = ({
   };
   return (
     <>
-      {currentTierListLists &&
-        currentTierListLists.map((championList) => (
+      {tierListState &&
+        tierListState.lists &&
+        tierListState.lists.map((championList) => (
           <ChampionList
             championListId={championList.championListId}
             name={championList.name}
@@ -74,22 +79,9 @@ const TierList: React.FC<ITierList> = ({
             deleteChampionEntry={doDeleteChampionEntry}
           />
         ))}
-      <button
-        type="button"
-        onClick={() =>
-          updateTierList(
-            currentTierListId,
-            currentTierListName,
-            currentTierListOrder,
-            currentTierListLists,
-          )
-        }
-      >
-        Save this list!
-      </button>
-      <button type="button" onClick={() => deleteTierList(tierListId)}>
+      <Button type="button" variant="destructive" onClick={() => deleteTierList(tierListId)}>
         Delete this list
-      </button>
+      </Button>
     </>
   );
 };

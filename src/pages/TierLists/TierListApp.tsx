@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Button } from 'react-rainbow-components';
 import TierList from '@/components/TierList';
 import SegmentedSelect from '@/components/SegmentedSelect';
 import { ITierListData, IChampionListData } from '@/types/tierLists';
 
-interface IChampionListApp {
+interface ITierListApp {
   data: ITierListData[];
+  selectedList: string;
   methods: {
+    selectList: (id: string) => void;
     createTierList: (name: string, order: number) => void;
     updateTierList: (id: string, name: string, order: number, lists: IChampionListData[]) => void;
     deleteTierList: (id: string) => void;
   };
 }
 
-const ChampionListApp: React.FC<IChampionListApp> = ({
+const TierListApp: React.FC<ITierListApp> = ({
   data: tierListData,
-  methods: { createTierList, updateTierList, deleteTierList },
+  selectedList,
+  methods: { selectList, createTierList, updateTierList, deleteTierList },
 }) => {
-  const defaultSelectedTierList = tierListData ? tierListData[0].tierListId : undefined;
-  const [selectedList, selectList] = useState<string | undefined>(defaultSelectedTierList);
-
   const tierListSelectData = tierListData.map((tierList) => ({
     id: tierList.tierListId,
     name: tierList.name,
@@ -26,9 +27,9 @@ const ChampionListApp: React.FC<IChampionListApp> = ({
   const currentTierListData = tierListData.find((tierList) => tierList.tierListId === selectedList);
 
   const AddTierListButton: JSX.Element = (
-    <button type="button" onClick={() => createTierList('Test', 0)}>
+    <Button type="button" variant="success" onClick={() => createTierList('Test', 0)}>
       Add TierList!
-    </button>
+    </Button>
   );
 
   if (tierListData) {
@@ -64,4 +65,4 @@ const ChampionListApp: React.FC<IChampionListApp> = ({
   );
 };
 
-export default ChampionListApp;
+export default TierListApp;

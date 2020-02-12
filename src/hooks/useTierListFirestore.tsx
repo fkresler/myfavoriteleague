@@ -9,7 +9,7 @@ const useTierListFirestore = (userId?: string) => {
   const [isError, setIsError] = React.useState<boolean>(false);
   const [tierListData, setTierListData] = React.useState<ITierListData[]>([]);
 
-  const createTierList = (name: string, order: number = 1) => {
+  const createTierList = async (name: string, order: number = 1) => {
     const tierListRef = Firebase.firestore.collection('tierlists');
     tierListRef
       .add({
@@ -26,7 +26,7 @@ const useTierListFirestore = (userId?: string) => {
       });
   };
 
-  const updateTierList = (
+  const updateTierList = async (
     tierListId: string,
     name: string,
     order: number,
@@ -49,7 +49,7 @@ const useTierListFirestore = (userId?: string) => {
       });
   };
 
-  const deleteTierList = (tierListId: string) => {
+  const deleteTierList = async (tierListId: string) => {
     const tierListRef = Firebase.firestore.collection('tierlists');
     tierListRef
       .doc(tierListId)
