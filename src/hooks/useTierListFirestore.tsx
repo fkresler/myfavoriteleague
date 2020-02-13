@@ -4,25 +4,51 @@ import { ITierListData, IChampionListData } from '@/types/tierLists';
 
 const useTierListFirestore = (userId?: string) => {
   const Firebase = React.useContext(FirebaseContext);
-  const [changeCounter, setChangeCounter] = React.useState<number>(0);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
   const [tierListData, setTierListData] = React.useState<ITierListData[]>([]);
 
+  const receiveTierList = async () => {
+    setIsLoading(true);
+    const tierListRef = Firebase.firestore.collection('tierlists');
+    return tierListRef
+      .where('authorId', '==', userId)
+      .get()
+      .then((snapshot) => {
+        const userTierLists: ITierListData[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data() as ITierListData;
+          userTierLists.push({
+            tierListId: doc.id,
+            ...data,
+          });
+        });
+        console.log('Receiving data was successful for data: ', userTierLists);
+        setTierListData(userTierLists);
+        setIsLoading(false);
+        setIsError(false);
+      })
+      .catch((error) => {
+        console.log('Receiving data failed with error: ', error);
+        setIsLoading(false);
+        setIsError(true);
+      });
+  };
+
   const createTierList = async (name: string, order: number = 1) => {
     const tierListRef = Firebase.firestore.collection('tierlists');
-    tierListRef
+    return tierListRef
       .add({
         authorId: userId,
         name,
         order,
       })
       .then((response) => {
-        console.log('AddResponse: ', response);
-        setChangeCounter(changeCounter + 1);
+        console.log('Adding was successful for id: ', response.id);
+        receiveTierList();
       })
       .catch((error) => {
-        console.log('AddError: ', error);
+        console.log('Adding failed with error: ', error);
       });
   };
 
@@ -33,64 +59,39 @@ const useTierListFirestore = (userId?: string) => {
     lists: IChampionListData[],
   ) => {
     const tierListRef = Firebase.firestore.collection('tierlists');
-    tierListRef
+    return tierListRef
       .doc(tierListId)
       .update({
         name,
         order,
         lists,
       })
-      .then((response) => {
-        console.log('UpdateResponse: ', response);
-        setChangeCounter(changeCounter + 1);
+      .then(() => {
+        console.log('Updating was successful');
+        receiveTierList();
       })
       .catch((error) => {
-        console.log('UpdateError: ', error);
+        console.log('Updating failed with error: ', error);
       });
   };
 
   const deleteTierList = async (tierListId: string) => {
     const tierListRef = Firebase.firestore.collection('tierlists');
-    tierListRef
+    return tierListRef
       .doc(tierListId)
       .delete()
-      .then((response) => {
-        console.log('DeleteResponse: ', response);
-        setChangeCounter(changeCounter + 1);
+      .then(() => {
+        console.log('Deleting was successful');
+        receiveTierList();
       })
       .catch((error) => {
-        console.log('DeleteError: ', error);
+        console.log('Deleting failed with error: ', error);
       });
   };
 
   React.useEffect(() => {
-    if (userId) {
-      setIsLoading(true);
-      const tierListRef = Firebase.firestore.collection('tierlists');
-      tierListRef
-        .where('authorId', '==', userId)
-        .get()
-        .then((snapshot) => {
-          const userTierLists: ITierListData[] = [];
-          snapshot.forEach((doc) => {
-            const data = doc.data() as ITierListData;
-            userTierLists.push({
-              tierListId: doc.id,
-              ...data,
-            });
-          });
-          console.log('Data', userTierLists);
-          setTierListData(userTierLists);
-          setIsLoading(false);
-          setIsError(false);
-        })
-        .catch((error) => {
-          console.log('Error during fetching tierlists: ', error);
-          setIsLoading(false);
-          setIsError(true);
-        });
-    }
-  }, [userId, changeCounter]);
+    receiveTierList();
+  }, [userId]);
 
   return {
     tierListData,

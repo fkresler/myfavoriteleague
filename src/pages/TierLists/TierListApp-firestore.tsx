@@ -2,6 +2,7 @@ import React from 'react';
 import TierListApp from './TierListApp';
 import useAuthentication from '@/hooks/useAuthentication';
 import useTierListFirestore from '@/hooks/useTierListFirestore';
+import TierListReducer from './TierListReducer';
 
 const TierListLoading: JSX.Element = <div>Loading ...</div>;
 
@@ -11,14 +12,18 @@ const TierListAppFirestore: React.FC = () => {
   const authUser = useAuthentication();
   const authUserId = authUser ? authUser.uid : undefined;
   const { tierListData, isLoading, isError, methods } = useTierListFirestore(authUserId);
-  const initialSelectedTierList =
-    tierListData && tierListData.length > 0 ? tierListData[0].tierListId : '';
-  const [selectedList, selectList] = React.useState<string>(initialSelectedTierList);
+  const [tierListState, dispatch] = React.useReducer(TierListReducer, []);
+  const [selectedList, selectList] = React.useState<string>('');
+  React.useEffect(() => {
+    const defaultSelectedList =
+      tierListData && tierListData.length > 0 ? tierListData[0].tierListId : '';
+    selectList(defaultSelectedList);
+  }, [tierListData]);
+
   const methodSet = {
     ...methods,
-    deleteTierList: (id: string) => {
-      methods.deleteTierList(id);
-      selectList(tierListData && tierListData.length > 0 ? tierListData[0].tierListId : '');
+    deleteTierList: async (id: string) => {
+      return methods.deleteTierList(id);
     },
     selectList,
   };
