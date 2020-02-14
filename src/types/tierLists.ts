@@ -1,3 +1,53 @@
+export type ITierListApp = {
+  data: ITierListData[];
+  selectedList: string;
+  methods: ITierListMethods;
+};
+
+export type ITierListMethods = {
+  selectList: (id: string) => void;
+  createTierList: (name: string, order: number) => Promise<void>;
+  updateTierList: (
+    id: string,
+    name: string,
+    order: number,
+    lists: IChampionListData[],
+  ) => Promise<void>;
+  deleteTierList: (id: string) => Promise<void>;
+  updateTierListInfo: (tierListId: string, name: string, order: number) => void;
+  createChampionList: (
+    tierListId: string,
+    name: string,
+    description: string,
+    order: number,
+  ) => void;
+  updateChampionListInfo: (
+    tierListId: string,
+    championListId: string,
+    name: string,
+    description: string,
+    order: number,
+  ) => void;
+  deleteChampionList: (tierListId: string, championListId: string) => void;
+  addChampionEntry: (
+    tierListId: string,
+    championListId: string,
+    championId: string,
+    note: string,
+  ) => void;
+  updateChampionEntry: (
+    tierListId: string,
+    championListId: string,
+    championEntryId: string,
+    note: string,
+  ) => void;
+  deleteChampionEntry: (
+    tierListId: string,
+    championListId: string,
+    championEntryId: string,
+  ) => void;
+};
+
 export type ITierListData = {
   tierListId: string;
   authorId: string;
@@ -7,13 +57,7 @@ export type ITierListData = {
 };
 
 export type ITierList = ITierListData & {
-  updateTierList: (
-    tierListId: string,
-    name: string,
-    order: number,
-    lists: IChampionListData[],
-  ) => void;
-  deleteTierList: (tierListId: string) => void;
+  methods: ITierListMethods;
 };
 
 export type IChampionListData = {

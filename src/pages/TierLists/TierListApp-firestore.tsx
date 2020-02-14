@@ -3,6 +3,8 @@ import TierListApp from './TierListApp';
 import useAuthentication from '@/hooks/useAuthentication';
 import useTierListFirestore from '@/hooks/useTierListFirestore';
 import TierListReducer from './TierListReducer';
+import * as TierListAction from './TierListActions';
+import { ITierListMethods } from '@/types/tierLists';
 
 const TierListLoading: JSX.Element = <div>Loading ...</div>;
 
@@ -10,7 +12,7 @@ const TierListError: JSX.Element = <div>Something odd happened oof</div>;
 
 const TierListAppFirestore: React.FC = () => {
   const authUser = useAuthentication();
-  const authUserId = authUser ? authUser.uid : undefined;
+  const authUserId = authUser ? authUser.uid : '';
   const { tierListData, isLoading, isError, methods } = useTierListFirestore(authUserId);
   const [tierListState, dispatch] = React.useReducer(TierListReducer, []);
   const [selectedList, selectList] = React.useState<string>('');
@@ -18,12 +20,38 @@ const TierListAppFirestore: React.FC = () => {
     const defaultSelectedList =
       tierListData && tierListData.length > 0 ? tierListData[0].tierListId : '';
     selectList(defaultSelectedList);
+    dispatch(TierListAction.setTierLists(tierListData));
   }, [tierListData]);
 
-  const methodSet = {
+  const methodSet: ITierListMethods = {
     ...methods,
-    deleteTierList: async (id: string) => {
+    deleteTierList: async (id) => {
       return methods.deleteTierList(id);
+    },
+    updateTierListInfo: (tierListId, name, order) => {
+      dispatch(TierListAction.updateTierListInfo(tierListId, name, order));
+    },
+    createChampionList: (tierListId, name, description, order) => {
+      dispatch(TierListAction.createChampionList(tierListId, name, description, order));
+    },
+    updateChampionListInfo: (tierListId, championListId, name, description, order) => {
+      dispatch(
+        TierListAction.updateChampionListInfo(tierListId, championListId, name, description, order),
+      );
+    },
+    deleteChampionList: (tierListId, championListId) => {
+      dispatch(TierListAction.deleteChampionList(tierListId, championListId));
+    },
+    addChampionEntry: (tierListId, championListId, championId, note) => {
+      dispatch(TierListAction.addChampionEntry(tierListId, championListId, championId, note));
+    },
+    updateChampionEntry: (tierListId, championListId, championEntryId, note) => {
+      dispatch(
+        TierListAction.updateChampionEntry(tierListId, championListId, championEntryId, note),
+      );
+    },
+    deleteChampionEntry: (tierListId, championListId, championEntryId) => {
+      dispatch(TierListAction.deleteChampionEntry(tierListId, championListId, championEntryId));
     },
     selectList,
   };
@@ -36,7 +64,7 @@ const TierListAppFirestore: React.FC = () => {
     return TierListError;
   }
 
-  return <TierListApp data={tierListData} selectedList={selectedList} methods={methodSet} />;
+  return <TierListApp data={tierListState} selectedList={selectedList} methods={methodSet} />;
 };
 
 export default TierListAppFirestore;
