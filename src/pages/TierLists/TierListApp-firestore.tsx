@@ -2,6 +2,7 @@ import React from 'react';
 import TierListApp from './TierListApp';
 import useAuthentication from '@/hooks/useAuthentication';
 import useTierListFirestore from '@/hooks/useTierListFirestore';
+import useUnload from '@/hooks/useUnload';
 import TierListReducer from './TierListReducer';
 import * as TierListAction from './TierListActions';
 import { ITierListMethods } from '@/types/tierLists';
@@ -22,14 +23,32 @@ const TierListAppFirestore: React.FC = () => {
     selectList(defaultSelectedList);
     dispatch(TierListAction.setTierLists(tierListData));
   }, [tierListData]);
+  useUnload(() => {
+    console.log('Updating Firebase now!');
+    tierListState.map((tierList) => {
+      return methods.updateTierList(
+        tierList.tierListId,
+        tierList.name,
+        tierList.order || 0,
+        tierList.lists || [],
+      );
+    });
+  });
 
   const methodSet: ITierListMethods = {
     ...methods,
-    deleteTierList: async (id) => {
-      return methods.deleteTierList(id);
-    },
     updateTierListInfo: (tierListId, name, order) => {
       dispatch(TierListAction.updateTierListInfo(tierListId, name, order));
+    },
+    saveTierLists: async (completeTierListData) => {
+      completeTierListData.map((tierList) => {
+        return methods.updateTierList(
+          tierList.tierListId,
+          tierList.name,
+          tierList.order || 0,
+          tierList.lists || [],
+        );
+      });
     },
     createChampionList: (tierListId, name, description, order) => {
       dispatch(TierListAction.createChampionList(tierListId, name, description, order));

@@ -5,6 +5,7 @@ export interface ISegmentedSelect {
   choices?: {
     id: string;
     name: string;
+    order: number;
   }[];
   currentlySelectedChoice?: string;
   onChoiceSelection?: (toBeSelectedChoice: string) => void;
@@ -32,14 +33,15 @@ const StyledSegmentedOption = styled.div<{ isActive: boolean }>`
 `;
 
 const SegmentedSelect: React.FC<ISegmentedSelect> = ({
-  choices,
+  choices = [],
   currentlySelectedChoice,
   onChoiceSelection = () => {},
 }) => {
+  const sortedChoices = choices.sort((itemA, itemB) => itemA.order - itemB.order);
   return (
     <StyledSegmentedSelect>
-      {choices &&
-        choices.map((choice) => (
+      {sortedChoices &&
+        sortedChoices.map((choice) => (
           <StyledSegmentedOption
             key={choice.id}
             isActive={choice.id === currentlySelectedChoice}

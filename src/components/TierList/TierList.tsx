@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'react-rainbow-components';
+import { Button, Modal, Input } from 'react-rainbow-components';
 import ChampionList from '@/components/ChampionList';
 import { ITierList } from '@/types/tierLists';
 
@@ -21,6 +21,48 @@ const TierList: React.FC<ITierList> = ({
     deleteChampionEntry,
   },
 }) => {
+  const [isEditTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
+  const [newTierListName, setNewTierListName] = React.useState<string>(name);
+  const [newTierListError, setNewTierListError] = React.useState<string | undefined>(undefined);
+  React.useEffect(() => {
+    setNewTierListName(name);
+  }, [name]);
+  const EditTierListModal: JSX.Element = (
+    <Modal
+      id="edit-tierlist-modal"
+      isOpen={isEditTierListModalOpen}
+      onRequestClose={() => {
+        setTierListModalOpen(false);
+        setNewTierListName('');
+        setNewTierListError(undefined);
+      }}
+    >
+      <form id="edit-tierlist-form">
+        <Input
+          label="Tierlist Name"
+          placeholder="e.g. 'Top Lane'"
+          required
+          type="text"
+          error={newTierListError}
+          value={newTierListName}
+          onChange={(e) => {
+            setNewTierListName(e.target.value);
+          }}
+        />
+        <Button
+          type="submit"
+          variant="success"
+          onClick={() => {
+            updateTierListInfo(tierListId, newTierListName, order);
+            setTierListModalOpen(false);
+          }}
+        >
+          Save Tierlist!
+        </Button>
+      </form>
+    </Modal>
+  );
+
   return (
     <>
       {lists &&
@@ -43,6 +85,16 @@ const TierList: React.FC<ITierList> = ({
             deleteChampionEntry={(clId, ceId) => deleteChampionEntry(tierListId, clId, ceId)}
           />
         ))}
+      {EditTierListModal}
+      <Button
+        type="button"
+        variant="neutral"
+        onClick={() => {
+          setTierListModalOpen(true);
+        }}
+      >
+        Edit this list
+      </Button>
       <Button type="button" variant="destructive" onClick={() => deleteTierList(tierListId)}>
         Delete this list
       </Button>

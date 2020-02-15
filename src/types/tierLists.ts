@@ -5,6 +5,7 @@ export type ITierListApp = {
 };
 
 export type ITierListMethods = {
+  saveTierLists: (tierListData: ITierListData[]) => Promise<void>;
   selectList: (id: string) => void;
   createTierList: (name: string, order: number) => Promise<void>;
   updateTierList: (
