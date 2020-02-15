@@ -35,13 +35,14 @@ const useTierListFirestore = (userId: string = '') => {
       });
   };
 
-  const createTierList = async (name: string, order: number = 1) => {
+  const createTierList = async (name: string, order: number = 0) => {
     const tierListRef = Firebase.firestore.collection('tierlists');
     return tierListRef
       .add({
         authorId: userId,
         name,
         order,
+        lists: [],
       })
       .then((response) => {
         console.log('Adding was successful for id: ', response.id);

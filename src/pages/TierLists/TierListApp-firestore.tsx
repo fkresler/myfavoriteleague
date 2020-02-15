@@ -2,7 +2,6 @@ import React from 'react';
 import TierListApp from './TierListApp';
 import useAuthentication from '@/hooks/useAuthentication';
 import useTierListFirestore from '@/hooks/useTierListFirestore';
-import useUnload from '@/hooks/useUnload';
 import TierListReducer from './TierListReducer';
 import * as TierListAction from './TierListActions';
 import { ITierListMethods } from '@/types/tierLists';
@@ -23,17 +22,6 @@ const TierListAppFirestore: React.FC = () => {
     selectList(defaultSelectedList);
     dispatch(TierListAction.setTierLists(tierListData));
   }, [tierListData]);
-  useUnload(() => {
-    console.log('Updating Firebase now!');
-    tierListState.map((tierList) => {
-      return methods.updateTierList(
-        tierList.tierListId,
-        tierList.name,
-        tierList.order || 0,
-        tierList.lists || [],
-      );
-    });
-  });
 
   const methodSet: ITierListMethods = {
     ...methods,
@@ -45,12 +33,12 @@ const TierListAppFirestore: React.FC = () => {
         return methods.updateTierList(
           tierList.tierListId,
           tierList.name,
-          tierList.order || 0,
-          tierList.lists || [],
+          tierList.order,
+          tierList.lists,
         );
       });
     },
-    createChampionList: (tierListId, name, description, order) => {
+    createChampionList: (tierListId, name, description, order = 0) => {
       dispatch(TierListAction.createChampionList(tierListId, name, description, order));
     },
     updateChampionListInfo: (tierListId, championListId, name, description, order) => {
@@ -61,7 +49,7 @@ const TierListAppFirestore: React.FC = () => {
     deleteChampionList: (tierListId, championListId) => {
       dispatch(TierListAction.deleteChampionList(tierListId, championListId));
     },
-    addChampionEntry: (tierListId, championListId, championId, note) => {
+    addChampionEntry: (tierListId, championListId, championId, note = '') => {
       dispatch(TierListAction.addChampionEntry(tierListId, championListId, championId, note));
     },
     updateChampionEntry: (tierListId, championListId, championEntryId, note) => {

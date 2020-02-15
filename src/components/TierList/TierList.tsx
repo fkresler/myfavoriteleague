@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Modal, Input } from 'react-rainbow-components';
+import { Button } from 'react-rainbow-components';
 import ChampionList from '@/components/ChampionList';
+import TierListModal from '@/components/TierListModal';
+import ChampionListModal from '@/components/ChampionListModal';
 import { ITierList } from '@/types/tierLists';
 
 const TierList: React.FC<ITierList> = ({
   tierListId,
   authorId,
   name,
-  order = 0,
-  lists = [],
+  order,
+  lists,
   methods: {
     updateTierListInfo,
     deleteTierList,
@@ -22,55 +24,61 @@ const TierList: React.FC<ITierList> = ({
   },
 }) => {
   const [isEditTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
-  const [newTierListName, setNewTierListName] = React.useState<string>(name);
-  const [newTierListError, setNewTierListError] = React.useState<string | undefined>(undefined);
-  React.useEffect(() => {
-    setNewTierListName(name);
-  }, [name]);
-  const EditTierListModal: JSX.Element = (
-    <Modal
-      id="edit-tierlist-modal"
-      isOpen={isEditTierListModalOpen}
-      onRequestClose={() => {
-        setTierListModalOpen(false);
-        setNewTierListName('');
-        setNewTierListError(undefined);
-      }}
-    >
-      <form id="edit-tierlist-form">
-        <Input
-          label="Tierlist Name"
-          placeholder="e.g. 'Top Lane'"
-          required
-          type="text"
-          error={newTierListError}
-          value={newTierListName}
-          onChange={(e) => {
-            setNewTierListName(e.target.value);
-          }}
-        />
-        <Button
-          type="submit"
-          variant="success"
-          onClick={() => {
-            updateTierListInfo(tierListId, newTierListName, order);
-            setTierListModalOpen(false);
-          }}
-        >
-          Save Tierlist!
-        </Button>
-      </form>
-    </Modal>
+  const [isAddChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
+  const sortedChampionLists = lists.sort((clA, clB) => clA.order - clB.order);
+
+  const EditTierList: JSX.Element = (
+    <>
+      <TierListModal
+        isModalOpen={isEditTierListModalOpen}
+        initialTierListData={{ tierListId, authorId, name, order, lists }}
+        handleTierListData={(tlName) => {
+          updateTierListInfo(tierListId, tlName, order);
+        }}
+        closeModalBox={() => setTierListModalOpen(false)}
+      />
+      <Button
+        type="button"
+        variant="neutral"
+        onClick={() => {
+          setTierListModalOpen(true);
+        }}
+      >
+        Edit this list
+      </Button>
+    </>
+  );
+
+  const AddChampionList: JSX.Element = (
+    <>
+      <ChampionListModal
+        isModalOpen={isAddChampionListModalOpen}
+        handleChampionListData={(clName, clDescription) =>
+          createChampionList(tierListId, clName, clDescription, sortedChampionLists.length)
+        }
+        closeModalBox={() => setChampionListModalOpen(false)}
+      />
+      <Button
+        type="button"
+        variant="neutral"
+        onClick={() => {
+          setChampionListModalOpen(true);
+        }}
+      >
+        Add another Championlist!
+      </Button>
+    </>
   );
 
   return (
     <>
-      {lists &&
-        lists.map((championList) => (
+      {sortedChampionLists &&
+        sortedChampionLists.map((championList) => (
           <ChampionList
             championListId={championList.championListId}
             name={championList.name}
             description={championList.description}
+            order={championList.order}
             entries={championList.entries}
             updateChampionList={(clId, clName, clDescription, clOrder) =>
               updateChampionListInfo(tierListId, clId, clName, clDescription, clOrder)
@@ -85,16 +93,8 @@ const TierList: React.FC<ITierList> = ({
             deleteChampionEntry={(clId, ceId) => deleteChampionEntry(tierListId, clId, ceId)}
           />
         ))}
-      {EditTierListModal}
-      <Button
-        type="button"
-        variant="neutral"
-        onClick={() => {
-          setTierListModalOpen(true);
-        }}
-      >
-        Edit this list
-      </Button>
+      {AddChampionList}
+      {EditTierList}
       <Button type="button" variant="destructive" onClick={() => deleteTierList(tierListId)}>
         Delete this list
       </Button>

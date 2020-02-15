@@ -53,8 +53,8 @@ export type ITierListData = {
   tierListId: string;
   authorId: string;
   name: string;
-  order?: number;
-  lists?: IChampionListData[];
+  order: number;
+  lists: IChampionListData[];
 };
 
 export type ITierList = ITierListData & {
@@ -63,9 +63,9 @@ export type ITierList = ITierListData & {
 
 export type IChampionListData = {
   championListId: string;
-  order?: number;
+  order: number;
   name: string;
-  description?: string;
+  description: string;
   entries: IChampionEntryData[];
 };
 
@@ -86,10 +86,10 @@ export type IChampionList = IChampionListData & {
 export type IChampionEntryData = {
   championEntryId: string;
   championId: string;
-  note?: string;
+  note: string;
 };
 
 export type IChampionEntry = IChampionEntryData & {
-  updateChampionEntry: (championEntryId: string, note?: string) => void;
+  updateChampionEntry: (championEntryId: string, note: string) => void;
   deleteChampionEntry: (championEntryId: string) => void;
 };
