@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LolApi } from 'twisted';
-import { ChampionsDataDragon } from 'twisted/dist/dto';
+import { ChampionsDataDragon } from 'twisted/dist/models-dto';
 
 export interface IStaticLeagueProvider {
   state: {
