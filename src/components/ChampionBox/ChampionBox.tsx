@@ -4,14 +4,16 @@ import useChampionData from '@/hooks/useChampionData';
 
 interface IChampionBox {
   championId: string;
+  isHighlighted?: boolean;
+  onClick?: () => void;
 }
 
-const StyledChampionBox = styled.div`
+const StyledChampionBox = styled.div<{ isHighlighted?: boolean }>`
   display: inline-block;
   max-width: 5rem;
   max-height: 5rem;
   border-radius: 100%;
-  border: 1px solid grey;
+  border: ${({ isHighlighted }) => (isHighlighted ? '5px solid green' : '1px solid grey')};
   box-sizing: border-box;
   overflow: hidden;
 
@@ -25,7 +27,7 @@ const StyledInvalidContent = styled(StyledChampionBox)`
   background-color: grey;
 `;
 
-const ChampionBox = ({ championId }: IChampionBox) => {
+const ChampionBox: React.FC<IChampionBox> = ({ championId, isHighlighted, onClick }) => {
   const championData = useChampionData(championId);
 
   if (championData) {
@@ -36,7 +38,7 @@ const ChampionBox = ({ championId }: IChampionBox) => {
     } = championData;
     const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${full}`;
     return (
-      <StyledChampionBox>
+      <StyledChampionBox isHighlighted={isHighlighted} onClick={onClick}>
         <img src={imageUrl} alt={name} />
       </StyledChampionBox>
     );

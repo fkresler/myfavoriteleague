@@ -40,7 +40,7 @@ const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList,
     </Button>
   );
 
-  if (tierListData) {
+  if (tierListData && tierListData.length > 0) {
     return (
       <>
         {AddTierList}
@@ -69,7 +69,7 @@ const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList,
   return (
     <>
       {AddTierList}
-      <div>You have no content yet :( Go create some!</div>;
+      <div>You have no content yet :( Go create some!</div>
     </>
   );
 };

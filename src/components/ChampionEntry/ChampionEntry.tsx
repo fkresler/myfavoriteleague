@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from 'react-rainbow-components';
 import { IChampionEntry } from '@/types/tierLists';
 import ChampionBox from '@/components/ChampionBox';
 
@@ -37,9 +38,14 @@ const ChampionEntry: React.FC<IChampionEntry> = ({
   deleteChampionEntry,
 }: IChampionEntry) => {
   return (
-    <StyledChampionEntry>
+    <StyledChampionEntry
+      onContextMenu={(event) => {
+        event.preventDefault();
+        deleteChampionEntry(championEntryId);
+      }}
+    >
       <ChampionBox championId={championId} />
-      <span>{note}</span>
+      {note && <span>{note}</span>}
     </StyledChampionEntry>
   );
 };

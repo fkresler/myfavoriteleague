@@ -4,6 +4,7 @@ import { Card, Button } from 'react-rainbow-components';
 import { IChampionList } from '@/types/tierLists';
 import ChampionListModal from '@/components/ChampionListModal';
 import ChampionEntry from '@/components/ChampionEntry';
+import ChampionEntryModal from '@/components/ChampionEntryModal';
 
 const StyledChampionContainer = styled.div`
   display: flex;
@@ -34,10 +35,27 @@ const ChampionList: React.FC<IChampionList> = ({
   deleteChampionEntry,
 }) => {
   const [isEditChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
+  const [isChampionEntryModalOpen, setChampionEntryModalOpen] = React.useState<boolean>(false);
   const updateChampionEntryForChampionList = (championEntryId: string, note: string) =>
     updateChampionEntry(championListId, championEntryId, note);
   const deleteChampionEntryForChampionList = (championEntryId: string) =>
     deleteChampionEntry(championListId, championEntryId);
+  const AddChampionEntry: JSX.Element = (
+    <>
+      <ChampionEntryModal
+        isModalOpen={isChampionEntryModalOpen}
+        handleChampionEntryData={(selectedChampions, selectedNote) => {
+          selectedChampions.map((championId) => {
+            return addChampionEntry(championListId, championId, selectedNote);
+          });
+        }}
+        closeModalBox={() => setChampionEntryModalOpen(false)}
+      />
+      <Button type="button" variant="success" onClick={() => setChampionEntryModalOpen(true)}>
+        +
+      </Button>
+    </>
+  );
   const CardActions: JSX.Element = (
     <StyledChampionListFooter>
       <ChampionListModal
@@ -78,6 +96,7 @@ const ChampionList: React.FC<IChampionList> = ({
               deleteChampionEntry={deleteChampionEntryForChampionList}
             />
           ))}
+        {AddChampionEntry}
       </StyledChampionContainer>
     </Card>
   );

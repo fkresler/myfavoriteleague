@@ -54,14 +54,14 @@ const SignInPage: React.FC = () => {
         type="email"
         placeholder="Your login email"
         value={email}
-        onChange={(event) => onInputChange(event)}
+        onChange={(event: React.SyntheticEvent<HTMLInputElement>) => onInputChange(event)}
       />
       <InputField
         name="password"
         type="password"
         placeholder="Your login password"
         value={password}
-        onChange={(event) => onInputChange(event)}
+        onChange={(event: React.SyntheticEvent<HTMLInputElement>) => onInputChange(event)}
       />
       <button type="submit">Login</button>
       {error && <div>{error.message}</div>}
