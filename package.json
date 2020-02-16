@@ -5,6 +5,7 @@
   "scripts": {
     "preinstall": "rm -f node_modules/@",
     "postinstall": "ln -s `pwd`/src node_modules/@",
+    "depupgrade": "yarn preinstall & yarn upgrade-interactive",
     "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "lint": "yarn eslint src --ext js,ts,jsx,tsx",
     "start": "react-scripts start",
@@ -33,7 +34,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "styled-components": "^5.0.0",
-    "twisted": "^1.10.0"
+    "twisted": "git+https://git@github.com/fkresler/twisted"
   },
   "devDependencies": {
     "@types/jest": "24.9.0",
