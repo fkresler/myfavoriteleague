@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Routes from '@/types/routes';
 import { SignUpData } from '@/types/authentication';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
-import InputField from '@/components/InputField';
+import { Input, Button } from 'react-rainbow-components';
 
 const initialSignUpState: SignUpData = {
   email: '',
@@ -55,30 +55,30 @@ const SignUpPage: React.FC = () => {
   };
   return (
     <StyledForm onSubmit={(event) => onSignUpSubmit(event)}>
-      <InputField
+      <Input
         name="email"
         type="email"
         placeholder="Your email"
         value={email}
         onChange={(event) => onInputChange(event)}
       />
-      <InputField
+      <Input
         name="password"
         type="password"
         placeholder="Your password"
         value={password}
         onChange={(event) => onInputChange(event)}
       />
-      <InputField
+      <Input
         name="passwordRepeat"
         type="password"
         placeholder="Your password (again)"
         value={passwordRepeat}
         onChange={(event) => onInputChange(event)}
       />
-      <button type="submit" disabled={!isDataValid}>
+      <Button type="submit" variant="success" disabled={!isDataValid}>
         Register Now!
-      </button>
+      </Button>
       {error && <div>{error.message}</div>}
     </StyledForm>
   );
