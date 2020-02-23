@@ -4,6 +4,8 @@ import { FaTimes } from 'react-icons/fa';
 import useAuthentication from '@/hooks/useAuthentication';
 import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
+import { Link, useHistory } from 'react-router-dom';
+import Routes from '@/types/routes';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -12,29 +14,35 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const GeneralLayout = styled.div`
-  min-width: 100vw;
-  min-height: 100vh;
   display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
 `;
 
 const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
-  background-color: #5b5f97;
-  width: ${({ isNavbarOpen }) => (isNavbarOpen ? '500px' : '0')};
-  max-width: 90%;
-  overflow: hidden;
-  transition: all 0.5s ease-out;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  position: absolute;
+  width: 20rem;
+  height: 100%;
+  left: ${({ isNavbarOpen }) => (isNavbarOpen ? '0' : '-20rem')};
+  background-color: ${(props) => props.theme.colors.mainColorDark};
+  transition: all 0.5s ease-out;
+  z-index: 2;
 `;
 
-const ContentLayout = styled.div`
+const ContentLayout = styled.div<{ isNavbarOpen: boolean }>`
   width: 100vw;
   overflow: hidden;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  z-index: 1;
+  position: relative;
+  left: ${({ isNavbarOpen }) => (isNavbarOpen ? '20rem' : '0')};
+  transition: all 0.5s ease-out;
 `;
 
 const HeaderBar = styled.div`
@@ -98,35 +106,47 @@ interface INavigationLayout {
   navLinks?: JSX.Element[];
 }
 
-const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks, children }) => {
+const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
   const Firebase = useContext(FirebaseContext);
   const currentUser = useAuthentication();
   const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
+  const history = useHistory();
   return (
     <GeneralLayout>
       <GlobalStyle />
-      {navLinks && (
-        <SideNavigationBar isNavbarOpen={isNavbarOpen} ref={clickOutsideRef}>
-          <CloseButton onClick={() => setNavbarOpen(false)}>
-            <FaTimes />
-          </CloseButton>
-          {navLinks.map((navLink) => (
-            <NavigationLink onClick={() => setNavbarOpen(false)}>{navLink}</NavigationLink>
-          ))}
-          {currentUser && (
-            <NavigationLink
-              onClick={() => {
-                setNavbarOpen(false);
-                Firebase.doSignOut();
-              }}
-            >
-              Logout
-            </NavigationLink>
-          )}
-        </SideNavigationBar>
-      )}
-      <ContentLayout>
+      <SideNavigationBar isNavbarOpen={isNavbarOpen} ref={clickOutsideRef}>
+        <CloseButton onClick={() => setNavbarOpen(false)}>
+          <FaTimes />
+        </CloseButton>
+        <NavigationLink onClick={() => setNavbarOpen(false)}>
+          <Link key="home" to={Routes.HOME}>
+            Home
+          </Link>
+        </NavigationLink>
+        {currentUser && (
+          <NavigationLink onClick={() => setNavbarOpen(false)}>
+            <Link key="champion-lists" to={Routes.CHAMPION_LISTS}>
+              My Lists
+            </Link>
+          </NavigationLink>
+        )}
+        {navLinks.map((navLink) => (
+          <NavigationLink onClick={() => setNavbarOpen(false)}>{navLink}</NavigationLink>
+        ))}
+        {currentUser && (
+          <NavigationLink
+            onClick={() => {
+              setNavbarOpen(false);
+              Firebase.doSignOut();
+              history.push(Routes.HOME);
+            }}
+          >
+            Logout
+          </NavigationLink>
+        )}
+      </SideNavigationBar>
+      <ContentLayout isNavbarOpen={isNavbarOpen}>
         <HeaderBar>
           <Logo onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</Logo>
         </HeaderBar>

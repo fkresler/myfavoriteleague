@@ -1,6 +1,6 @@
 enum Routes {
   LANDING = '/',
-  HOME = '/home',
+  HOME = '/',
   SIGN_UP = '/register',
   SIGN_IN = '/login',
   PASSWORD_FORGET = '/forgotten',
