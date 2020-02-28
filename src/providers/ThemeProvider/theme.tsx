@@ -2,11 +2,12 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   colors: {
-    mainColorLighter: '#ffbd69',
-    mainColorLight: '#b21f66',
-    mainColorNormal: '#4392F1',
-    mainColorDark: '#111d5e',
-    mainColorDarker: '#240B36',
+    mainColorLighter: '#6CBD10',
+    mainColorLight: '#348B06',
+    mainColorNormal: '#2B6832',
+    mainColorDark: '#183C37',
+    mainColorDarker: '#0D1C33',
+    productColor: '#DBC93B',
     colorPositive: '#13CE66',
     colorNegative: '#FF4949',
     colorWarning: '#FFC82C',

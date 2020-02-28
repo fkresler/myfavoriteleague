@@ -24,13 +24,13 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
+  position: fixed;
   width: 20rem;
-  height: 100%;
+  height: 100vh;
   left: ${({ isNavbarOpen }) => (isNavbarOpen ? '0' : '-20rem')};
   background-color: ${(props) => props.theme.colors.mainColorDark};
   transition: all 0.5s ease-out;
-  z-index: 2;
+  z-index: 3;
 `;
 
 const ContentLayout = styled.div<{ isNavbarOpen: boolean }>`
@@ -43,27 +43,52 @@ const ContentLayout = styled.div<{ isNavbarOpen: boolean }>`
   position: relative;
   left: ${({ isNavbarOpen }) => (isNavbarOpen ? '20rem' : '0')};
   transition: all 0.5s ease-out;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background-color: ${({ isNavbarOpen }) => (isNavbarOpen ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)')};
+    pointer-events: ${({ isNavbarOpen }) => (isNavbarOpen ? 'auto' : 'none')};
+    transition: all 0.5s ease-out;
+  }
 `;
 
 const HeaderBar = styled.div`
-  background-color: #f8ffe7;
-  flex: 0 0 auto;
-  padding: 1.5rem;
+  background-color: ${(props) => props.theme.colors.mainColorNormal};
+  color: ${(props) => props.theme.colors.fontColorLight};
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 5rem;
+  line-height: 5rem;
+  padding: 0 1.5rem;
+  z-index: 2;
+
+  & * {
+    color: ${(props) => props.theme.colors.fontColorLight};
+  }
 `;
 
 const ContentWrapper = styled.div`
+  margin-top: 5rem;
   background-color: #fff;
   flex: 1 0 auto;
+  padding: 2rem 1rem;
 `;
 
 const FooterBar = styled.div`
-  background-color: #48435c;
+  background-color: ${(props) => props.theme.colors.mainColorDarker};
   flex: 0 0 auto;
   padding: 1rem;
-  color: #fff;
+  color: ${(props) => props.theme.colors.fontColorLight};
 
   & * {
-    color: #fff;
+    color: ${(props) => props.theme.colors.fontColorLight};
   }
 `;
 
@@ -76,7 +101,7 @@ const CloseButton = styled.div`
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
-  color: #fff;
+  color: ${(props) => props.theme.colors.fontColorLight};
   font-weight: bold;
   font-size: 200%;
   cursor: pointer;
@@ -86,18 +111,18 @@ const NavigationLink = styled.div`
   display: block;
   margin-top: 4rem;
   white-space: nowrap;
-  color: #fff;
+  color: ${(props) => props.theme.colors.fontColorLight};
   font-weight: bold;
   text-decoration: underline;
-  text-decoration-color: #fff;
+  text-decoration-color: ${(props) => props.theme.colors.fontColorLight};
   cursor: pointer;
 
   & * {
     white-space: nowrap;
-    color: #fff;
+    color: ${(props) => props.theme.colors.fontColorLight};
     font-weight: bold;
     text-decoration: underline;
-    text-decoration-color: #fff;
+    text-decoration-color: ${(props) => props.theme.colors.fontColorLight};
     cursor: pointer;
   }
 `;
