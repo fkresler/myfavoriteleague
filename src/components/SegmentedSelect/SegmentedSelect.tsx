@@ -13,10 +13,8 @@ export interface ISegmentedSelect {
 
 const StyledSegmentedSelect = styled.div`
   display: flex;
-  width: 60%;
-  margin: 1rem auto;
   border-radius: 3px;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const StyledSegmentedOption = styled.div<{ isActive: boolean }>`
