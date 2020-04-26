@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Weedwick from 'weedwick-api';
+import Weedwick, { DataDragonChampionDetail } from 'weedwick-api';
 
 export interface IStaticLeagueProvider {
   state: {
     isLoading: boolean;
-    championData: any | null;
+    championData: DataDragonChampionDetail | null;
   };
 }
 
@@ -17,7 +17,7 @@ export const StaticLeagueContext = React.createContext<IStaticLeagueProvider>({
 
 export const StaticLeagueProvider: React.FunctionComponent = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [championData, setChampionData] = useState<any | null>(null);
+  const [championData, setChampionData] = useState<DataDragonChampionDetail | null>(null);
   useEffect(() => {
     let abortFn: () => void;
     setIsLoading(true);
@@ -26,7 +26,9 @@ export const StaticLeagueProvider: React.FunctionComponent = ({ children }) => {
       const championResponse = await staticApi.getChampionData();
       const { data, abort } = championResponse;
       abortFn = abort;
-      setChampionData(data);
+      if (data) {
+        setChampionData(data);
+      }
       setIsLoading(false);
     };
     fetchAndSetData();
