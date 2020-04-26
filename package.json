@@ -6,7 +6,6 @@
     "preinstall": "rm -f node_modules/@",
     "postinstall": "ln -s `pwd`/src node_modules/@",
     "depupgrade": "yarn preinstall & yarn upgrade-interactive",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
     "lint": "yarn eslint src --ext js,ts,jsx,tsx",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -35,7 +34,6 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.0",
-    "twisted": "git+https://git@github.com/fkresler/twisted",
     "weedwick-api": "^1.0.1"
   },
   "devDependencies": {
