@@ -26,6 +26,7 @@
     ]
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.26.0",
     "firebase": "^7.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -34,7 +35,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.0",
-    "twisted": "git+https://git@github.com/fkresler/twisted"
+    "twisted": "git+https://git@github.com/fkresler/twisted",
+    "weedwick-api": "^1.0.1"
   },
   "devDependencies": {
     "@types/jest": "25.1.3",
