@@ -14,6 +14,12 @@ import PageNotFound from '@/pages/NotFound';
 import Theme from '@/providers/ThemeProvider/theme';
 
 const App: React.FC = () => {
+  React.useEffect(() => {
+    window.onbeforeunload = () => {
+      return 'You have unsaved changes!';
+    };
+  }, []);
+
   return (
     <FirebaseProvider>
       <StaticLeagueProvider>
