@@ -1,10 +1,10 @@
 import React from 'react';
-import TierListApp from './TierListApp';
 import useAuthentication from '@/hooks/useAuthentication';
 import useTierListFirestore from '@/hooks/useTierListFirestore';
+import { ITierListMethods } from '@/types/tierLists';
+import TierListApp from './TierListApp';
 import TierListReducer from './TierListReducer';
 import * as TierListAction from './TierListActions';
-import { ITierListMethods } from '@/types/tierLists';
 
 const TierListLoading: JSX.Element = <div>Loading ...</div>;
 
