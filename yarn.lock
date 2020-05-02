@@ -11565,9 +11565,9 @@ websocket-extensions@>=0.1.1:
   integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
 
 weedwick-api@^1.0.1:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/weedwick-api/-/weedwick-api-1.0.6.tgz#26c5d61daada8ac4804937cba26539d36b97a28b"
-  integrity sha512-TFjsaJk3dkRjorf7GGlzrK9ROcQyECmvDmAe8FCEHNWGZPgY6NNL3X2x+BkHdupNbry0Oku0wiHyBVK/mEwJhg==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/weedwick-api/-/weedwick-api-1.0.8.tgz#50ed3b2d2b64811c9b34c5ab7e08636d8eef1cfd"
+  integrity sha512-BPkldXFN3efeWTFLhDkXCKGbogaWBkvAZNo5rzIxp3fQoXWuzCnOMQlVtkfW/XLzvC5VJ1gUseCAMFYBVNWr7w==
   dependencies:
     abort-controller "^3.0.0"
     cross-fetch "^3.0.4"
