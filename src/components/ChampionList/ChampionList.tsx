@@ -80,9 +80,7 @@ const ChampionList: React.FC<IChampionList> = ({
   );
   const CardFooter: JSX.Element | undefined = description ? (
     <StyledChampionListFooter>{description}</StyledChampionListFooter>
-  ) : (
-    undefined
-  );
+  ) : undefined;
   return (
     <Card title={name} actions={CardActions} footer={CardFooter}>
       <StyledChampionContainer>

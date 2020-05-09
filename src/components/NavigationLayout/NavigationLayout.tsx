@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaPowerOff } from 'react-icons/fa';
 import useAuthentication from '@/hooks/useAuthentication';
 import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
@@ -14,9 +14,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const GeneralLayout = styled.div`
-  display: flex;
+  display: block;
   width: 100vw;
-  min-height: 100vh;
   overflow: hidden;
 `;
 
@@ -27,21 +26,19 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
   position: fixed;
   width: 20rem;
   height: 100vh;
-  left: ${({ isNavbarOpen }) => (isNavbarOpen ? '0' : '-20rem')};
+  transform: ${({ isNavbarOpen }) => (isNavbarOpen ? 'scaleX(1)' : 'scaleX(0)')};
+  transform-origin: 0% 100%;
   background-color: ${(props) => props.theme.colors.mainColorDark};
   transition: all 0.5s ease-out;
   z-index: 3;
 `;
 
 const ContentLayout = styled.div<{ isNavbarOpen: boolean }>`
-  width: 100vw;
-  overflow: hidden;
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
   z-index: 1;
-  position: relative;
-  left: ${({ isNavbarOpen }) => (isNavbarOpen ? '20rem' : '0')};
   transition: all 0.5s ease-out;
 
   &::after {
@@ -59,19 +56,26 @@ const ContentLayout = styled.div<{ isNavbarOpen: boolean }>`
 `;
 
 const HeaderBar = styled.div`
-  background-color: ${(props) => props.theme.colors.mainColorNormal};
-  color: ${(props) => props.theme.colors.fontColorLight};
   position: fixed;
   top: 0;
   width: 100%;
   height: 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   line-height: 5rem;
-  padding: 0 1.5rem;
+  background-color: ${(props) => props.theme.colors.mainColorNormal};
+  color: ${(props) => props.theme.colors.fontColorLight};
   z-index: 2;
+`;
 
-  & * {
-    color: ${(props) => props.theme.colors.fontColorLight};
-  }
+const HeaderElement = styled.div`
+  display: inline-block;
+  cursor: pointer;
+  color: ${(props) => props.theme.colors.fontColorLight};
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const ContentWrapper = styled.div`
@@ -83,18 +87,9 @@ const ContentWrapper = styled.div`
 
 const FooterBar = styled.div`
   background-color: ${(props) => props.theme.colors.mainColorDarker};
-  flex: 0 0 auto;
-  padding: 1rem;
+  padding: 2rem 1rem;
   color: ${(props) => props.theme.colors.fontColorLight};
-
-  & * {
-    color: ${(props) => props.theme.colors.fontColorLight};
-  }
-`;
-
-const Logo = styled.div`
-  display: inline-block;
-  cursor: pointer;
+  line-height: 200%;
 `;
 
 const CloseButton = styled.div`
@@ -159,24 +154,28 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
         {navLinks.map((navLink) => (
           <NavigationLink onClick={() => setNavbarOpen(false)}>{navLink}</NavigationLink>
         ))}
-        {currentUser && (
-          <NavigationLink
-            onClick={() => {
-              setNavbarOpen(false);
-              Firebase.doSignOut();
-              history.push(Routes.HOME);
-            }}
-          >
-            Logout
-          </NavigationLink>
-        )}
       </SideNavigationBar>
       <ContentLayout isNavbarOpen={isNavbarOpen}>
         <HeaderBar>
-          <Logo onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</Logo>
+          <HeaderElement onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</HeaderElement>
+          {currentUser && (
+            <HeaderElement
+              onClick={() => {
+                Firebase.doSignOut();
+                history.push(Routes.HOME);
+              }}
+            >
+              <FaPowerOff />
+            </HeaderElement>
+          )}
         </HeaderBar>
         <ContentWrapper>{children}</ContentWrapper>
-        <FooterBar>Footer</FooterBar>
+        <FooterBar>
+          MyFavoriteLeague isn't endorsed by Riot Games and doesn't reflect the views or opinions of
+          Riot Games or anyone officially involved in producing or managing Riot Games properties.
+          Riot Games, and all associated properties are trademarks or registered trademarks of Riot
+          Games, Inc.
+        </FooterBar>
       </ContentLayout>
     </GeneralLayout>
   );
