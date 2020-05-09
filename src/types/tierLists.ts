@@ -1,6 +1,6 @@
 export type ITierListApp = {
   data: ITierListData[];
-  selectedList: string;
+  selectedList?: string;
   methods: ITierListMethods;
 };
 
