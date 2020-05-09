@@ -1,7 +1,7 @@
 import React from 'react';
-import useAuthentication from '@/hooks/useAuthentication';
 import useTierListFirestore from '@/hooks/useTierListFirestore';
 import { ITierListMethods } from '@/types/tierLists';
+import { FirebaseContext } from '@/providers/FirebaseProvider';
 import TierListApp from './TierListApp';
 import TierListReducer from './TierListReducer';
 import * as TierListAction from './TierListActions';
@@ -11,7 +11,7 @@ const TierListLoading: JSX.Element = <div>Loading ...</div>;
 const TierListError: JSX.Element = <div>Something odd happened oof</div>;
 
 const TierListAppFirestore: React.FC = () => {
-  const authUser = useAuthentication();
+  const { authUser } = React.useContext(FirebaseContext);
   const authUserId = authUser ? authUser.uid : '';
   const { tierListData, isLoading, isError, methods } = useTierListFirestore(authUserId);
   const [tierListState, dispatch] = React.useReducer(TierListReducer, []);

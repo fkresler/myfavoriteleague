@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { FaTimes, FaPowerOff } from 'react-icons/fa';
-import useAuthentication from '@/hooks/useAuthentication';
 import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { Link, useHistory } from 'react-router-dom';
@@ -128,8 +127,7 @@ interface INavigationLayout {
 
 const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
-  const Firebase = useContext(FirebaseContext);
-  const currentUser = useAuthentication();
+  const { Firebase, authUser: currentUser } = useContext(FirebaseContext);
   const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
   const history = useHistory();
   return (
@@ -158,7 +156,7 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
       <ContentLayout isNavbarOpen={isNavbarOpen}>
         <HeaderBar>
           <HeaderElement onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</HeaderElement>
-          {currentUser && (
+          {currentUser && !currentUser.isAnonymous && (
             <HeaderElement
               onClick={() => {
                 Firebase.doSignOut();

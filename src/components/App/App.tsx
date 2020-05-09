@@ -7,6 +7,7 @@ import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
 import PageHome from '@/routes/Home';
 import PageChampionList from '@/routes/TierLists';
+import PageNotes from '@/routes/Notes';
 import routesignUp from '@/routes/SignUp';
 import routesignIn from '@/routes/SignIn';
 import PageResetPassword from '@/routes/ResetPassword';
@@ -33,6 +34,7 @@ const App: React.FC = () => {
                 <Route exact path={Routes.SIGN_IN} component={routesignIn} />
                 <Route exact path={Routes.PASSWORD_FORGET} component={PageResetPassword} />
                 <Route exact path={Routes.CHAMPION_LISTS} component={PageChampionList} />
+                <Route exact path={Routes.NOTES} component={PageNotes} />
                 <Route path="*" component={PageNotFound} />
               </Switch>
             </NavigationLayout>

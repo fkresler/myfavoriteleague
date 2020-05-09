@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Routes from '@/types/routes';
 import { Button } from 'react-rainbow-components';
-import useAuthentication from '@/hooks/useAuthentication';
+import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const HomePageContent = styled.div`
   display: flex;
@@ -24,13 +24,13 @@ const ButtonGroup = styled.div`
 `;
 
 const HomePage: React.FC = () => {
-  const currentUser = useAuthentication();
+  const { authUser: currentUser } = React.useContext(FirebaseContext);
 
   return (
     <HomePageContent>
       <h1>Welcome to League Mains!</h1>
       <h2>Where you can manage your preferred champions on your own!</h2>
-      {!currentUser && (
+      {(!currentUser || currentUser.isAnonymous) && (
         <ButtonGroup>
           <Button variant="brand">
             <Link to={Routes.SIGN_UP}>Sign Up</Link>
@@ -42,6 +42,9 @@ const HomePage: React.FC = () => {
             <Link to={Routes.PASSWORD_FORGET}>Forgot Password?</Link>
           </Button>
         </ButtonGroup>
+      )}
+      {currentUser && currentUser.isAnonymous && (
+        <div>Your data is saved but you should register for amazing advantages!</div>
       )}
     </HomePageContent>
   );

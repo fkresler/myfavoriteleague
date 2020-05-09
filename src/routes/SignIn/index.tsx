@@ -22,7 +22,7 @@ const StyledForm = styled.form`
 `;
 
 const SignInPage: React.FC = () => {
-  const Firebase = useContext(FirebaseContext);
+  const { Firebase } = useContext(FirebaseContext);
   const history = useHistory();
   const [signInData, setSignInData] = useState<SignInData>(initialSignInData);
   const { email, password, error } = signInData;

@@ -30,6 +30,8 @@ class Firebase {
   doSigninWithEmailAndPassword = (email: string, password: string) =>
     app.auth().signInWithEmailAndPassword(email, password);
 
+  doSigninAnonymously = () => app.auth().signInAnonymously();
+
   doSignOut = () => app.auth().signOut();
 
   doPasswordReset = (email: string) => app.auth().sendPasswordResetEmail(email);

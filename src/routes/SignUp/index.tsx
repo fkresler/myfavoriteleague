@@ -23,7 +23,7 @@ const StyledForm = styled.form`
 `;
 
 const SignUpPage: React.FC = () => {
-  const Firebase = useContext(FirebaseContext);
+  const { Firebase } = useContext(FirebaseContext);
   const history = useHistory();
   const [signUpData, setSignUpData] = useState<SignUpData>(initialSignUpState);
   const { email, password, passwordRepeat, error } = signUpData;

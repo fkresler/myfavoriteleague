@@ -3,7 +3,7 @@ import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { ITierListData, IChampionListData } from '@/types/tierLists';
 
 const useTierListFirestore = (userId: string = '') => {
-  const Firebase = React.useContext(FirebaseContext);
+  const { Firebase } = React.useContext(FirebaseContext);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
   const [tierListData, setTierListData] = React.useState<ITierListData[]>([]);
