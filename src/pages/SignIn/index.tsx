@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import Routes from '@/types/routes';
-import { SignInData } from '@/types/authentication';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
-import InputField from '@/components/InputField';
+import { SignInData } from '@/types/authentication';
+import Routes from '@/types/routes';
+import { Input, Button } from 'react-rainbow-components';
 
 const initialSignInData = {
   email: '',
@@ -49,21 +49,23 @@ const SignInPage: React.FC = () => {
   };
   return (
     <StyledForm onSubmit={(event) => onSignInSubmit(event)}>
-      <InputField
+      <Input
         name="email"
         type="email"
         placeholder="Your login email"
         value={email}
         onChange={(event: React.SyntheticEvent<HTMLInputElement>) => onInputChange(event)}
       />
-      <InputField
+      <Input
         name="password"
         type="password"
         placeholder="Your login password"
         value={password}
         onChange={(event: React.SyntheticEvent<HTMLInputElement>) => onInputChange(event)}
       />
-      <button type="submit">Login</button>
+      <Button type="submit" variant="success">
+        Login
+      </Button>
       {error && <div>{error.message}</div>}
     </StyledForm>
   );

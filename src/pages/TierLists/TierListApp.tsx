@@ -1,9 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Button } from 'react-rainbow-components';
 import TierList from '@/components/TierList';
 import SegmentedSelect from '@/components/SegmentedSelect';
 import TierListModal from '@/components/TierListModal';
 import { ITierListApp } from '@/types/tierLists';
+
+const StyledSegmentedSection = styled.div`
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  & > *:first-child {
+    flex-grow: 1;
+  }
+
+  & > *:last-child {
+    margin-left: 1rem;
+  }
+`;
 
 const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList, methods }) => {
   const tierListSelectData = tierListData.map((tierList) => ({
@@ -23,7 +40,7 @@ const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList,
         closeModalBox={() => setTierListModalOpen(false)}
       />
       <Button type="button" variant="success" onClick={() => setTierListModalOpen(true)}>
-        Add TierList!
+        +
       </Button>
     </>
   );
@@ -43,15 +60,17 @@ const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList,
   if (tierListData && tierListData.length > 0) {
     return (
       <>
-        {AddTierList}
         {SaveTierListsButton}
-        {tierListData && (
-          <SegmentedSelect
-            choices={tierListSelectData}
-            currentlySelectedChoice={selectedList}
-            onChoiceSelection={selectList}
-          />
-        )}
+        <StyledSegmentedSection>
+          {tierListData && (
+            <SegmentedSelect
+              choices={tierListSelectData}
+              currentlySelectedChoice={selectedList}
+              onChoiceSelection={selectList}
+            />
+          )}
+          {AddTierList}
+        </StyledSegmentedSection>
         {currentTierListData && (
           <TierList
             tierListId={currentTierListData.tierListId}

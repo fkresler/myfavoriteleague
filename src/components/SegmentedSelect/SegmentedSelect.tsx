@@ -13,18 +13,18 @@ export interface ISegmentedSelect {
 
 const StyledSegmentedSelect = styled.div`
   display: flex;
-  width: 60%;
-  margin: 1rem auto;
   border-radius: 3px;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const StyledSegmentedOption = styled.div<{ isActive: boolean }>`
   flex-grow: 1;
   flex-basis: 0;
   padding: 1rem;
-  background-color: ${({ isActive }) => (isActive ? 'blue' : 'orange')};
-  color: #fff;
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.mainColorDark : theme.colors.mainColorLighter};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.fontColorLight : theme.colors.fontColorDark};
   font-weight: bold;
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
   text-align: center;

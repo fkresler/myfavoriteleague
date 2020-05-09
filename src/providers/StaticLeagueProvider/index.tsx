@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { LolApi } from 'twisted';
-import { ChampionsDataDragon } from 'twisted/dist/models-dto';
+import Weedwick, { DataDragonChampions } from 'weedwick-api';
 
 export interface IStaticLeagueProvider {
   state: {
     isLoading: boolean;
-    championData: ChampionsDataDragon | null;
+    championData: DataDragonChampions | null;
   };
 }
 
@@ -18,14 +17,24 @@ export const StaticLeagueContext = React.createContext<IStaticLeagueProvider>({
 
 export const StaticLeagueProvider: React.FunctionComponent = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [championData, setChampionData] = useState<ChampionsDataDragon | null>(null);
+  const [championData, setChampionData] = useState<DataDragonChampions | null>(null);
   useEffect(() => {
-    const staticApi = new LolApi();
+    let abortFn: () => void;
     setIsLoading(true);
-    staticApi.DataDragon.getChampion().then((jsonData) => {
-      setChampionData(jsonData);
+    const fetchAndSetData = async () => {
+      const staticApi = new Weedwick();
+      const championResponse = await staticApi.getChampionData();
+      const { data, abort } = championResponse;
+      abortFn = abort;
+      if (data) {
+        setChampionData(data);
+      }
       setIsLoading(false);
-    });
+    };
+    fetchAndSetData();
+    return () => {
+      abortFn();
+    };
   }, []);
   return (
     <StaticLeagueContext.Provider
