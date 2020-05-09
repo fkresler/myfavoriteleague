@@ -33,7 +33,6 @@
     "react-rainbow-components": "^1.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "react-use-gesture": "^7.0.15",
     "styled-components": "^5.0.0",
     "weedwick-api": "^1.0.1"
   },
