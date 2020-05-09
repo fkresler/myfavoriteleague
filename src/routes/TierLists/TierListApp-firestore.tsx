@@ -15,11 +15,13 @@ const TierListAppFirestore: React.FC = () => {
   const authUserId = authUser ? authUser.uid : '';
   const { tierListData, isLoading, isError, methods } = useTierListFirestore(authUserId);
   const [tierListState, dispatch] = React.useReducer(TierListReducer, []);
-  const [selectedList, selectList] = React.useState<string>('');
+  const [selectedList, selectList] = React.useState<string | undefined>(undefined);
   React.useEffect(() => {
-    const defaultSelectedList =
-      tierListData && tierListData.length > 0 ? tierListData[0].tierListId : '';
-    selectList(defaultSelectedList);
+    if (!selectedList) {
+      const defaultSelectedList =
+        tierListData && tierListData.length > 0 ? tierListData[0].tierListId : '';
+      selectList(defaultSelectedList);
+    }
     dispatch(TierListAction.setTierLists(tierListData));
   }, [tierListData]);
 
