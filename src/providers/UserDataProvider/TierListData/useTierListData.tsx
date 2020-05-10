@@ -15,6 +15,7 @@ export const useTierListData = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
   const [state, dispatch] = React.useReducer(tierListReducer, []);
+  const [hasClientDataChanged, setHasClientDataChanged] = React.useState<boolean>(false);
   const [toBeDeletedLists, setToBeDeletedLists] = React.useState<string[]>([]);
 
   const userId = Firebase.authUser ? Firebase.authUser.uid : null;
@@ -50,28 +51,42 @@ export const useTierListData = () => {
           break;
         }
         case 'PUSH_TIERLISTS': {
-          try {
-            setIsLoading(true);
-            await toBeDeletedLists.forEach(async (tierListId) => {
-              await Firebase.Firebase.firestore
+          if (hasClientDataChanged) {
+            try {
+              setIsLoading(true);
+              const tierListsRef = Firebase.Firebase.firestore
                 .collection('users')
                 .doc(userId)
-                .collection('tierlists')
-                .doc(tierListId)
-                .delete();
-            });
-            await state.forEach(async (tierList) => {
-              await Firebase.Firebase.firestore
-                .collection('users')
-                .doc(userId)
-                .collection('tierlists')
-                .doc(tierList.tierListId)
-                .set(tierList);
-            });
-            setIsLoading(false);
-          } catch {
-            setIsError(true);
-            setIsLoading(false);
+                .collection('tierlists');
+              if (toBeDeletedLists.length > 0) {
+                const deletionQuery = await tierListsRef
+                  .where('tierListId', 'in', toBeDeletedLists)
+                  .get();
+                const deletionBatch = Firebase.Firebase.firestore.batch();
+                await deletionQuery.forEach(async (doc) => {
+                  await deletionBatch.delete(doc.ref);
+                });
+                await deletionBatch.commit();
+                setToBeDeletedLists([]);
+              }
+              const toBePushedTierLists = state.map((tierList) => tierList.tierListId);
+              const updateQuery = await tierListsRef
+                .where('tierListId', 'in', toBePushedTierLists)
+                .get();
+              const updateBatch = Firebase.Firebase.firestore.batch();
+              await updateQuery.forEach(async (doc) => {
+                const newDocData = state.find((tierList) => tierList.tierListId === doc.id);
+                if (newDocData) {
+                  await updateBatch.set(doc.ref, newDocData);
+                }
+              });
+              await updateBatch.commit();
+              setHasClientDataChanged(false);
+              setIsLoading(false);
+            } catch {
+              setIsError(true);
+              setIsLoading(false);
+            }
           }
           break;
         }
@@ -79,10 +94,12 @@ export const useTierListData = () => {
           const { tierListId } = action.payload;
           setToBeDeletedLists([...toBeDeletedLists, tierListId]);
           dispatch(action);
+          setHasClientDataChanged(true);
           break;
         }
         default: {
           dispatch(action);
+          setHasClientDataChanged(true);
         }
       }
     }

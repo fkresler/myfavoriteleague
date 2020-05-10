@@ -4,7 +4,7 @@ import { Button } from 'react-rainbow-components';
 import TierList from '@/components/TierList';
 import SegmentedSelect from '@/components/SegmentedSelect';
 import TierListModal from '@/components/TierListModal';
-import { ITierListApp } from '@/types/tierLists';
+import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
 
 const StyledSegmentedSection = styled.div`
   margin: 1.5rem 0;
@@ -22,21 +22,31 @@ const StyledSegmentedSection = styled.div`
   }
 `;
 
-const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList, methods }) => {
-  const tierListSelectData = tierListData.map((tierList) => ({
+const TierListLoading: JSX.Element = <div>Loading ...</div>;
+
+const TierListError: JSX.Element = <div>Something odd happened oof</div>;
+
+const TierListApp: React.FC = () => {
+  const { tierlists } = React.useContext(UserDataContext);
+  const {
+    state: { isLoading, isError, data },
+    dispatch,
+  } = tierlists;
+  const [selectedList, selectList] = React.useState<string | undefined>(undefined);
+
+  const tierListSelectData = data.map((tierList) => ({
     id: tierList.tierListId,
     name: tierList.name,
     order: tierList.order,
   }));
-  const currentTierListData = tierListData.find((tierList) => tierList.tierListId === selectedList);
-  const { selectList, createTierList, saveTierLists } = methods;
+  const currentTierListData = data.find((tierList) => tierList.tierListId === selectedList);
   const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
 
   const AddTierList: JSX.Element = (
     <>
       <TierListModal
         isModalOpen={isAddTierListModalOpen}
-        handleTierListData={(tlName) => createTierList(tlName, tierListData.length)}
+        handleTierListData={(tlName) => createTierList(tlName, data.length)}
         closeModalBox={() => setTierListModalOpen(false)}
       />
       <Button type="button" variant="success" onClick={() => setTierListModalOpen(true)}>
@@ -50,19 +60,19 @@ const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList,
       type="button"
       variant="success"
       onClick={() => {
-        saveTierLists(tierListData);
+        saveTierLists(data);
       }}
     >
       Save Tierlists
     </Button>
   );
 
-  if (tierListData && tierListData.length > 0) {
+  if (data && data.length > 0) {
     return (
       <>
         {SaveTierListsButton}
         <StyledSegmentedSection>
-          {tierListData && (
+          {data && (
             <SegmentedSelect
               choices={tierListSelectData}
               currentlySelectedChoice={selectedList}
@@ -83,6 +93,14 @@ const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList,
         )}
       </>
     );
+  }
+
+  if (isLoading) {
+    return TierListLoading;
+  }
+
+  if (isError) {
+    return TierListError;
   }
 
   return (
