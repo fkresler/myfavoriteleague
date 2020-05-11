@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal, Button, Input, Textarea } from 'react-rainbow-components';
-import { IChampionListData } from '@/types/tierLists';
+import { ChampionListData } from '@/types';
 
 export type IChampionListModal = {
   isModalOpen: boolean;
-  initialChampionListData?: IChampionListData;
+  initialChampionListData?: ChampionListData;
   handleChampionListData: (name: string, description: string) => void;
   closeModalBox: () => void;
 };

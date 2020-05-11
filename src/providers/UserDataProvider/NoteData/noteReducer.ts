@@ -1,6 +1,7 @@
 import { AsyncNoteData } from '@/types';
 
 export const initialNoteData: AsyncNoteData = {
+  hasLoaded: false,
   isLoading: true,
   isError: false,
   data: [],

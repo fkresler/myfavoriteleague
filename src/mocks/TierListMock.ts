@@ -1,6 +1,6 @@
-import { ITierListData } from '@/types/tierLists';
+import { TierListData } from '@/types';
 
-const tierListMock: ITierListData[] = [
+const tierListMock: TierListData[] = [
   {
     tierListId: '1',
     authorId: '0123456789',

@@ -27,7 +27,7 @@ const TierListApp: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
   const { tierlists } = React.useContext(UserDataContext);
   const {
-    state: { isLoading, isError, data },
+    state: { hasLoaded, isLoading, isError, data },
     dispatch,
   } = tierlists;
   const [selectedList, selectList] = React.useState<string | undefined>(undefined);
@@ -39,6 +39,12 @@ const TierListApp: React.FC = () => {
   }));
   const currentTierListData = data.find((tierList) => tierList.tierListId === selectedList);
   const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (!hasLoaded) {
+      dispatch(tierListActions.fetchTierLists());
+    }
+  }, [authUser, hasLoaded]);
 
   const TierListLoading: JSX.Element = <div>Loading ...</div>;
 
@@ -73,6 +79,14 @@ const TierListApp: React.FC = () => {
     </Button>
   );
 
+  if (isLoading) {
+    return TierListLoading;
+  }
+
+  if (isError) {
+    return TierListError;
+  }
+
   if (data && data.length > 0) {
     return (
       <>
@@ -99,14 +113,6 @@ const TierListApp: React.FC = () => {
         )}
       </>
     );
-  }
-
-  if (isLoading) {
-    return TierListLoading;
-  }
-
-  if (isError) {
-    return TierListError;
   }
 
   return (

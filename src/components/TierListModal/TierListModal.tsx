@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal, Button, Input } from 'react-rainbow-components';
-import { ITierListData } from '@/types/tierLists';
+import { TierListData } from '@/types';
 
 export type ITierListModal = {
   isModalOpen: boolean;
-  initialTierListData?: ITierListData;
+  initialTierListData?: TierListData;
   handleTierListData: (name: string) => void;
   closeModalBox: () => void;
 };

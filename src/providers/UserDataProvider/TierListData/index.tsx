@@ -1,2 +1,4 @@
-export * as tierListActions from './tierListActions';
+import * as tierListActions from './tierListActions';
+
 export * from './useTierListData';
+export { tierListActions };
