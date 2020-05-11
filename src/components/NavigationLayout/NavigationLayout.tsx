@@ -169,10 +169,10 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
         </HeaderBar>
         <ContentWrapper>{children}</ContentWrapper>
         <FooterBar>
-          MyFavoriteLeague isn't endorsed by Riot Games and doesn't reflect the views or opinions of
-          Riot Games or anyone officially involved in producing or managing Riot Games properties.
-          Riot Games, and all associated properties are trademarks or registered trademarks of Riot
-          Games, Inc.
+          MyFavoriteLeague isn`&apos;`t endorsed by Riot Games and doesn`&apos;`t reflect the views
+          or opinions of Riot Games or anyone officially involved in producing or managing Riot
+          Games properties. Riot Games, and all associated properties are trademarks or registered
+          trademarks of Riot Games, Inc.
         </FooterBar>
       </ContentLayout>
     </GeneralLayout>

@@ -1,4 +1,4 @@
-import { TierListData, ChampionListData, TierListAction } from '@/types';
+import { TierListData, ChampionListData, TierListAction, ChampionEntryData } from '@/types';
 
 export const fetchTierLists = (): TierListAction => {
   return {
@@ -12,15 +12,6 @@ export const pushTierLists = (): TierListAction => {
   };
 };
 
-export const deleteTierList = (tierListId: string): TierListAction => {
-  return {
-    type: 'DELETE_TIERLIST',
-    payload: {
-      tierListId,
-    },
-  };
-};
-
 export const setTierLists = (tierLists: TierListData[]): TierListAction => {
   return {
     type: 'SET_TIERLISTS',
@@ -30,17 +21,16 @@ export const setTierLists = (tierLists: TierListData[]): TierListAction => {
   };
 };
 
-export const setTierListInfo = (
-  tierListId: string,
+export const addTierList = (
   authorId: string,
-  name: string,
-  order: number,
-  lists: ChampionListData[],
+  name: string = '',
+  order: number = 0,
+  lists: ChampionListData[] = [],
 ): TierListAction => {
   return {
-    type: 'SET_TIERLIST_INFO',
+    type: 'ADD_TIERLIST',
     payload: {
-      tierListId,
+      tierListId: new Date().getTime().toString() + Math.random(),
       authorId,
       name,
       order,
@@ -49,13 +39,13 @@ export const setTierListInfo = (
   };
 };
 
-export const updateTierListInfo = (
+export const updateTierList = (
   tierListId: string,
-  name: string,
-  order: number,
+  name?: string,
+  order?: number,
 ): TierListAction => {
   return {
-    type: 'UPDATE_TIERLIST_INFO',
+    type: 'UPDATE_TIERLIST',
     payload: {
       tierListId,
       name,
@@ -64,11 +54,21 @@ export const updateTierListInfo = (
   };
 };
 
+export const deleteTierList = (tierListId: string): TierListAction => {
+  return {
+    type: 'DELETE_TIERLIST',
+    payload: {
+      tierListId,
+    },
+  };
+};
+
 export const createChampionList = (
   tierListId: string,
   name: string = 'New List',
-  description: string,
+  description: string = '',
   order: number = 0,
+  entries: ChampionEntryData[] = [],
 ): TierListAction => {
   return {
     type: 'CREATE_CHAMPIONLIST',
@@ -78,20 +78,20 @@ export const createChampionList = (
       name,
       description,
       order,
-      entries: [],
+      entries,
     },
   };
 };
 
-export const updateChampionListInfo = (
+export const updateChampionList = (
   tierListId: string,
   championListId: string,
-  name: string,
-  description: string,
-  order: number,
+  name?: string,
+  description?: string,
+  order?: number,
 ): TierListAction => {
   return {
-    type: 'UPDATE_CHAMPIONLIST_INFO',
+    type: 'UPDATE_CHAMPIONLIST',
     payload: {
       tierListId,
       championListId,
@@ -116,7 +116,7 @@ export const addChampionEntry = (
   tierListId: string,
   championListId: string,
   championId: string,
-  note: string,
+  note: string = '',
 ): TierListAction => {
   return {
     type: 'ADD_CHAMPIONENTRY',
@@ -134,7 +134,7 @@ export const updateChampionEntry = (
   tierListId: string,
   championListId: string,
   championEntryId: string,
-  note: string,
+  note?: string,
 ): TierListAction => {
   return {
     type: 'UPDATE_CHAMPIONENTRY',

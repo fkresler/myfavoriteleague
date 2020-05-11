@@ -1,11 +1,11 @@
-import { AsyncNoteData, NoteAction } from '@/types';
+import { AsyncNoteData } from '@/types';
 
 export const initialNoteData: AsyncNoteData = {
   isLoading: true,
   isError: false,
-  data: {},
+  data: [],
 };
 
-export const noteReducer = (state: AsyncNoteData, action: NoteAction) => {
+export const noteReducer = (state: AsyncNoteData) => {
   return state;
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Card, Button } from 'react-rainbow-components';
-import { IChampionList } from '@/types/tierLists';
 import ChampionListModal from '@/components/ChampionListModal';
 import ChampionEntry from '@/components/ChampionEntry';
 import ChampionEntryModal from '@/components/ChampionEntryModal';
+import { IChampionList } from '@/types';
 
 const StyledChampionContainer = styled.div`
   display: flex;

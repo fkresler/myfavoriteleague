@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Button, Modal, Textarea } from 'react-rainbow-components';
 import { useAllChampionData } from '@/hooks/useChampionData';
 import ChampionBox from '@/components/ChampionBox';

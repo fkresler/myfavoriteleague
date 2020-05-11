@@ -58,29 +58,20 @@ export const useTierListData = () => {
                 .collection('users')
                 .doc(userId)
                 .collection('tierlists');
+              const pushBatch = Firebase.Firebase.firestore.batch();
               if (toBeDeletedLists.length > 0) {
                 const deletionQuery = await tierListsRef
                   .where('tierListId', 'in', toBeDeletedLists)
                   .get();
-                const deletionBatch = Firebase.Firebase.firestore.batch();
                 await deletionQuery.forEach(async (doc) => {
-                  await deletionBatch.delete(doc.ref);
+                  await pushBatch.delete(doc.ref);
                 });
-                await deletionBatch.commit();
                 setToBeDeletedLists([]);
               }
-              const toBePushedTierLists = state.map((tierList) => tierList.tierListId);
-              const updateQuery = await tierListsRef
-                .where('tierListId', 'in', toBePushedTierLists)
-                .get();
-              const updateBatch = Firebase.Firebase.firestore.batch();
-              await updateQuery.forEach(async (doc) => {
-                const newDocData = state.find((tierList) => tierList.tierListId === doc.id);
-                if (newDocData) {
-                  await updateBatch.set(doc.ref, newDocData);
-                }
+              state.forEach((tierList) => {
+                const tierListEntryRef = tierListsRef.doc(tierList.tierListId);
+                pushBatch.set(tierListEntryRef, tierList);
               });
-              await updateBatch.commit();
               setHasClientDataChanged(false);
               setIsLoading(false);
             } catch {

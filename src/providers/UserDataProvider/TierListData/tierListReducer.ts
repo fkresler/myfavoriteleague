@@ -6,31 +6,25 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       const { tierLists } = action.payload;
       return [...tierLists];
     }
-    case 'SET_TIERLIST_INFO': {
+    case 'ADD_TIERLIST': {
       const { tierListId, authorId, name, order, lists } = action.payload;
-      const newTierListState = state.map((tierList) => {
-        if (tierList.tierListId === tierListId) {
-          return {
-            tierListId,
-            authorId,
-            name,
-            order,
-            lists: [...lists],
-          };
-        }
-        return { ...tierList };
-      });
-      return newTierListState;
+      const newTierList: TierListData = {
+        tierListId,
+        authorId,
+        name,
+        order,
+        lists,
+      };
+      return [...state, newTierList];
     }
-    case 'UPDATE_TIERLIST_INFO': {
+    case 'UPDATE_TIERLIST': {
       const { tierListId, name, order } = action.payload;
       const newTierListState = state.map((tierList) => {
         if (tierList.tierListId === tierListId) {
           return {
             ...tierList,
-            tierListId,
-            name,
-            order,
+            ...(name && { name }),
+            ...(order && { order }),
           };
         }
         return { ...tierList };
@@ -65,7 +59,7 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       });
       return newTierListState;
     }
-    case 'UPDATE_CHAMPIONLIST_INFO': {
+    case 'UPDATE_CHAMPIONLIST': {
       const { tierListId, championListId, name, description, order } = action.payload;
       const newTierListState = state.map((tierList) => {
         if (tierList.tierListId === tierListId) {
@@ -74,9 +68,9 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
             if (item.championListId === championListId) {
               return {
                 ...item,
-                name,
-                description,
-                order,
+                ...(name && { name }),
+                ...(description && { description }),
+                ...(order && { order }),
               };
             }
             return {
@@ -151,7 +145,7 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
                 if (entriesItem.championEntryId === championEntryId) {
                   return {
                     ...entriesItem,
-                    note,
+                    ...(note && { note }),
                   };
                 }
                 return { ...entriesItem };

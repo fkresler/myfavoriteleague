@@ -4,8 +4,9 @@ import { Button } from 'react-rainbow-components';
 import ChampionList from '@/components/ChampionList';
 import TierListModal from '@/components/TierListModal';
 import ChampionListModal from '@/components/ChampionListModal';
-import { ITierList } from '@/types/tierLists';
 import { FaPlus } from 'react-icons/fa';
+import { ITierList } from '@/types';
+import { tierListActions } from '@/providers/UserDataProvider';
 
 const StyledChampionListSpacer = styled.div`
   display: flex;
@@ -30,23 +31,7 @@ const StyledTierListActionRow = styled.div`
   align-items: center;
 `;
 
-const TierList: React.FC<ITierList> = ({
-  tierListId,
-  authorId,
-  name,
-  order,
-  lists,
-  methods: {
-    updateTierListInfo,
-    deleteTierList,
-    createChampionList,
-    updateChampionListInfo,
-    deleteChampionList,
-    addChampionEntry,
-    updateChampionEntry,
-    deleteChampionEntry,
-  },
-}) => {
+const TierList: React.FC<ITierList> = ({ tierListId, authorId, name, order, lists, dispatch }) => {
   const [isEditTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
   const [isAddChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
   const sortedChampionLists = lists.sort((clA, clB) => clA.order - clB.order);
@@ -57,7 +42,7 @@ const TierList: React.FC<ITierList> = ({
         isModalOpen={isEditTierListModalOpen}
         initialTierListData={{ tierListId, authorId, name, order, lists }}
         handleTierListData={(tlName) => {
-          updateTierListInfo(tierListId, tlName, order);
+          dispatch(tierListActions.updateTierList(tierListId, tlName, order));
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
@@ -78,7 +63,14 @@ const TierList: React.FC<ITierList> = ({
       <ChampionListModal
         isModalOpen={isAddChampionListModalOpen}
         handleChampionListData={(clName, clDescription) =>
-          createChampionList(tierListId, clName, clDescription, sortedChampionLists.length)
+          dispatch(
+            tierListActions.createChampionList(
+              tierListId,
+              clName,
+              clDescription,
+              sortedChampionLists.length,
+            ),
+          )
         }
         closeModalBox={() => setChampionListModalOpen(false)}
       />
@@ -106,23 +98,39 @@ const TierList: React.FC<ITierList> = ({
               order={championList.order}
               entries={championList.entries}
               updateChampionList={(clId, clName, clDescription, clOrder) =>
-                updateChampionListInfo(tierListId, clId, clName, clDescription, clOrder)
+                dispatch(
+                  tierListActions.updateChampionList(
+                    tierListId,
+                    clId,
+                    clName,
+                    clDescription,
+                    clOrder,
+                  ),
+                )
               }
-              deleteChampionList={(clId) => deleteChampionList(tierListId, clId)}
+              deleteChampionList={(clId) =>
+                dispatch(tierListActions.deleteChampionList(tierListId, clId))
+              }
               addChampionEntry={(clId, championId, note) =>
-                addChampionEntry(tierListId, clId, championId, note)
+                dispatch(tierListActions.addChampionEntry(tierListId, clId, championId, note))
               }
               updateChampionEntry={(clId, ceId, note) =>
-                updateChampionEntry(tierListId, clId, ceId, note)
+                dispatch(tierListActions.updateChampionEntry(tierListId, clId, ceId, note))
               }
-              deleteChampionEntry={(clId, ceId) => deleteChampionEntry(tierListId, clId, ceId)}
+              deleteChampionEntry={(clId, ceId) =>
+                dispatch(tierListActions.deleteChampionEntry(tierListId, clId, ceId))
+              }
             />
           ))}
       </StyledChampionListSpacer>
       <StyledAddChampionListRow>{AddChampionList}</StyledAddChampionListRow>
       <StyledTierListActionRow>
         {EditTierList}
-        <Button type="button" variant="destructive" onClick={() => deleteTierList(tierListId)}>
+        <Button
+          type="button"
+          variant="destructive"
+          onClick={() => dispatch(tierListActions.deleteTierList(tierListId))}
+        >
           Delete this list
         </Button>
       </StyledTierListActionRow>

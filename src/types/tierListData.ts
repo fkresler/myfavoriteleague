@@ -22,17 +22,40 @@ export type TierListData = {
   lists: ChampionListData[];
 };
 
+export type IChampionEntry = ChampionEntryData & {
+  updateChampionEntry: (championEntryId: string, note: string) => void;
+  deleteChampionEntry: (championEntryId: string) => void;
+};
+
+export type IChampionList = ChampionListData & {
+  updateChampionList: (
+    championListId: string,
+    name: string,
+    description: string,
+    order: number,
+    entries: ChampionEntryData[],
+  ) => void;
+  deleteChampionList: (championListId: string) => void;
+  addChampionEntry: (championListId: string, championId: string, note: string) => void;
+  updateChampionEntry: (championListId: string, championEntryId: string, note: string) => void;
+  deleteChampionEntry: (championListId: string, championEntryId: string) => void;
+};
+
+export type ITierList = TierListData & {
+  dispatch: (action: TierListAction) => void;
+};
+
 export type AsyncTierListData = AsyncUserData<TierListData>;
 
 export type TierListAction =
   | IFetchTierListsAction
   | IPushTierListsAction
-  | IDeleteTierListAction
   | ISetTierListsAction
-  | ISetTierListInfoAction
-  | IUpdateTierListInfoAction
+  | IAddTierListAction
+  | IUpdateTierListAction
+  | IDeleteTierListAction
   | ICreateChampionListAction
-  | IUpdateChampionListInfoAction
+  | IUpdateChampionListAction
   | IDeleteChampionListAction
   | IAddChampionEntryAction
   | IUpdateChampionEntryAction
@@ -46,13 +69,6 @@ export type IPushTierListsAction = {
   type: 'PUSH_TIERLISTS';
 };
 
-export type IDeleteTierListAction = {
-  type: 'DELETE_TIERLIST';
-  payload: {
-    tierListId: string;
-  };
-};
-
 export type ISetTierListsAction = {
   type: 'SET_TIERLISTS';
   payload: {
@@ -60,8 +76,8 @@ export type ISetTierListsAction = {
   };
 };
 
-export type ISetTierListInfoAction = {
-  type: 'SET_TIERLIST_INFO';
+export type IAddTierListAction = {
+  type: 'ADD_TIERLIST';
   payload: {
     tierListId: string;
     authorId: string;
@@ -71,12 +87,19 @@ export type ISetTierListInfoAction = {
   };
 };
 
-export type IUpdateTierListInfoAction = {
-  type: 'UPDATE_TIERLIST_INFO';
+export type IUpdateTierListAction = {
+  type: 'UPDATE_TIERLIST';
   payload: {
     tierListId: string;
-    name: string;
-    order: number;
+    name?: string;
+    order?: number;
+  };
+};
+
+export type IDeleteTierListAction = {
+  type: 'DELETE_TIERLIST';
+  payload: {
+    tierListId: string;
   };
 };
 
@@ -92,14 +115,14 @@ export type ICreateChampionListAction = {
   };
 };
 
-export type IUpdateChampionListInfoAction = {
-  type: 'UPDATE_CHAMPIONLIST_INFO';
+export type IUpdateChampionListAction = {
+  type: 'UPDATE_CHAMPIONLIST';
   payload: {
     tierListId: string;
     championListId: string;
-    name: string;
-    description: string;
-    order: number;
+    name?: string;
+    description?: string;
+    order?: number;
   };
 };
 
@@ -128,7 +151,7 @@ export type IUpdateChampionEntryAction = {
     tierListId: string;
     championEntryId: string;
     championListId: string;
-    note: string;
+    note?: string;
   };
 };
 

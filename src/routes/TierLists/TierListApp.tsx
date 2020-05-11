@@ -5,6 +5,7 @@ import TierList from '@/components/TierList';
 import SegmentedSelect from '@/components/SegmentedSelect';
 import TierListModal from '@/components/TierListModal';
 import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
+import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const StyledSegmentedSection = styled.div`
   margin: 1.5rem 0;
@@ -22,11 +23,8 @@ const StyledSegmentedSection = styled.div`
   }
 `;
 
-const TierListLoading: JSX.Element = <div>Loading ...</div>;
-
-const TierListError: JSX.Element = <div>Something odd happened oof</div>;
-
 const TierListApp: React.FC = () => {
+  const { authUser } = React.useContext(FirebaseContext);
   const { tierlists } = React.useContext(UserDataContext);
   const {
     state: { isLoading, isError, data },
@@ -42,11 +40,19 @@ const TierListApp: React.FC = () => {
   const currentTierListData = data.find((tierList) => tierList.tierListId === selectedList);
   const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
 
+  const TierListLoading: JSX.Element = <div>Loading ...</div>;
+
+  const TierListError: JSX.Element = <div>Something odd happened oof</div>;
+
   const AddTierList: JSX.Element = (
     <>
       <TierListModal
         isModalOpen={isAddTierListModalOpen}
-        handleTierListData={(tlName) => createTierList(tlName, data.length)}
+        handleTierListData={(tlName) => {
+          if (authUser) {
+            dispatch(tierListActions.addTierList(authUser.uid, tlName, data.length));
+          }
+        }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
       <Button type="button" variant="success" onClick={() => setTierListModalOpen(true)}>
@@ -60,7 +66,7 @@ const TierListApp: React.FC = () => {
       type="button"
       variant="success"
       onClick={() => {
-        saveTierLists(data);
+        dispatch(tierListActions.pushTierLists());
       }}
     >
       Save Tierlists
@@ -88,7 +94,7 @@ const TierListApp: React.FC = () => {
             name={currentTierListData.name}
             order={currentTierListData.order}
             lists={currentTierListData.lists}
-            methods={methods}
+            dispatch={dispatch}
           />
         )}
       </>

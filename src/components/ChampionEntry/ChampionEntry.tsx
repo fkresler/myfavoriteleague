@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'react-rainbow-components';
-import { IChampionEntry } from '@/types/tierLists';
 import ChampionBox from '@/components/ChampionBox';
+import { IChampionEntry } from '@/types';
 
 const StyledChampionEntry = styled.div`
   display: inline-block;
@@ -35,7 +34,6 @@ const ChampionEntry: React.FC<IChampionEntry> = ({
   championEntryId,
   championId,
   note,
-  updateChampionEntry,
   deleteChampionEntry,
 }: IChampionEntry) => {
   return (
