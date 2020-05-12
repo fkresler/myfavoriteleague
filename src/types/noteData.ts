@@ -23,6 +23,7 @@ export type NoteAction =
   | IDeleteNoteAction
   | IAddNoteTagAction
   | IRemoveNoteTagAction
+  | ISetNoteTagsAction
   | IClearNoteTagsAction;
 
 export type IFetchNotesAction = {
@@ -80,6 +81,14 @@ export type IRemoveNoteTagAction = {
   payload: {
     id: string;
     tag: string;
+  };
+};
+
+export type ISetNoteTagsAction = {
+  type: 'SET_TAGS';
+  payload: {
+    id: string;
+    tags: string[];
   };
 };
 

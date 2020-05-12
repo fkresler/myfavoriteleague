@@ -56,6 +56,19 @@ export const noteReducer = (state: NoteData[], action: NoteAction): NoteData[] =
       });
       return newNoteState;
     }
+    case 'SET_TAGS': {
+      const { id, tags } = action.payload;
+      const newNoteState = state.map((note) => {
+        if (note.id === id) {
+          return {
+            ...note,
+            tags,
+          };
+        }
+        return { ...note };
+      });
+      return newNoteState;
+    }
     case 'CLEAR_TAGS': {
       const { id } = action.payload;
       const newNoteState = state.map((note) => {

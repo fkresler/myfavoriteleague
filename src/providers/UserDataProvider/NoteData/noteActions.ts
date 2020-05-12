@@ -45,7 +45,7 @@ export const updateNote = (id: string, { text, title }: Partial<NoteData>): Note
   };
 };
 
-export const deleteNote = (id: string) => {
+export const deleteNote = (id: string): NoteAction => {
   return {
     type: 'DELETE_NOTE',
     payload: {
@@ -70,6 +70,16 @@ export const removeNoteTag = (id: string, tag: string): NoteAction => {
     payload: {
       id,
       tag,
+    },
+  };
+};
+
+export const setNoteTags = (id: string, tags: string[]): NoteAction => {
+  return {
+    type: 'SET_TAGS',
+    payload: {
+      id,
+      tags,
     },
   };
 };
