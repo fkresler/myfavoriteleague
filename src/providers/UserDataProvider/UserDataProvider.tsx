@@ -1,7 +1,7 @@
 import React from 'react';
 import { AsyncTierListData, AsyncNoteData, TierListAction, NoteAction } from '@/types';
 import { useTierListData, initialTierListData } from './TierListData';
-import { initialNoteData, noteReducer } from './NoteData';
+import { useNoteData, initialNoteData } from './NoteData';
 
 type UserData = {
   tierlists: {
@@ -27,7 +27,7 @@ export const UserDataContext = React.createContext<UserData>({
 
 export const UserDataProvider: React.FC = ({ children }) => {
   const { state: tierListState, dispatch: tierListDispatch } = useTierListData();
-  const [noteState, noteDispatch] = React.useReducer(noteReducer, initialNoteData);
+  const { state: noteState, dispatch: noteDispatch } = useNoteData();
 
   return (
     <UserDataContext.Provider

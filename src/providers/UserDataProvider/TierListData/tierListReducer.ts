@@ -7,13 +7,8 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       return [...tierLists];
     }
     case 'ADD_TIERLIST': {
-      const { tierListId, authorId, name, order, lists } = action.payload;
       const newTierList: TierListData = {
-        tierListId,
-        authorId,
-        name,
-        order,
-        lists,
+        ...action.payload,
       };
       return [...state, newTierList];
     }
