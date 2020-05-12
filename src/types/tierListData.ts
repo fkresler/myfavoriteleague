@@ -45,7 +45,7 @@ export type ITierList = TierListData & {
   dispatch: (action: TierListAction) => void;
 };
 
-export type AsyncTierListData = AsyncUserData<TierListData>;
+export type AsyncTierListData = AsyncUserData<TierListData[]>;
 
 export type TierListAction =
   | IFetchTierListsAction

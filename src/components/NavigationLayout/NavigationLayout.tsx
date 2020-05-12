@@ -82,6 +82,7 @@ const ContentWrapper = styled.div`
   background-color: #fff;
   flex: 1 0 auto;
   padding: 2rem 1rem;
+  min-height: 100vh;
 `;
 
 const FooterBar = styled.div`
@@ -169,9 +170,9 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
         </HeaderBar>
         <ContentWrapper>{children}</ContentWrapper>
         <FooterBar>
-          MyFavoriteLeague isn`&apos;`t endorsed by Riot Games and doesn`&apos;`t reflect the views
-          or opinions of Riot Games or anyone officially involved in producing or managing Riot
-          Games properties. Riot Games, and all associated properties are trademarks or registered
+          MyFavoriteLeague isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or
+          opinions of Riot Games or anyone officially involved in producing or managing Riot Games
+          properties. Riot Games, and all associated properties are trademarks or registered
           trademarks of Riot Games, Inc.
         </FooterBar>
       </ContentLayout>

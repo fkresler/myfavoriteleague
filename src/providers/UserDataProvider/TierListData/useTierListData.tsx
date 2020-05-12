@@ -45,14 +45,11 @@ export const useTierListData = () => {
         }
         case 'PUSH_TIERLISTS': {
           try {
-            setIsLoading(true);
             await Firebase.Firebase.firestore.collection('tierlists').doc(userId).set({
               data: state,
             });
-            setIsLoading(false);
           } catch (e) {
             setIsError(true);
-            setIsLoading(false);
           }
           break;
         }
