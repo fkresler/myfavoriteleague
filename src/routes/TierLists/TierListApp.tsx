@@ -44,7 +44,7 @@ const TierListApp: React.FC = () => {
     if (!hasLoaded) {
       dispatch(tierListActions.fetchTierLists());
     }
-  }, [authUser, hasLoaded]);
+  }, [authUser]);
 
   const TierListLoading: JSX.Element = <div>Loading ...</div>;
 

@@ -20,6 +20,10 @@ export const useTierListData = () => {
 
   const userId = Firebase.authUser ? Firebase.authUser.uid : null;
 
+  React.useEffect(() => {
+    setHasLoaded(false);
+  }, [Firebase.authUser]);
+
   const enhancedDispatch = async (action: TierListAction) => {
     setIsError(false);
     if (!userId) {
