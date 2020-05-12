@@ -144,11 +144,18 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
           </Link>
         </NavigationLink>
         {currentUser && (
-          <NavigationLink onClick={() => setNavbarOpen(false)}>
-            <Link key="champion-lists" to={Routes.CHAMPION_LISTS}>
-              My Lists
-            </Link>
-          </NavigationLink>
+          <>
+            <NavigationLink onClick={() => setNavbarOpen(false)}>
+              <Link key="champion-lists" to={Routes.CHAMPION_LISTS}>
+                My Lists
+              </Link>
+            </NavigationLink>
+            <NavigationLink onClick={() => setNavbarOpen(false)}>
+              <Link key="notes" to={Routes.NOTES}>
+                My Notes
+              </Link>
+            </NavigationLink>
+          </>
         )}
         {navLinks.map((navLink) => (
           <NavigationLink onClick={() => setNavbarOpen(false)}>{navLink}</NavigationLink>
