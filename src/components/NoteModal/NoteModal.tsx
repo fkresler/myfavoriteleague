@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, EditableText, Label, InputGroup, Overlay, TagInput } from '@blueprintjs/core';
+import { Button, EditableText, Label, InputGroup, Dialog, TagInput } from '@blueprintjs/core';
 import { NoteData } from '@/types';
 
 const NoteModal: React.FC<{
@@ -12,7 +12,7 @@ const NoteModal: React.FC<{
   const [noteTags, setNoteTags] = React.useState<string[]>([]);
 
   return (
-    <Overlay isOpen={isOpen} onClose={() => onClose()}>
+    <Dialog isOpen={isOpen} onClose={() => onClose()}>
       <form id="add-note-form">
         <Label>
           Title (optional):
@@ -48,7 +48,7 @@ const NoteModal: React.FC<{
       >
         Save Note
       </Button>
-    </Overlay>
+    </Dialog>
   );
 };
 

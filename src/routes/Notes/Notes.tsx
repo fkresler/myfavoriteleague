@@ -29,7 +29,10 @@ const Notes: React.FC = () => {
     <>
       <NoteModal
         isOpen={isAddNoteModalOpen}
-        onConfirm={(noteData: Partial<NoteData>) => dispatch(noteActions.addNote(noteData))}
+        onConfirm={(noteData: Partial<NoteData>) => {
+          dispatch(noteActions.addNote(noteData));
+          setIsAddNoteModalOpen(false);
+        }}
         onClose={() => setIsAddNoteModalOpen(false)}
       />
       <Button intent="success" onClick={() => setIsAddNoteModalOpen(true)}>
