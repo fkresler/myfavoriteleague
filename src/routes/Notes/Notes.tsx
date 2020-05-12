@@ -4,6 +4,7 @@ import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
 import Note from '@/components/Note';
 import NoteModal from '@/components/NoteModal';
+import { NoteData } from '@/types';
 
 const Notes: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
@@ -26,7 +27,11 @@ const Notes: React.FC = () => {
 
   const AddNoteModal: JSX.Element = (
     <>
-      <NoteModal isOpen={isAddNoteModalOpen} onClose={() => setIsAddNoteModalOpen(false)} />
+      <NoteModal
+        isOpen={isAddNoteModalOpen}
+        onConfirm={(noteData: Partial<NoteData>) => dispatch(noteActions.addNote(noteData))}
+        onClose={() => setIsAddNoteModalOpen(false)}
+      />
       <Button intent="success" onClick={() => setIsAddNoteModalOpen(true)}>
         +
       </Button>
