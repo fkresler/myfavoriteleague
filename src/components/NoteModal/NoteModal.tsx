@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, EditableText, Label, InputGroup, Dialog, TagInput } from '@blueprintjs/core';
+import { Button, Input, Modal, Textarea } from 'react-rainbow-components';
 import { NoteData } from '@/types';
 
 const NoteModal: React.FC<{
@@ -9,46 +9,33 @@ const NoteModal: React.FC<{
 }> = ({ isOpen, onConfirm, onClose }) => {
   const [noteTitle, setNoteTitle] = React.useState<string>('');
   const [noteText, setNoteText] = React.useState<string>('');
-  const [noteTags, setNoteTags] = React.useState<string[]>([]);
 
   return (
-    <Dialog isOpen={isOpen} onClose={() => onClose()}>
+    <Modal isOpen={isOpen} onRequestClose={() => onClose()}>
       <form id="add-note-form">
-        <Label>
-          Title (optional):
-          <InputGroup
-            placeholder="The note title ..."
-            value={noteTitle}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNoteTitle(e.target.value)}
-          />
-        </Label>
-        <EditableText
-          multiline
-          minLines={8}
-          value={noteText}
-          onConfirm={(value) => setNoteText(value)}
-          placeholder="Your note ... go ahead, never stop learning"
+        <Input
+          placeholder="The note title ..."
+          value={noteTitle}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNoteTitle(e.target.value)}
         />
-        <TagInput
-          placeholder="Add some tags here if you want"
-          values={noteTags}
-          onAdd={(values) => setNoteTags(values)}
-          onRemove={(value) => setNoteTags(noteTags.filter((tag) => tag !== value))}
+        <Textarea
+          value={noteText}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNoteText(e.target.value)}
+          placeholder="Your note ... go ahead, never stop learning"
         />
       </form>
       <Button
-        intent="success"
+        variant="success"
         onClick={() =>
           onConfirm({
             title: noteTitle,
             text: noteText,
-            tags: noteTags,
           })
         }
       >
         Save Note
       </Button>
-    </Dialog>
+    </Modal>
   );
 };
 
