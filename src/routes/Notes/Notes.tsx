@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@blueprintjs/core';
+import { Button } from 'react-rainbow-components';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
 import Note from '@/components/Note';
@@ -35,14 +35,14 @@ const Notes: React.FC = () => {
         }}
         onClose={() => setIsAddNoteModalOpen(false)}
       />
-      <Button intent="success" onClick={() => setIsAddNoteModalOpen(true)}>
+      <Button variant="success" onClick={() => setIsAddNoteModalOpen(true)}>
         +
       </Button>
     </>
   );
 
   const SaveNotesButton: JSX.Element = (
-    <Button intent="success" onClick={() => dispatch(noteActions.pushNotes())}>
+    <Button variant="success" onClick={() => dispatch(noteActions.pushNotes())}>
       Save Notes
     </Button>
   );
