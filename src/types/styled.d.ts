@@ -3,11 +3,6 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface MyFavoriteLeagueTheme {
     colors: {
-      mainColorLighter: string;
-      mainColorLight: string;
-      mainColorNormal: string;
-      mainColorDark: string;
-      mainColorDarker: string;
       lightBackgroundColor: string;
       darkBackgroundColor: string;
       colorPositive: string;

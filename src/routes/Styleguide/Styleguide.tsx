@@ -4,8 +4,13 @@ import styled, { ThemeContext, MyFavoriteLeagueTheme } from 'styled-components';
 const DebugColorWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: flex-start;
+
+  & > * {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    min-width: 10rem;
+  }
 `;
 
 const StyledThemeColorWrapper = styled.div`
@@ -34,14 +39,6 @@ const Styleguide: React.FC = () => {
   const theme: MyFavoriteLeagueTheme = React.useContext(ThemeContext);
   return (
     <>
-      <h2>Main Colors</h2>
-      <DebugColorWrapper>
-        <ThemeColor text="mainColorLighter" color={theme.colors.mainColorLighter} />
-        <ThemeColor text="mainColorLight" color={theme.colors.mainColorLight} />
-        <ThemeColor text="mainColorNormal" color={theme.colors.mainColorNormal} />
-        <ThemeColor text="mainColorDark" color={theme.colors.mainColorDark} />
-        <ThemeColor text="mainColorDarker" color={theme.colors.mainColorDarker} />
-      </DebugColorWrapper>
       <h2>Background Colors</h2>
       <DebugColorWrapper>
         <ThemeColor text="lightBgColor" color={theme.colors.lightBackgroundColor} />

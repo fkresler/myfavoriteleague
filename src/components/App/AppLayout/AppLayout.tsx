@@ -17,7 +17,7 @@ const GeneralLayout = styled.div`
   display: block;
   width: 100vw;
   overflow: hidden;
-  background-color: ${(props) => props.theme.colors.mainColorNormal};
+  background-color: ${(props) => props.theme.colors.lightBackgroundColor};
 `;
 
 const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
@@ -29,7 +29,7 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
   height: 100vh;
   transform: ${({ isNavbarOpen }) => (isNavbarOpen ? 'scaleX(1)' : 'scaleX(0)')};
   transform-origin: 0% 100%;
-  background-color: ${(props) => props.theme.colors.mainColorDark};
+  background-color: ${(props) => props.theme.colors.darkBackgroundColor};
   transition: all 0.5s ease-out;
   z-index: 3;
 `;
@@ -66,7 +66,7 @@ const HeaderBar = styled.div`
   justify-content: space-between;
   align-items: center;
   line-height: 5rem;
-  background-color: ${(props) => props.theme.colors.mainColorNormal};
+  background-color: ${(props) => props.theme.colors.darkBackgroundColor};
   color: ${(props) => props.theme.colors.fontColorLight};
   z-index: 2;
 `;
@@ -87,7 +87,7 @@ const ContentWrapper = styled.div`
 `;
 
 const FooterBar = styled.div`
-  background-color: ${(props) => props.theme.colors.mainColorDarker};
+  background-color: ${(props) => props.theme.colors.darkBackgroundColor};
   padding: 2rem 1rem;
   color: ${(props) => props.theme.colors.fontColorLight};
   line-height: 200%;

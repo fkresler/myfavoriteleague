@@ -22,7 +22,7 @@ const StyledSegmentedOption = styled.div<{ isActive: boolean }>`
   flex-basis: 0;
   padding: 1rem;
   background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.mainColorDark : theme.colors.mainColorLighter};
+    isActive ? theme.colors.darkBackgroundColor : theme.colors.darkBackgroundColor};
   color: ${({ isActive, theme }) =>
     isActive ? theme.colors.fontColorLight : theme.colors.fontColorDark};
   font-weight: bold;
