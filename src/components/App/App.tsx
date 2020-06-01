@@ -1,19 +1,22 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import NavigationLayout from '@/components/NavigationLayout';
 import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
 import { UserDataContext, UserDataProvider } from '@/providers/UserDataProvider';
-import PageHome from '@/routes/Home';
-import PageChampionList from '@/routes/TierLists';
-import PageNotes from '@/routes/Notes';
-import routesignUp from '@/routes/SignUp';
-import routesignIn from '@/routes/SignIn';
-import PageResetPassword from '@/routes/ResetPassword';
-import PageNotFound from '@/routes/NotFound';
+import {
+  Home,
+  Notes,
+  NotFound,
+  ResetPassword,
+  SignIn,
+  SignUp,
+  Styleguide,
+  TierLists,
+} from '@/routes';
 import { lightTheme, darkTheme } from '@/providers/ThemeProvider/theme';
+import AppLayout from './AppLayout';
 
 const App: React.FC = () => {
   return (
@@ -37,18 +40,19 @@ const ThemedApp: React.FC = () => {
   return (
     <Router>
       <ThemeProvider theme={useDarkTheme ? darkTheme : lightTheme}>
-        <NavigationLayout>
+        <AppLayout>
           <Switch>
-            <Route exact path={Routes.LANDING} component={PageHome} />
-            <Route exact path={Routes.HOME} component={PageHome} />
-            <Route exact path={Routes.SIGN_UP} component={routesignUp} />
-            <Route exact path={Routes.SIGN_IN} component={routesignIn} />
-            <Route exact path={Routes.PASSWORD_FORGET} component={PageResetPassword} />
-            <Route exact path={Routes.CHAMPION_LISTS} component={PageChampionList} />
-            <Route exact path={Routes.NOTES} component={PageNotes} />
-            <Route path="*" component={PageNotFound} />
+            <Route exact path={Routes.LANDING} component={Home} />
+            <Route exact path={Routes.HOME} component={Home} />
+            <Route exact path={Routes.SIGN_UP} component={SignUp} />
+            <Route exact path={Routes.SIGN_IN} component={SignIn} />
+            <Route exact path={Routes.PASSWORD_FORGET} component={ResetPassword} />
+            <Route exact path={Routes.CHAMPION_LISTS} component={TierLists} />
+            <Route exact path={Routes.NOTES} component={Notes} />
+            <Route exact path={Routes.STYLEGUIDE} component={Styleguide} />
+            <Route path="*" component={NotFound} />
           </Switch>
-        </NavigationLayout>
+        </AppLayout>
       </ThemeProvider>
     </Router>
   );

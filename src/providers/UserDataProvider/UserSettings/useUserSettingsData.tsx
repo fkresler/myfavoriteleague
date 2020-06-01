@@ -31,11 +31,11 @@ export const useUserSettingsData = () => {
 
   const enhancedDispatch = async (action: UserSettingsAction) => {
     setIsError(false);
-    if (!userId) {
-      setIsError(true);
-    } else {
-      switch (action.type) {
-        case 'FETCH_SETTINGS': {
+    switch (action.type) {
+      case 'FETCH_SETTINGS': {
+        if (!userId) {
+          setIsError(true);
+        } else {
           try {
             setIsLoading(true);
             const snapShotData = await Firebase.Firebase.firestore
@@ -50,9 +50,13 @@ export const useUserSettingsData = () => {
             setIsError(true);
             setIsLoading(false);
           }
-          break;
         }
-        case 'PUSH_SETTINGS': {
+        break;
+      }
+      case 'PUSH_SETTINGS': {
+        if (!userId) {
+          setIsError(true);
+        } else {
           try {
             await Firebase.Firebase.firestore.collection('usersettings').doc(userId).set({
               data: state,
@@ -60,11 +64,11 @@ export const useUserSettingsData = () => {
           } catch {
             setIsError(true);
           }
-          break;
         }
-        default: {
-          dispatch(action);
-        }
+        break;
+      }
+      default: {
+        dispatch(action);
       }
     }
   };

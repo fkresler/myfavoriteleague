@@ -6,6 +6,7 @@ enum Routes {
   PASSWORD_FORGET = '/forgotten',
   CHAMPION_LISTS = '/lists',
   NOTES = '/notes',
+  STYLEGUIDE = '/styleguide',
 }
 
 export default Routes;

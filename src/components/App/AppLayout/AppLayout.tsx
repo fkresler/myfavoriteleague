@@ -17,6 +17,7 @@ const GeneralLayout = styled.div`
   display: block;
   width: 100vw;
   overflow: hidden;
+  background-color: ${(props) => props.theme.colors.mainColorNormal};
 `;
 
 const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
@@ -80,7 +81,6 @@ const HeaderElement = styled.div`
 
 const ContentWrapper = styled.div`
   margin-top: 5rem;
-  background-color: #fff;
   flex: 1 0 auto;
   padding: 2rem 1rem;
   min-height: 100vh;
@@ -123,11 +123,11 @@ const NavigationLink = styled.div`
   }
 `;
 
-interface INavigationLayout {
+interface IAppLayout {
   navLinks?: JSX.Element[];
 }
 
-const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children }) => {
+const AppLayout: React.FC<IAppLayout> = ({ navLinks = [], children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
   const { Firebase, authUser: currentUser } = useContext(FirebaseContext);
   const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
@@ -194,4 +194,4 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
   );
 };
 
-export default NavigationLayout;
+export default AppLayout;
