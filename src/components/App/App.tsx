@@ -5,7 +5,7 @@ import NavigationLayout from '@/components/NavigationLayout';
 import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
-import { UserDataProvider } from '@/providers/UserDataProvider';
+import { UserDataProvider, useUserSettingsData } from '@/providers/UserDataProvider';
 import PageHome from '@/routes/Home';
 import PageChampionList from '@/routes/TierLists';
 import PageNotes from '@/routes/Notes';
@@ -13,38 +13,43 @@ import routesignUp from '@/routes/SignUp';
 import routesignIn from '@/routes/SignIn';
 import PageResetPassword from '@/routes/ResetPassword';
 import PageNotFound from '@/routes/NotFound';
-import Theme from '@/providers/ThemeProvider/theme';
+import { lightTheme, darkTheme } from '@/providers/ThemeProvider/theme';
 
 const App: React.FC = () => {
-  React.useEffect(() => {
-    window.onbeforeunload = () => {
-      return 'You have unsaved changes!';
-    };
-  }, []);
-
   return (
     <FirebaseProvider>
       <StaticLeagueProvider>
         <UserDataProvider>
-          <Router>
-            <ThemeProvider theme={Theme}>
-              <NavigationLayout>
-                <Switch>
-                  <Route exact path={Routes.LANDING} component={PageHome} />
-                  <Route exact path={Routes.HOME} component={PageHome} />
-                  <Route exact path={Routes.SIGN_UP} component={routesignUp} />
-                  <Route exact path={Routes.SIGN_IN} component={routesignIn} />
-                  <Route exact path={Routes.PASSWORD_FORGET} component={PageResetPassword} />
-                  <Route exact path={Routes.CHAMPION_LISTS} component={PageChampionList} />
-                  <Route exact path={Routes.NOTES} component={PageNotes} />
-                  <Route path="*" component={PageNotFound} />
-                </Switch>
-              </NavigationLayout>
-            </ThemeProvider>
-          </Router>
+          <ThemedApp />
         </UserDataProvider>
       </StaticLeagueProvider>
     </FirebaseProvider>
+  );
+};
+
+const ThemedApp: React.FC = () => {
+  const {
+    state: {
+      data: { useDarkTheme },
+    },
+  } = useUserSettingsData();
+  return (
+    <Router>
+      <ThemeProvider theme={useDarkTheme ? darkTheme : lightTheme}>
+        <NavigationLayout>
+          <Switch>
+            <Route exact path={Routes.LANDING} component={PageHome} />
+            <Route exact path={Routes.HOME} component={PageHome} />
+            <Route exact path={Routes.SIGN_UP} component={routesignUp} />
+            <Route exact path={Routes.SIGN_IN} component={routesignIn} />
+            <Route exact path={Routes.PASSWORD_FORGET} component={PageResetPassword} />
+            <Route exact path={Routes.CHAMPION_LISTS} component={PageChampionList} />
+            <Route exact path={Routes.NOTES} component={PageNotes} />
+            <Route path="*" component={PageNotFound} />
+          </Switch>
+        </NavigationLayout>
+      </ThemeProvider>
+    </Router>
   );
 };
 
