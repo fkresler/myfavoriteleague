@@ -6,10 +6,17 @@ export const userSettingsReducer = (
 ): UserSettingsData => {
   switch (action.type) {
     case 'SET_SETTINGS': {
-      const { summonerName = '', useDarkTheme = false } = action.payload;
+      const { summonerName, useDarkTheme } = action.payload;
       return {
+        ...state,
         summonerName,
         useDarkTheme,
+      };
+    }
+    case 'TOGGLE_THEME': {
+      return {
+        ...state,
+        useDarkTheme: !state.useDarkTheme,
       };
     }
     default:

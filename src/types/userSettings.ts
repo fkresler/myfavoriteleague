@@ -1,8 +1,8 @@
 import { AsyncUserData } from './userData';
 
 export type UserSettingsData = {
-  useDarkTheme: boolean;
-  summonerName: string;
+  useDarkTheme?: boolean;
+  summonerName?: string;
 };
 
 export type AsyncUserSettingsData = AsyncUserData<UserSettingsData>;
@@ -14,7 +14,8 @@ export type IUserSettings = UserSettingsData & {
 export type UserSettingsAction =
   | IFetchUserSettingsAction
   | IPushUserSettingsAction
-  | ISetUserSettingsActions;
+  | ISetUserSettingsAction
+  | IToggleDarkThemeAction;
 
 export type IFetchUserSettingsAction = {
   type: 'FETCH_SETTINGS';
@@ -24,10 +25,14 @@ export type IPushUserSettingsAction = {
   type: 'PUSH_SETTINGS';
 };
 
-export type ISetUserSettingsActions = {
+export type ISetUserSettingsAction = {
   type: 'SET_SETTINGS';
   payload: {
     useDarkTheme?: boolean;
     summonerName?: string;
   };
+};
+
+export type IToggleDarkThemeAction = {
+  type: 'TOGGLE_THEME';
 };

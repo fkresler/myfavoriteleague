@@ -43,7 +43,7 @@ export const useUserSettingsData = () => {
               .doc(userId)
               .get();
             const userSettingsData = (snapShotData.data() || {}) as { data?: UserSettingsData };
-            dispatch(userSettingsActions.setUserSettings(userSettingsData || {}));
+            dispatch(userSettingsActions.setUserSettings(userSettingsData.data || {}));
             setHasLoaded(true);
             setIsLoading(false);
           } catch {

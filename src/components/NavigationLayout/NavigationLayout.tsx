@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { FaTimes, FaPowerOff } from 'react-icons/fa';
+import { FaTimes, FaPowerOff, FaRegLightbulb } from 'react-icons/fa';
 import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { Link, useHistory } from 'react-router-dom';
 import Routes from '@/types/routes';
+import { UserDataContext, userSettingsActions } from '@/providers/UserDataProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -131,6 +132,9 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
   const { Firebase, authUser: currentUser } = useContext(FirebaseContext);
   const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
   const history = useHistory();
+  const {
+    usersettings: { dispatch },
+  } = React.useContext(UserDataContext);
   return (
     <GeneralLayout>
       <GlobalStyle />
@@ -164,6 +168,9 @@ const NavigationLayout: React.FC<INavigationLayout> = ({ navLinks = [], children
       <ContentLayout isNavbarOpen={isNavbarOpen}>
         <HeaderBar>
           <HeaderElement onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</HeaderElement>
+          <HeaderElement onClick={() => dispatch(userSettingsActions.toggleDarkTheme())}>
+            <FaRegLightbulb />
+          </HeaderElement>
           {currentUser && !currentUser.isAnonymous && (
             <HeaderElement
               onClick={() => {

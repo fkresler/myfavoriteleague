@@ -5,7 +5,7 @@ import NavigationLayout from '@/components/NavigationLayout';
 import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
-import { UserDataProvider, useUserSettingsData } from '@/providers/UserDataProvider';
+import { UserDataContext, UserDataProvider } from '@/providers/UserDataProvider';
 import PageHome from '@/routes/Home';
 import PageChampionList from '@/routes/TierLists';
 import PageNotes from '@/routes/Notes';
@@ -28,11 +28,12 @@ const App: React.FC = () => {
 };
 
 const ThemedApp: React.FC = () => {
+  const { usersettings } = React.useContext(UserDataContext);
   const {
     state: {
       data: { useDarkTheme },
     },
-  } = useUserSettingsData();
+  } = usersettings;
   return (
     <Router>
       <ThemeProvider theme={useDarkTheme ? darkTheme : lightTheme}>

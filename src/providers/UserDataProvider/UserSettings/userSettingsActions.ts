@@ -21,3 +21,9 @@ export const setUserSettings = (userSettings: UserSettingsData): UserSettingsAct
     },
   };
 };
+
+export const toggleDarkTheme = (): UserSettingsAction => {
+  return {
+    type: 'TOGGLE_THEME',
+  };
+};
