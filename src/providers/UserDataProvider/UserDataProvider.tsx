@@ -1,7 +1,15 @@
 import React from 'react';
-import { AsyncTierListData, AsyncNoteData, TierListAction, NoteAction } from '@/types';
+import {
+  AsyncTierListData,
+  AsyncNoteData,
+  AsyncUserSettingsData,
+  TierListAction,
+  NoteAction,
+  UserSettingsAction,
+} from '@/types';
 import { useTierListData, initialTierListData } from './TierListData';
 import { useNoteData, initialNoteData } from './NoteData';
+import { useUserSettingsData, initialAsyncUserSettingsData } from './UserSettings';
 
 type UserData = {
   tierlists: {
@@ -11,6 +19,10 @@ type UserData = {
   notes: {
     state: AsyncNoteData;
     dispatch: (action: NoteAction) => void;
+  };
+  usersettings: {
+    state: AsyncUserSettingsData;
+    dispatch: (action: UserSettingsAction) => void;
   };
 };
 
@@ -23,11 +35,16 @@ export const UserDataContext = React.createContext<UserData>({
     state: initialNoteData,
     dispatch: () => {},
   },
+  usersettings: {
+    state: initialAsyncUserSettingsData,
+    dispatch: () => {},
+  },
 });
 
 export const UserDataProvider: React.FC = ({ children }) => {
   const { state: tierListState, dispatch: tierListDispatch } = useTierListData();
   const { state: noteState, dispatch: noteDispatch } = useNoteData();
+  const { state: userSettingsState, dispatch: userSettingsDispatch } = useUserSettingsData();
 
   return (
     <UserDataContext.Provider
@@ -39,6 +56,10 @@ export const UserDataProvider: React.FC = ({ children }) => {
         notes: {
           state: noteState,
           dispatch: noteDispatch,
+        },
+        usersettings: {
+          state: userSettingsState,
+          dispatch: userSettingsDispatch,
         },
       }}
     >
