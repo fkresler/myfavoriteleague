@@ -8,7 +8,8 @@ declare module 'styled-components' {
       mainColorNormal: string;
       mainColorDark: string;
       mainColorDarker: string;
-      defaultBackgroundColor: string;
+      lightBackgroundColor: string;
+      darkBackgroundColor: string;
       colorPositive: string;
       colorNegative: string;
       colorWarning: string;

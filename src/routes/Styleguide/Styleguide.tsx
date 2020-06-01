@@ -42,6 +42,11 @@ const Styleguide: React.FC = () => {
         <ThemeColor text="mainColorDark" color={theme.colors.mainColorDark} />
         <ThemeColor text="mainColorDarker" color={theme.colors.mainColorDarker} />
       </DebugColorWrapper>
+      <h2>Background Colors</h2>
+      <DebugColorWrapper>
+        <ThemeColor text="lightBgColor" color={theme.colors.lightBackgroundColor} />
+        <ThemeColor text="darkBgColor" color={theme.colors.darkBackgroundColor} />
+      </DebugColorWrapper>
       <h2>Font Colors</h2>
       <DebugColorWrapper>
         <ThemeColor text="fontColorLight" color={theme.colors.fontColorLight} />
