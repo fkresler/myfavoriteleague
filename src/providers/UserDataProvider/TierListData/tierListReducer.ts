@@ -1,4 +1,4 @@
-import { TierListData, TierListAction } from '@/types';
+import { TierListData, TierListAction, ChampionEntryData } from '@/types';
 
 export const tierListReducer = (state: TierListData[], action: TierListAction): TierListData[] => {
   switch (action.type) {
@@ -162,6 +162,54 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
         };
       });
       return newTierListState;
+    }
+    case 'MOVE_CHAMPIONENTRY': {
+      const { tierListId, championEntryId, championListId: newChampionListId } = action.payload;
+      let movableChampionEntryData: ChampionEntryData | undefined;
+      const specifiedTierList = state.find(
+        (singleTierList) => singleTierList.tierListId === tierListId,
+      );
+      if (specifiedTierList) {
+        for (let counter = 0; counter < specifiedTierList.lists.length; counter += 1) {
+          const currentChampionList = specifiedTierList.lists[counter];
+          const foundChampionEntry = currentChampionList.entries.find(
+            (entryItem) => entryItem.championEntryId === championEntryId,
+          );
+          if (foundChampionEntry && newChampionListId !== currentChampionList.championListId) {
+            movableChampionEntryData = { ...foundChampionEntry };
+          }
+          if (foundChampionEntry) {
+            break;
+          }
+        }
+      }
+      if (movableChampionEntryData) {
+        const newTierListState = state.map((tierList) => {
+          if (tierList.tierListId === tierListId) {
+            const championListsArray = tierList.lists ? tierList.lists : [];
+            const newChampionListsArray = championListsArray.map((singleChampionList) => {
+              if (singleChampionList.championListId === newChampionListId) {
+                return {
+                  ...singleChampionList,
+                  ...(movableChampionEntryData && {
+                    entries: singleChampionList.entries.concat(movableChampionEntryData),
+                  }),
+                };
+              }
+              return {
+                ...singleChampionList,
+                entries: singleChampionList.entries.filter(
+                  (singleEntry) => singleEntry.championEntryId !== championEntryId,
+                ),
+              };
+            });
+            return { ...tierList, lists: newChampionListsArray };
+          }
+          return { ...tierList };
+        });
+        return newTierListState;
+      }
+      return state;
     }
     case 'DELETE_CHAMPIONENTRY': {
       const { tierListId, championListId, championEntryId } = action.payload;

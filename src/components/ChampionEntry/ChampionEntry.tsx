@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDrag } from 'react-dnd';
 import ChampionBox from '@/components/ChampionBox';
-import { IChampionEntry } from '@/types';
+import { DnDTierListTypes, DnDChampionEntryItem, IChampionEntry } from '@/types';
 
 const StyledChampionEntry = styled.div`
   display: inline-block;
@@ -36,8 +37,18 @@ const ChampionEntry: React.FC<IChampionEntry> = ({
   note,
   deleteChampionEntry,
 }: IChampionEntry) => {
+  const dndItemData: DnDChampionEntryItem = {
+    type: DnDTierListTypes.ChampionElement,
+    championEntryId,
+    note,
+    championId,
+  };
+  const [, dragRef] = useDrag({
+    item: dndItemData,
+  });
   return (
     <StyledChampionEntry
+      ref={dragRef}
       onContextMenu={(event) => {
         event.preventDefault();
         deleteChampionEntry(championEntryId);

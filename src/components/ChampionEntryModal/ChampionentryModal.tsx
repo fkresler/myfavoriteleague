@@ -54,6 +54,7 @@ const ChampionEntryModal: React.FC<IChampionEntryModal> = ({
             const isSelected = selectedChampions.indexOf(championKey) > -1;
             return (
               <ChampionBox
+                key={championData.id}
                 championId={championData.id}
                 isHighlighted={isSelected}
                 onClick={() => toggleChampionInSelectedList(championData.id)}

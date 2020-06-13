@@ -1,5 +1,13 @@
 import { AsyncUserData } from './userData';
 
+export enum DnDTierListTypes {
+  ChampionElement = 'ChampionElement',
+}
+
+export type DnDChampionEntryItem = ChampionEntryData & {
+  type: DnDTierListTypes;
+};
+
 export type ChampionEntryData = {
   championEntryId: string;
   championId: string;
@@ -38,6 +46,7 @@ export type IChampionList = ChampionListData & {
   deleteChampionList: (championListId: string) => void;
   addChampionEntry: (championListId: string, championId: string, note: string) => void;
   updateChampionEntry: (championListId: string, championEntryId: string, note: string) => void;
+  moveChampionEntry: (championListId: string, championEntryId: string) => void;
   deleteChampionEntry: (championListId: string, championEntryId: string) => void;
 };
 
@@ -59,6 +68,7 @@ export type TierListAction =
   | IDeleteChampionListAction
   | IAddChampionEntryAction
   | IUpdateChampionEntryAction
+  | IMoveChampionEntryAction
   | IDeleteChampionEntryAction;
 
 export type IFetchTierListsAction = {
@@ -152,6 +162,15 @@ export type IUpdateChampionEntryAction = {
     championEntryId: string;
     championListId: string;
     note?: string;
+  };
+};
+
+export type IMoveChampionEntryAction = {
+  type: 'MOVE_CHAMPIONENTRY';
+  payload: {
+    tierListId: string;
+    championListId: string;
+    championEntryId: string;
   };
 };
 

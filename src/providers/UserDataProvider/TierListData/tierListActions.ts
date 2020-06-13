@@ -147,6 +147,21 @@ export const updateChampionEntry = (
   };
 };
 
+export const moveChampionEntry = (
+  tierListId: string,
+  championListId: string,
+  championEntryId: string,
+): TierListAction => {
+  return {
+    type: 'MOVE_CHAMPIONENTRY',
+    payload: {
+      tierListId,
+      championListId,
+      championEntryId,
+    },
+  };
+};
+
 export const deleteChampionEntry = (
   tierListId: string,
   championListId: string,

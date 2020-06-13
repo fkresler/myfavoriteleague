@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDrop } from 'react-dnd';
 import { Card, Button } from 'react-rainbow-components';
 import ChampionListModal from '@/components/ChampionListModal';
 import ChampionEntry from '@/components/ChampionEntry';
 import ChampionEntryModal from '@/components/ChampionEntryModal';
-import { IChampionList } from '@/types';
+import { DnDTierListTypes, IChampionList, DnDChampionEntryItem } from '@/types';
 
 const StyledChampionContainer = styled.div`
   display: flex;
@@ -32,10 +33,20 @@ const ChampionList: React.FC<IChampionList> = ({
   deleteChampionList,
   addChampionEntry,
   updateChampionEntry,
+  moveChampionEntry,
   deleteChampionEntry,
 }) => {
+  const [, dropRef] = useDrop({
+    accept: DnDTierListTypes.ChampionElement,
+    drop: (item: DnDChampionEntryItem) => {
+      moveChampionEntry(championListId, item.championEntryId);
+    },
+  });
   const [isEditChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
   const [isChampionEntryModalOpen, setChampionEntryModalOpen] = React.useState<boolean>(false);
+  const sortedEntries = entries.sort((entryA, entryB) =>
+    entryB.championId > entryA.championId ? -1 : 1,
+  );
   const updateChampionEntryForChampionList = (championEntryId: string, note: string) =>
     updateChampionEntry(championListId, championEntryId, note);
   const deleteChampionEntryForChampionList = (championEntryId: string) =>
@@ -82,21 +93,24 @@ const ChampionList: React.FC<IChampionList> = ({
     <StyledChampionListFooter>{description}</StyledChampionListFooter>
   ) : undefined;
   return (
-    <Card title={name} actions={CardActions} footer={CardFooter}>
-      <StyledChampionContainer>
-        {entries &&
-          entries.map((champion) => (
-            <ChampionEntry
-              championEntryId={champion.championEntryId}
-              championId={champion.championId}
-              note={champion.note}
-              updateChampionEntry={updateChampionEntryForChampionList}
-              deleteChampionEntry={deleteChampionEntryForChampionList}
-            />
-          ))}
-        {AddChampionEntry}
-      </StyledChampionContainer>
-    </Card>
+    <div ref={dropRef}>
+      <Card title={name} actions={CardActions} footer={CardFooter}>
+        <StyledChampionContainer>
+          {sortedEntries &&
+            sortedEntries.map((champion) => (
+              <ChampionEntry
+                key={champion.championEntryId}
+                championEntryId={champion.championEntryId}
+                championId={champion.championId}
+                note={champion.note}
+                updateChampionEntry={updateChampionEntryForChampionList}
+                deleteChampionEntry={deleteChampionEntryForChampionList}
+              />
+            ))}
+          {AddChampionEntry}
+        </StyledChampionContainer>
+      </Card>
+    </div>
   );
 };
 

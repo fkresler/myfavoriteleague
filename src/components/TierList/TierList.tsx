@@ -92,6 +92,7 @@ const TierList: React.FC<ITierList> = ({ tierListId, authorId, name, order, list
         {sortedChampionLists &&
           sortedChampionLists.map((championList) => (
             <ChampionList
+              key={championList.championListId}
               championListId={championList.championListId}
               name={championList.name}
               description={championList.description}
@@ -117,6 +118,9 @@ const TierList: React.FC<ITierList> = ({ tierListId, authorId, name, order, list
               updateChampionEntry={(clId, ceId, note) =>
                 dispatch(tierListActions.updateChampionEntry(tierListId, clId, ceId, note))
               }
+              moveChampionEntry={(clId, ceId) => {
+                dispatch(tierListActions.moveChampionEntry(tierListId, clId, ceId));
+              }}
               deleteChampionEntry={(clId, ceId) =>
                 dispatch(tierListActions.deleteChampionEntry(tierListId, clId, ceId))
               }

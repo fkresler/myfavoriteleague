@@ -6,7 +6,7 @@ import { Button, Card } from 'react-rainbow-components';
 const Note: React.FC<{ data: INote }> = ({ data }) => {
   const { id, title, text, dispatch } = data;
   return (
-    <Card key={id}>
+    <Card>
       {title && <div>{title}</div>}
       <div>{text}</div>
       <Button variant="destructive" onClick={() => dispatch(noteActions.deleteNote(id))}>

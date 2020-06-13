@@ -18,6 +18,7 @@ const GeneralLayout = styled.div`
   width: 100vw;
   overflow: hidden;
   background-color: ${(props) => props.theme.colors.lightBackgroundColor};
+  color: ${(props) => props.theme.colors.fontColorDark};
 `;
 
 const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`

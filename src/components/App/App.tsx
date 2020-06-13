@@ -1,6 +1,8 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
@@ -23,7 +25,9 @@ const App: React.FC = () => {
     <FirebaseProvider>
       <StaticLeagueProvider>
         <UserDataProvider>
-          <ThemedApp />
+          <DndProvider backend={HTML5Backend}>
+            <ThemedApp />
+          </DndProvider>
         </UserDataProvider>
       </StaticLeagueProvider>
     </FirebaseProvider>
