@@ -168,7 +168,9 @@ const AppLayout: React.FC<IAppLayout> = ({ navLinks = [], children }) => {
       </SideNavigationBar>
       <ContentLayout isNavbarOpen={isNavbarOpen}>
         <HeaderBar>
-          <HeaderElement onClick={() => setNavbarOpen(!isNavbarOpen)}>League Mains</HeaderElement>
+          <HeaderElement onClick={() => setNavbarOpen(!isNavbarOpen)}>
+            MyFavoriteLeague
+          </HeaderElement>
           <HeaderElement onClick={() => dispatch(userSettingsActions.toggleDarkTheme())}>
             <FaRegLightbulb />
           </HeaderElement>
