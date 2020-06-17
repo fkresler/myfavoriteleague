@@ -8,11 +8,10 @@ import { createDefaultTierListData } from './initialTierListData';
 export const useTierListData = () => {
   const Firebase = React.useContext(FirebaseContext);
   const userId = Firebase.authUser ? Firebase.authUser.uid : null;
-  const initialTierListData = userId ? createDefaultTierListData(userId) : [];
   const [hasLoaded, setHasLoaded] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
-  const [state, dispatch] = React.useReducer(tierListReducer, initialTierListData);
+  const [state, dispatch] = React.useReducer(tierListReducer, []);
 
   React.useEffect(() => {
     setHasLoaded(false);
@@ -34,6 +33,9 @@ export const useTierListData = () => {
             const tierListData = (snapshotData.data() || {}) as { data?: TierListData[] };
             if (tierListData.data) {
               dispatch(tierListActions.setTierLists(tierListData.data));
+            } else {
+              const initialTierListData = userId ? createDefaultTierListData(userId) : [];
+              dispatch(tierListActions.setTierLists(initialTierListData));
             }
             setHasLoaded(true);
             setIsLoading(false);

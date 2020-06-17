@@ -30,9 +30,7 @@ const TierListApp: React.FC = () => {
     state: { hasLoaded, isLoading, isError, data },
     dispatch,
   } = tierlists;
-  const [selectedList, selectList] = React.useState<string | undefined>(
-    data.length > 0 ? data[0].id : undefined,
-  );
+  const [selectedList, selectList] = React.useState<string | undefined>(undefined);
 
   const tierListSelectData = data.map((tierList) => ({
     id: tierList.id,
@@ -47,6 +45,13 @@ const TierListApp: React.FC = () => {
       dispatch(tierListActions.fetchTierLists());
     }
   }, [authUser]);
+
+  React.useEffect(() => {
+    if (!selectedList) {
+      const defaultSelectedElement = data.length > 0 ? data[0].id : undefined;
+      selectList(defaultSelectedElement);
+    }
+  }, [hasLoaded]);
 
   const TierListLoading: JSX.Element = <div>Loading ...</div>;
 
