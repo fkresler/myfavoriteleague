@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import ChampionBox from '@/components/ChampionBox';
-import { DnDTierListTypes, DnDChampionEntryItem, IChampionEntry } from '@/types';
+import { DnDTierListTypes, DnDTierListItemData, ChampionListEntryData } from '@/types';
 import useChampionData from '@/hooks/useChampionData';
 
 const StyledChampionEntry = styled.div`
@@ -32,12 +32,17 @@ const StyledChampionEntry = styled.div`
   }
 `;
 
-const ChampionEntry: React.FC<IChampionEntry> = ({
-  championEntryId,
+export type IChampionListEntry = ChampionListEntryData & {
+  updateChampionEntry: (championEntryId: string, note: string) => void;
+  deleteChampionEntry: (championEntryId: string) => void;
+};
+
+const ChampionEntry: React.FC<IChampionListEntry> = ({
+  id,
   championId,
   note,
   deleteChampionEntry,
-}: IChampionEntry) => {
+}) => {
   const championData = useChampionData(championId);
   let imageUrl: string | undefined;
   if (championData) {
@@ -47,9 +52,9 @@ const ChampionEntry: React.FC<IChampionEntry> = ({
     } = championData;
     imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${full}`;
   }
-  const dndItemData: DnDChampionEntryItem = {
+  const dndItemData: DnDTierListItemData<ChampionListEntryData> = {
     type: DnDTierListTypes.ChampionElement,
-    championEntryId,
+    id,
     note,
     championId,
   };

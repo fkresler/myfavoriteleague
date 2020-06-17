@@ -5,7 +5,7 @@ import ChampionList from '@/components/ChampionList';
 import TierListModal from '@/components/TierListModal';
 import ChampionListModal from '@/components/ChampionListModal';
 import { FaPlus } from 'react-icons/fa';
-import { ITierList } from '@/types';
+import { TierListData, TierListAction } from '@/types';
 import { tierListActions } from '@/providers/UserDataProvider';
 
 const StyledChampionListSpacer = styled.div`
@@ -31,7 +31,21 @@ const StyledTierListActionRow = styled.div`
   align-items: center;
 `;
 
-const TierList: React.FC<ITierList> = ({ tierListId, authorId, name, order, lists, dispatch }) => {
+export type ITierList = TierListData & {
+  dispatch: (action: TierListAction) => void;
+};
+
+const TierList: React.FC<ITierList> = ({
+  id,
+  authorId,
+  name,
+  role,
+  isPublic,
+  isRemovable,
+  order,
+  lists,
+  dispatch,
+}) => {
   const [isEditTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
   const [isAddChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
   const sortedChampionLists = lists.sort((clA, clB) => clA.order - clB.order);
@@ -40,9 +54,9 @@ const TierList: React.FC<ITierList> = ({ tierListId, authorId, name, order, list
     <>
       <TierListModal
         isModalOpen={isEditTierListModalOpen}
-        initialTierListData={{ tierListId, authorId, name, order, lists }}
+        initialTierListData={{ id, authorId, name, order, lists }}
         handleTierListData={(tlName) => {
-          dispatch(tierListActions.updateTierList(tierListId, tlName, order));
+          dispatch(tierListActions.updateTierList(id, tlName, order));
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />

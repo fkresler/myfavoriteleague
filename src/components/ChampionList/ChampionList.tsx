@@ -5,7 +5,12 @@ import { Card, Button } from 'react-rainbow-components';
 import ChampionListModal from '@/components/ChampionListModal';
 import ChampionEntry from '@/components/ChampionEntry';
 import ChampionEntryModal from '@/components/ChampionEntryModal';
-import { DnDTierListTypes, IChampionList, DnDChampionEntryItem } from '@/types';
+import {
+  DnDTierListTypes,
+  DnDTierListItemData,
+  ChampionListData,
+  ChampionListEntryData,
+} from '@/types';
 
 const StyledChampionContainer = styled.div`
   display: flex;
@@ -23,8 +28,23 @@ const StyledChampionListFooter = styled.div`
   display: flex;
 `;
 
+export type IChampionList = ChampionListData & {
+  updateChampionList: (
+    championListId: string,
+    name: string,
+    description: string,
+    order: number,
+    entries: ChampionListEntryData[],
+  ) => void;
+  deleteChampionList: (championListId: string) => void;
+  addChampionEntry: (championListId: string, championId: string, note: string) => void;
+  updateChampionEntry: (championListId: string, championEntryId: string, note: string) => void;
+  moveChampionEntry: (championListId: string, championEntryId: string) => void;
+  deleteChampionEntry: (championListId: string, championEntryId: string) => void;
+};
+
 const ChampionList: React.FC<IChampionList> = ({
-  championListId,
+  id,
   name,
   description,
   order,
@@ -38,8 +58,8 @@ const ChampionList: React.FC<IChampionList> = ({
 }) => {
   const [, dropRef] = useDrop({
     accept: DnDTierListTypes.ChampionElement,
-    drop: (item: DnDChampionEntryItem) => {
-      moveChampionEntry(championListId, item.championEntryId);
+    drop: (item: DnDTierListItemData<ChampionListEntryData>) => {
+      moveChampionEntry(id, item.championEntryId);
     },
   });
   const [isEditChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);

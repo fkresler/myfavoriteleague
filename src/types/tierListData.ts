@@ -1,57 +1,38 @@
 import { AsyncUserData } from './userData';
+import { PositionalRole } from './league';
 
 export enum DnDTierListTypes {
   ChampionElement = 'ChampionElement',
+  OrderedChampionListElement = 'ChampionListElement',
 }
 
-export type DnDChampionEntryItem = ChampionEntryData & {
+export type DnDTierListItemData<T> = T & {
   type: DnDTierListTypes;
 };
 
-export type ChampionEntryData = {
-  championEntryId: string;
+export type ChampionListEntryData = {
+  id: string;
   championId: string;
-  note: string;
+  note: string | null;
 };
 
 export type ChampionListData = {
-  championListId: string;
-  order: number;
+  id: string;
   name: string;
+  order: number;
   description: string;
-  entries: ChampionEntryData[];
+  entries: ChampionListEntryData[];
 };
 
 export type TierListData = {
-  tierListId: string;
+  id: string;
   authorId: string;
   name: string;
+  role: PositionalRole | null;
+  isPublic: boolean;
+  isRemovable: boolean;
   order: number;
   lists: ChampionListData[];
-};
-
-export type IChampionEntry = ChampionEntryData & {
-  updateChampionEntry: (championEntryId: string, note: string) => void;
-  deleteChampionEntry: (championEntryId: string) => void;
-};
-
-export type IChampionList = ChampionListData & {
-  updateChampionList: (
-    championListId: string,
-    name: string,
-    description: string,
-    order: number,
-    entries: ChampionEntryData[],
-  ) => void;
-  deleteChampionList: (championListId: string) => void;
-  addChampionEntry: (championListId: string, championId: string, note: string) => void;
-  updateChampionEntry: (championListId: string, championEntryId: string, note: string) => void;
-  moveChampionEntry: (championListId: string, championEntryId: string) => void;
-  deleteChampionEntry: (championListId: string, championEntryId: string) => void;
-};
-
-export type ITierList = TierListData & {
-  dispatch: (action: TierListAction) => void;
 };
 
 export type AsyncTierListData = AsyncUserData<TierListData[]>;
@@ -63,13 +44,13 @@ export type TierListAction =
   | IAddTierListAction
   | IUpdateTierListAction
   | IDeleteTierListAction
-  | ICreateChampionListAction
+  | IAddChampionListAction
   | IUpdateChampionListAction
   | IDeleteChampionListAction
-  | IAddChampionEntryAction
-  | IUpdateChampionEntryAction
-  | IMoveChampionEntryAction
-  | IDeleteChampionEntryAction;
+  | IAddChampionListEntryAction
+  | IUpdateChampionListEntryAction
+  | IMoveChampionListEntryAction
+  | IDeleteChampionListEntryAction;
 
 export type IFetchTierListsAction = {
   type: 'FETCH_TIERLISTS';
@@ -88,97 +69,71 @@ export type ISetTierListsAction = {
 
 export type IAddTierListAction = {
   type: 'ADD_TIERLIST';
-  payload: {
-    tierListId: string;
-    authorId: string;
-    name: string;
-    order: number;
-    lists: ChampionListData[];
-  };
+  payload: TierListData;
 };
 
 export type IUpdateTierListAction = {
   type: 'UPDATE_TIERLIST';
-  payload: {
-    tierListId: string;
-    name?: string;
-    order?: number;
+  payload: Partial<TierListData> & {
+    id: string;
   };
 };
 
 export type IDeleteTierListAction = {
   type: 'DELETE_TIERLIST';
   payload: {
-    tierListId: string;
+    id: string;
   };
 };
 
-export type ICreateChampionListAction = {
-  type: 'CREATE_CHAMPIONLIST';
-  payload: {
+export type IAddChampionListAction = {
+  type: 'ADD_CHAMPIONLIST';
+  payload: ChampionListData & {
     tierListId: string;
-    championListId: string;
-    name: string;
-    description: string;
-    order: number;
-    entries: ChampionEntryData[];
   };
 };
 
 export type IUpdateChampionListAction = {
   type: 'UPDATE_CHAMPIONLIST';
-  payload: {
-    tierListId: string;
-    championListId: string;
-    name?: string;
-    description?: string;
-    order?: number;
+  payload: Partial<ChampionListData> & {
+    id: string;
   };
 };
 
 export type IDeleteChampionListAction = {
   type: 'DELETE_CHAMPIONLIST';
   payload: {
+    id: string;
+  };
+};
+
+export type IAddChampionListEntryAction = {
+  type: 'ADD_CHAMPIONLISTENTRY';
+  payload: ChampionListEntryData & {
     tierListId: string;
     championListId: string;
   };
 };
 
-export type IAddChampionEntryAction = {
-  type: 'ADD_CHAMPIONENTRY';
-  payload: {
-    tierListId: string;
-    championEntryId: string;
-    championListId: string;
-    championId: string;
-    note: string;
+export type IUpdateChampionListEntryAction = {
+  type: 'UPDATE_CHAMPIONLISTENTRY';
+  payload: Partial<ChampionListEntryData> & {
+    id: string;
   };
 };
 
-export type IUpdateChampionEntryAction = {
-  type: 'UPDATE_CHAMPIONENTRY';
+export type IMoveChampionListEntryAction = {
+  type: 'MOVE_CHAMPIONLISTENTRY';
   payload: {
+    id: string;
     tierListId: string;
-    championEntryId: string;
     championListId: string;
-    note?: string;
   };
 };
 
-export type IMoveChampionEntryAction = {
-  type: 'MOVE_CHAMPIONENTRY';
+export type IDeleteChampionListEntryAction = {
+  type: 'DELETE_CHAMPIONLISTENTRY';
   payload: {
-    tierListId: string;
-    championListId: string;
-    championEntryId: string;
-  };
-};
-
-export type IDeleteChampionEntryAction = {
-  type: 'DELETE_CHAMPIONENTRY';
-  payload: {
-    tierListId: string;
-    championListId: string;
-    championEntryId: string;
+    id: string;
   };
 };
