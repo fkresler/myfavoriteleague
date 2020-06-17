@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-rainbow-components';
-import ChampionList from '@/components/ChampionList';
-import TierListModal from '@/components/TierListModal';
-import ChampionListModal from '@/components/ChampionListModal';
 import { FaPlus } from 'react-icons/fa';
 import { TierListData, TierListAction } from '@/types';
 import { tierListActions } from '@/providers/UserDataProvider';
+import ChampionList from './ChampionList';
+import TierListModal from './TierListModal';
+import ChampionListModal from './ChampionListModal';
 
 const StyledChampionListSpacer = styled.div`
   display: flex;

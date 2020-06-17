@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import { Card, Button } from 'react-rainbow-components';
-import ChampionListModal from '@/components/ChampionListModal';
-import ChampionEntry from '@/components/ChampionEntry';
-import ChampionEntryModal from '@/components/ChampionEntryModal';
+import ChampionListModal from '@/components/TierList/ChampionListModal';
 import {
   DnDTierListTypes,
   DnDTierListItemData,
   ChampionListData,
   ChampionListEntryData,
 } from '@/types';
+import ChampionListEntry from './ChampionListEntry';
+import ChampionListEntryModal from './ChampionListEntryModal';
 
 const StyledChampionContainer = styled.div`
   display: flex;
@@ -73,7 +73,7 @@ const ChampionList: React.FC<IChampionList> = ({
     deleteChampionEntry(id, championEntryId);
   const AddChampionEntry: JSX.Element = (
     <>
-      <ChampionEntryModal
+      <ChampionListEntryModal
         isModalOpen={isChampionEntryModalOpen}
         handleChampionEntryData={(selectedChampions, selectedNote) => {
           selectedChampions.map((championId) => {
@@ -114,7 +114,7 @@ const ChampionList: React.FC<IChampionList> = ({
         <StyledChampionContainer>
           {sortedEntries &&
             sortedEntries.map((champion) => (
-              <ChampionEntry
+              <ChampionListEntry
                 key={champion.id}
                 id={champion.id}
                 championId={champion.championId}

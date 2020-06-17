@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-rainbow-components';
 import TierList from '@/components/TierList';
+import TierListModal from '@/components/TierList/TierListModal';
 import SegmentedSelect from '@/components/SegmentedSelect';
-import TierListModal from '@/components/TierListModal';
 import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 

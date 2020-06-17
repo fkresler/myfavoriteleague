@@ -3,13 +3,13 @@ import { Button, Modal, Textarea } from 'react-rainbow-components';
 import { useAllChampionData } from '@/hooks/useChampionData';
 import ChampionBox from '@/components/ChampionBox';
 
-export type IChampionEntryModal = {
+export type IChampionListEntryModal = {
   isModalOpen: boolean;
   handleChampionEntryData: (selectedChampions: string[], selectedNote: string) => void;
   closeModalBox: () => void;
 };
 
-const ChampionEntryModal: React.FC<IChampionEntryModal> = ({
+const ChampionListEntryModal: React.FC<IChampionListEntryModal> = ({
   isModalOpen,
   handleChampionEntryData,
   closeModalBox,
@@ -76,4 +76,4 @@ const ChampionEntryModal: React.FC<IChampionEntryModal> = ({
   );
 };
 
-export default ChampionEntryModal;
+export default ChampionListEntryModal;
