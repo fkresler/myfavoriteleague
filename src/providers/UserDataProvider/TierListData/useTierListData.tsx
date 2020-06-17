@@ -1,24 +1,18 @@
 import React from 'react';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
-import { TierListAction, TierListData, AsyncTierListData } from '@/types';
+import { TierListAction, TierListData } from '@/types';
 import * as tierListActions from './tierListActions';
 import tierListReducer from './tierListReducer';
-
-export const initialTierListData: AsyncTierListData = {
-  hasLoaded: false,
-  isLoading: true,
-  isError: false,
-  data: [],
-};
+import { createDefaultTierListData } from './initialTierListData';
 
 export const useTierListData = () => {
   const Firebase = React.useContext(FirebaseContext);
+  const userId = Firebase.authUser ? Firebase.authUser.uid : null;
+  const initialTierListData = userId ? createDefaultTierListData(userId) : [];
   const [hasLoaded, setHasLoaded] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
-  const [state, dispatch] = React.useReducer(tierListReducer, []);
-
-  const userId = Firebase.authUser ? Firebase.authUser.uid : null;
+  const [state, dispatch] = React.useReducer(tierListReducer, initialTierListData);
 
   React.useEffect(() => {
     setHasLoaded(false);
@@ -38,7 +32,9 @@ export const useTierListData = () => {
               .doc(userId)
               .get();
             const tierListData = (snapshotData.data() || {}) as { data?: TierListData[] };
-            dispatch(tierListActions.setTierLists(tierListData.data || []));
+            if (tierListData.data) {
+              dispatch(tierListActions.setTierLists(tierListData.data));
+            }
             setHasLoaded(true);
             setIsLoading(false);
           } catch {
@@ -74,3 +70,5 @@ export const useTierListData = () => {
     dispatch: enhancedDispatch,
   };
 };
+
+export default useTierListData;

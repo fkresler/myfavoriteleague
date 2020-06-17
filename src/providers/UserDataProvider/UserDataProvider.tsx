@@ -7,7 +7,7 @@ import {
   NoteAction,
   UserSettingsAction,
 } from '@/types';
-import { useTierListData, initialTierListData } from './TierListData';
+import { useTierListData, initialAsyncTierListData } from './TierListData';
 import { useNoteData, initialNoteData } from './NoteData';
 import { useUserSettingsData, initialAsyncUserSettingsData } from './UserSettings';
 
@@ -28,7 +28,7 @@ type UserData = {
 
 export const UserDataContext = React.createContext<UserData>({
   tierlists: {
-    state: initialTierListData,
+    state: initialAsyncTierListData,
     dispatch: () => {},
   },
   notes: {

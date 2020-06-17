@@ -30,7 +30,9 @@ const TierListApp: React.FC = () => {
     state: { hasLoaded, isLoading, isError, data },
     dispatch,
   } = tierlists;
-  const [selectedList, selectList] = React.useState<string | undefined>(undefined);
+  const [selectedList, selectList] = React.useState<string | undefined>(
+    data.length > 0 ? data[0].id : undefined,
+  );
 
   const tierListSelectData = data.map((tierList) => ({
     id: tierList.id,

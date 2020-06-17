@@ -37,11 +37,10 @@ const SegmentedSelect: React.FC<ISegmentedSelect> = ({
   currentlySelectedChoice,
   onChoiceSelection = () => {},
 }) => {
-  const sortedChoices = choices.sort((itemA, itemB) => itemA.order - itemB.order);
   return (
     <StyledSegmentedSelect>
-      {sortedChoices &&
-        sortedChoices.map((choice) => (
+      {choices &&
+        choices.map((choice) => (
           <StyledSegmentedOption
             key={choice.id}
             isActive={choice.id === currentlySelectedChoice}
