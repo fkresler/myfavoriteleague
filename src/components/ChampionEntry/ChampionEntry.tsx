@@ -69,7 +69,7 @@ const ChampionEntry: React.FC<IChampionListEntry> = ({
       ref={dragRef}
       onContextMenu={(event) => {
         event.preventDefault();
-        deleteChampionEntry(championEntryId);
+        deleteChampionEntry(id);
       }}
     >
       {imageUrl && <DragPreviewImage connect={preview} src={imageUrl} />}

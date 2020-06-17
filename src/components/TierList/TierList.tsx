@@ -54,9 +54,9 @@ const TierList: React.FC<ITierList> = ({
     <>
       <TierListModal
         isModalOpen={isEditTierListModalOpen}
-        initialTierListData={{ id, authorId, name, order, lists }}
+        initialTierListData={{ id, authorId, name, role, isPublic, isRemovable, order, lists }}
         handleTierListData={(tlName) => {
-          dispatch(tierListActions.updateTierList(id, tlName, order));
+          dispatch(tierListActions.updateTierList(id, { name: tlName }));
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
@@ -78,12 +78,7 @@ const TierList: React.FC<ITierList> = ({
         isModalOpen={isAddChampionListModalOpen}
         handleChampionListData={(clName, clDescription) =>
           dispatch(
-            tierListActions.createChampionList(
-              tierListId,
-              clName,
-              clDescription,
-              sortedChampionLists.length,
-            ),
+            tierListActions.addChampionList(id, { name: clName, description: clDescription }),
           )
         }
         closeModalBox={() => setChampionListModalOpen(false)}
@@ -106,37 +101,37 @@ const TierList: React.FC<ITierList> = ({
         {sortedChampionLists &&
           sortedChampionLists.map((championList) => (
             <ChampionList
-              key={championList.championListId}
-              championListId={championList.championListId}
+              key={championList.id}
+              id={championList.id}
               name={championList.name}
               description={championList.description}
               order={championList.order}
               entries={championList.entries}
               updateChampionList={(clId, clName, clDescription, clOrder) =>
                 dispatch(
-                  tierListActions.updateChampionList(
-                    tierListId,
-                    clId,
-                    clName,
-                    clDescription,
-                    clOrder,
-                  ),
+                  tierListActions.updateChampionList(clId, {
+                    name: clName,
+                    description: clDescription,
+                    order: clOrder,
+                  }),
                 )
               }
-              deleteChampionList={(clId) =>
-                dispatch(tierListActions.deleteChampionList(tierListId, clId))
-              }
+              deleteChampionList={(clId) => dispatch(tierListActions.deleteChampionList(clId))}
               addChampionEntry={(clId, championId, note) =>
-                dispatch(tierListActions.addChampionEntry(tierListId, clId, championId, note))
+                dispatch(
+                  tierListActions.addChampionListEntry(id, clId, championId, {
+                    note,
+                  }),
+                )
               }
               updateChampionEntry={(clId, ceId, note) =>
-                dispatch(tierListActions.updateChampionEntry(tierListId, clId, ceId, note))
+                dispatch(tierListActions.updateChampionListEntry(ceId, { note }))
               }
               moveChampionEntry={(clId, ceId) => {
-                dispatch(tierListActions.moveChampionEntry(tierListId, clId, ceId));
+                dispatch(tierListActions.moveChampionListEntry(ceId, id, clId));
               }}
               deleteChampionEntry={(clId, ceId) =>
-                dispatch(tierListActions.deleteChampionEntry(tierListId, clId, ceId))
+                dispatch(tierListActions.deleteChampionListEntry(ceId))
               }
             />
           ))}
@@ -147,7 +142,7 @@ const TierList: React.FC<ITierList> = ({
         <Button
           type="button"
           variant="destructive"
-          onClick={() => dispatch(tierListActions.deleteTierList(tierListId))}
+          onClick={() => dispatch(tierListActions.deleteTierList(id))}
         >
           Delete this list
         </Button>

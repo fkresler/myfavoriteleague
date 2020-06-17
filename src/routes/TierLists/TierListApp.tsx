@@ -33,11 +33,11 @@ const TierListApp: React.FC = () => {
   const [selectedList, selectList] = React.useState<string | undefined>(undefined);
 
   const tierListSelectData = data.map((tierList) => ({
-    id: tierList.tierListId,
+    id: tierList.id,
     name: tierList.name,
     order: tierList.order,
   }));
-  const currentTierListData = data.find((tierList) => tierList.tierListId === selectedList);
+  const currentTierListData = data.find((tierList) => tierList.id === selectedList);
   const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ const TierListApp: React.FC = () => {
         isModalOpen={isAddTierListModalOpen}
         handleTierListData={(tlName) => {
           if (authUser) {
-            dispatch(tierListActions.addTierList(authUser.uid, tlName, data.length));
+            dispatch(tierListActions.addTierList(authUser.uid, tlName, { order: data.length }));
           }
         }}
         closeModalBox={() => setTierListModalOpen(false)}
@@ -103,9 +103,12 @@ const TierListApp: React.FC = () => {
         </StyledSegmentedSection>
         {currentTierListData && (
           <TierList
-            tierListId={currentTierListData.tierListId}
+            id={currentTierListData.id}
             authorId={currentTierListData.authorId}
             name={currentTierListData.name}
+            role={currentTierListData.role}
+            isPublic={currentTierListData.isPublic}
+            isRemovable={currentTierListData.isRemovable}
             order={currentTierListData.order}
             lists={currentTierListData.lists}
             dispatch={dispatch}

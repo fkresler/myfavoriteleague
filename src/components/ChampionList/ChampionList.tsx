@@ -59,7 +59,7 @@ const ChampionList: React.FC<IChampionList> = ({
   const [, dropRef] = useDrop({
     accept: DnDTierListTypes.ChampionElement,
     drop: (item: DnDTierListItemData<ChampionListEntryData>) => {
-      moveChampionEntry(id, item.championEntryId);
+      moveChampionEntry(id, item.id);
     },
   });
   const [isEditChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
@@ -68,16 +68,16 @@ const ChampionList: React.FC<IChampionList> = ({
     entryB.championId > entryA.championId ? -1 : 1,
   );
   const updateChampionEntryForChampionList = (championEntryId: string, note: string) =>
-    updateChampionEntry(championListId, championEntryId, note);
+    updateChampionEntry(id, championEntryId, note);
   const deleteChampionEntryForChampionList = (championEntryId: string) =>
-    deleteChampionEntry(championListId, championEntryId);
+    deleteChampionEntry(id, championEntryId);
   const AddChampionEntry: JSX.Element = (
     <>
       <ChampionEntryModal
         isModalOpen={isChampionEntryModalOpen}
         handleChampionEntryData={(selectedChampions, selectedNote) => {
           selectedChampions.map((championId) => {
-            return addChampionEntry(championListId, championId, selectedNote);
+            return addChampionEntry(id, championId, selectedNote);
           });
         }}
         closeModalBox={() => setChampionEntryModalOpen(false)}
@@ -91,20 +91,16 @@ const ChampionList: React.FC<IChampionList> = ({
     <StyledChampionListFooter>
       <ChampionListModal
         isModalOpen={isEditChampionListModalOpen}
-        initialChampionListData={{ championListId, name, description, order, entries }}
+        initialChampionListData={{ id, name, description, order, entries }}
         handleChampionListData={(clName, clDescription) =>
-          updateChampionList(championListId, clName, clDescription, order, entries)
+          updateChampionList(id, clName, clDescription, order, entries)
         }
         closeModalBox={() => setChampionListModalOpen(false)}
       />
       <Button type="button" variant="neutral" onClick={() => setChampionListModalOpen(true)}>
         Edit
       </Button>
-      <Button
-        type="button"
-        variant="destructive"
-        onClick={() => deleteChampionList(championListId)}
-      >
+      <Button type="button" variant="destructive" onClick={() => deleteChampionList(id)}>
         Delete
       </Button>
     </StyledChampionListFooter>
@@ -119,8 +115,8 @@ const ChampionList: React.FC<IChampionList> = ({
           {sortedEntries &&
             sortedEntries.map((champion) => (
               <ChampionEntry
-                key={champion.championEntryId}
-                championEntryId={champion.championEntryId}
+                key={champion.id}
+                id={champion.id}
                 championId={champion.championId}
                 note={champion.note}
                 updateChampionEntry={updateChampionEntryForChampionList}
