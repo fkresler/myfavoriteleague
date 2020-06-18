@@ -32,7 +32,7 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
   transform-origin: 0% 100%;
   background-color: ${({ theme }) => theme.colors.background.secondary};
   color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)}
+    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   transition: all 0.5s ease-out;
   z-index: 3;
 `;

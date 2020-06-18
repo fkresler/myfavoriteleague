@@ -1,18 +1,19 @@
 import { MyFavoriteLeagueTheme } from 'styled-components';
 import { ThemeColor } from '@/types';
+import { lighten, darken } from 'polished';
 import { getTextColorByBackground } from './colors';
 
 export const lightTheme: MyFavoriteLeagueTheme = {
   colors: {
     brand: {
       main: ThemeColor.BRAND,
-      dark: `darken(${ThemeColor.BRAND}, 50%)`,
-      light: `lighten(${ThemeColor.BRAND}, 50%)`,
+      dark: darken(0.25, ThemeColor.BRAND),
+      light: lighten(0.25, ThemeColor.BRAND),
     },
     background: {
       main: ThemeColor.LIGHT,
       secondary: ThemeColor.LIGHT_SECONDARY,
-      highlight: `darken(${ThemeColor.LIGHT_SECONDARY}, 25%)`,
+      highlight: darken(0.15, ThemeColor.LIGHT_SECONDARY),
       disabled: ThemeColor.GREY,
     },
     text: {
@@ -22,8 +23,8 @@ export const lightTheme: MyFavoriteLeagueTheme = {
     },
     action: {
       main: ThemeColor.LIGHT_SECONDARY,
-      active: `darken(${ThemeColor.LIGHT_SECONDARY}, 25%)`,
-      hover: `darken(${ThemeColor.LIGHT_SECONDARY}, 15%)`,
+      active: darken(0.25, ThemeColor.LIGHT_SECONDARY),
+      hover: darken(0.15, ThemeColor.LIGHT_SECONDARY),
       disabled: ThemeColor.GREY,
     },
     border: {
@@ -75,13 +76,13 @@ export const darkTheme: MyFavoriteLeagueTheme = {
   colors: {
     brand: {
       main: ThemeColor.BRAND,
-      dark: `lighten(${ThemeColor.BRAND}, 50%)`,
-      light: `darken(${ThemeColor.BRAND}, 50%)`,
+      dark: darken(0.25, ThemeColor.BRAND),
+      light: lighten(0.25, ThemeColor.BRAND),
     },
     background: {
-      main: ThemeColor.LIGHT,
+      main: ThemeColor.DARK,
       secondary: ThemeColor.DARK_SECONDARY,
-      highlight: `lighten(${ThemeColor.DARK_SECONDARY}, 25%)`,
+      highlight: lighten(0.15, ThemeColor.DARK_SECONDARY),
       disabled: ThemeColor.GREY,
     },
     text: {
@@ -91,8 +92,8 @@ export const darkTheme: MyFavoriteLeagueTheme = {
     },
     action: {
       main: ThemeColor.DARK_SECONDARY,
-      active: `lighten(${ThemeColor.DARK_SECONDARY}, 25%)`,
-      hover: `lighten(${ThemeColor.DARK_SECONDARY}, 15%)`,
+      active: lighten(0.25, ThemeColor.DARK_SECONDARY),
+      hover: lighten(0.15, ThemeColor.DARK_SECONDARY),
       disabled: ThemeColor.GREY,
     },
     border: {

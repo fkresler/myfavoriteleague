@@ -14,8 +14,8 @@ export const CardWrapper = styled.div`
   box-sizing: border-box;
   border-radius: 3px;
   background-color: ${({ theme }) => theme.colors.background.main};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.main)};
   border: 1px solid ${({ theme }) => theme.colors.border.main};
-  transition: all 0.3s ease-out;
 `;
 
 export const CardHeader = styled.div`
