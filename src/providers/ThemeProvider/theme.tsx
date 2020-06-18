@@ -43,11 +43,11 @@ export const lightTheme: MyFavoriteLeagueTheme = {
     },
   },
   shadows: {
-    brand: `0 0 2px ${ThemeColor.BRAND}`,
-    success: `0 0 2px ${ThemeColor.SUCCESS}`,
-    error: `0 0 2px ${ThemeColor.ERROR}`,
-    warning: `0 0 2px ${ThemeColor.WARNING}`,
-    main: `0 0 2px 0 ${ThemeColor.DARK}`,
+    brand: `0 0 4px ${lighten(0.25, ThemeColor.BRAND)}`,
+    success: `0 0 4px ${lighten(0.25, ThemeColor.SUCCESS)}`,
+    error: `0 0 4px ${lighten(0.25, ThemeColor.ERROR)}`,
+    warning: `0 0 4px ${lighten(0.25, ThemeColor.WARNING)}`,
+    main: `0 0 4px 0 ${lighten(0.25, ThemeColor.DARK)}`,
   },
   borderRadius: {
     main: '0.3rem',
@@ -112,11 +112,11 @@ export const darkTheme: MyFavoriteLeagueTheme = {
     },
   },
   shadows: {
-    brand: `0 0 2px ${ThemeColor.BRAND}`,
-    success: `0 0 2px ${ThemeColor.SUCCESS}`,
-    error: `0 0 2px ${ThemeColor.ERROR}`,
-    warning: `0 0 2px ${ThemeColor.WARNING}`,
-    main: `0 0 2px 0 ${ThemeColor.DARK}`,
+    brand: `0 0 4px ${darken(0.25, ThemeColor.BRAND)}`,
+    success: `0 0 4px ${darken(0.25, ThemeColor.SUCCESS)}`,
+    error: `0 0 4px ${darken(0.25, ThemeColor.ERROR)}`,
+    warning: `0 0 4px ${darken(0.25, ThemeColor.WARNING)}`,
+    main: `0 0 4px 0 ${darken(0.25, ThemeColor.LIGHT)}`,
   },
   borderRadius: {
     main: '0.3rem',

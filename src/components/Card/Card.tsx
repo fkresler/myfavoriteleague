@@ -16,6 +16,10 @@ export const CardWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.background.main};
   color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.main)};
   border: 1px solid ${({ theme }) => theme.colors.border.main};
+
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows.main};
+  }
 `;
 
 export const CardHeader = styled.div`
