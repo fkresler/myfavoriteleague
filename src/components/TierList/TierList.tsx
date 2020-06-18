@@ -39,6 +39,7 @@ const TierList: React.FC<ITierList> = ({
   id,
   authorId,
   name,
+  mode,
   role,
   isPublic,
   isRemovable,
@@ -54,7 +55,17 @@ const TierList: React.FC<ITierList> = ({
     <>
       <TierListModal
         isModalOpen={isEditTierListModalOpen}
-        initialTierListData={{ id, authorId, name, role, isPublic, isRemovable, order, lists }}
+        initialTierListData={{
+          id,
+          authorId,
+          name,
+          mode,
+          role,
+          isPublic,
+          isRemovable,
+          order,
+          lists,
+        }}
         handleTierListData={(tlName) => {
           dispatch(tierListActions.updateTierList(id, { name: tlName }));
         }}

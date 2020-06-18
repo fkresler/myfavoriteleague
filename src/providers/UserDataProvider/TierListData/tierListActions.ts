@@ -36,6 +36,7 @@ export const addTierList = (
       id: data.id || computeNewTierListId(),
       authorId,
       name,
+      mode: data.mode || null,
       role: data.role || null,
       isPublic: data.isPublic || false,
       isRemovable: data.isRemovable || true,

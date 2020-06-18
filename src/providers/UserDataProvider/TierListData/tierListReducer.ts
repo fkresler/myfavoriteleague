@@ -13,12 +13,13 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       return [...state, newTierList];
     }
     case 'UPDATE_TIERLIST': {
-      const { id, name, role, isPublic, isRemovable, order } = action.payload;
+      const { id, name, mode, role, isPublic, isRemovable, order } = action.payload;
       const newTierListState = state.map((tierList) => {
         if (tierList.id === id) {
           return {
             ...tierList,
             ...(name && { name }),
+            ...(mode && { mode }),
             ...(role && { role }),
             ...(isPublic && { isPublic }),
             ...(isRemovable && { isRemovable }),

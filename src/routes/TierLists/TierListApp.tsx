@@ -113,6 +113,7 @@ const TierListApp: React.FC = () => {
             id={currentTierListData.id}
             authorId={currentTierListData.authorId}
             name={currentTierListData.name}
+            mode={currentTierListData.mode}
             role={currentTierListData.role}
             isPublic={currentTierListData.isPublic}
             isRemovable={currentTierListData.isRemovable}

@@ -1,4 +1,4 @@
-import { PositionalRole, AsyncTierListData, TierListData } from '@/types';
+import { GameMode, PositionalRole, AsyncTierListData, TierListData } from '@/types';
 
 export const initialAsyncTierListData: AsyncTierListData = {
   hasLoaded: false,
@@ -12,6 +12,7 @@ export const createDefaultTierListData = (authorId: string): TierListData[] => [
     id: 'INITIALTOPLIST',
     authorId,
     name: 'Top',
+    mode: GameMode.SR,
     role: PositionalRole.TOP,
     isPublic: false,
     isRemovable: false,
@@ -22,6 +23,7 @@ export const createDefaultTierListData = (authorId: string): TierListData[] => [
     id: 'INITIALJNGLIST',
     authorId,
     name: 'Jungle',
+    mode: GameMode.SR,
     role: PositionalRole.JNG,
     isPublic: false,
     isRemovable: false,
@@ -32,6 +34,7 @@ export const createDefaultTierListData = (authorId: string): TierListData[] => [
     id: 'INITIALMIDLIST',
     authorId,
     name: 'Mid',
+    mode: GameMode.SR,
     role: PositionalRole.MID,
     isPublic: false,
     isRemovable: false,
@@ -42,6 +45,7 @@ export const createDefaultTierListData = (authorId: string): TierListData[] => [
     id: 'INITIALBOTLIST',
     authorId,
     name: 'Bottom',
+    mode: GameMode.SR,
     role: PositionalRole.BOT,
     isPublic: false,
     isRemovable: false,
@@ -52,6 +56,7 @@ export const createDefaultTierListData = (authorId: string): TierListData[] => [
     id: 'INITIALSUPLIST',
     authorId,
     name: 'Support',
+    mode: GameMode.SR,
     role: PositionalRole.SUP,
     isPublic: false,
     isRemovable: false,

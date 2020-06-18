@@ -1,10 +1,11 @@
-import { PositionalRole, TierListData } from '@/types';
+import { GameMode, PositionalRole, TierListData } from '@/types';
 
 const tierListMock: TierListData[] = [
   {
     id: '1',
     authorId: '0123456789',
     name: 'Top',
+    mode: GameMode.SR,
     role: PositionalRole.TOP,
     isPublic: false,
     isRemovable: true,
@@ -75,6 +76,7 @@ const tierListMock: TierListData[] = [
     id: '2',
     authorId: '0123456789',
     name: 'Jungle',
+    mode: GameMode.SR,
     role: PositionalRole.JNG,
     isPublic: false,
     isRemovable: true,

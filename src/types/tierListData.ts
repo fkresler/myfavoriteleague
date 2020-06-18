@@ -1,5 +1,5 @@
 import { AsyncUserData } from './userData';
-import { PositionalRole } from './league';
+import { GameMode, PositionalRole } from './league';
 
 export enum DnDTierListTypes {
   ChampionElement = 'ChampionElement',
@@ -28,6 +28,7 @@ export type TierListData = {
   id: string;
   authorId: string;
   name: string;
+  mode: GameMode | null;
   role: PositionalRole | null;
   isPublic: boolean;
   isRemovable: boolean;

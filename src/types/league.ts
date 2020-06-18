@@ -1,3 +1,8 @@
+export enum GameMode {
+  'SR' = 'Summoners Rift',
+  'ARAM' = 'ARAM',
+}
+
 export enum PositionalRole {
   'ALL' = 'General',
   'TOP' = 'Top',
