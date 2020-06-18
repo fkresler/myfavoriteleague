@@ -10,6 +10,8 @@ declare module 'styled-components' {
       colorWarning: string;
       fontColorLight: string;
       fontColorDark: string;
+      borderColorLight: string;
+      borderColorDark: string;
     };
   }
 }

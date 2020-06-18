@@ -9,6 +9,8 @@ export const lightTheme: MyFavoriteLeagueTheme = {
     colorWarning: '#FFC82C',
     fontColorLight: '#F0F4FA',
     fontColorDark: '#050C24',
+    borderColorLight: '#F0F4FA',
+    borderColorDark: '#050C24',
   },
 };
 
@@ -21,6 +23,8 @@ export const darkTheme: MyFavoriteLeagueTheme = {
     colorWarning: '#FFC82C',
     fontColorLight: '#F0F4FA',
     fontColorDark: '#F0F4FA',
+    borderColorLight: '#F0F4FA',
+    borderColorDark: '#F0F4FA',
   },
 };
 

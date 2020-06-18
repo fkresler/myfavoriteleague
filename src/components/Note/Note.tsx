@@ -1,17 +1,19 @@
 import React from 'react';
 import { INote } from '@/types';
 import { noteActions } from '@/providers/UserDataProvider';
-import { Button, Card } from 'react-rainbow-components';
+import { Button } from 'react-rainbow-components';
+import Card from '@/components/Card';
 
 const Note: React.FC<{ data: INote }> = ({ data }) => {
   const { id, title, text, dispatch } = data;
+  const DeleteAction: React.ReactNode = (
+    <Button variant="destructive" onClick={() => dispatch(noteActions.deleteNote(id))}>
+      Delete note
+    </Button>
+  );
   return (
-    <Card>
-      {title && <div>{title}</div>}
+    <Card headline={title} action={DeleteAction}>
       <div>{text}</div>
-      <Button variant="destructive" onClick={() => dispatch(noteActions.deleteNote(id))}>
-        Delete note
-      </Button>
     </Card>
   );
 };
