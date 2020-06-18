@@ -1,4 +1,5 @@
 import 'styled-components';
+import { ThemeColor } from './colors';
 
 declare module 'styled-components' {
   export interface MyFavoriteLeagueTheme {
@@ -15,8 +16,9 @@ declare module 'styled-components' {
         disabled: string;
       };
       text: {
-        main: string;
-        disabled: string;
+        light: string;
+        dark: string;
+        getTextColorByBackground: (color: ThemeColor) => ThemeColor;
       };
       action: {
         main: string;

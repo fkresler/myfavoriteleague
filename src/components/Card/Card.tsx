@@ -13,8 +13,8 @@ export const CardWrapper = styled.div`
   display: block;
   box-sizing: border-box;
   border-radius: 3px;
-  background-color: ${(props) => props.theme.colors.lightBackgroundColor};
-  border: 1px solid ${(props) => props.theme.colors.borderColorDark};
+  background-color: ${({ theme }) => theme.colors.background.main};
+  border: 1px solid ${({ theme }) => theme.colors.border.main};
   transition: all 0.3s ease-out;
 `;
 
@@ -31,7 +31,7 @@ export const CardHeadlineWrapper = styled.div`
 export const CardSeperator = styled.div`
   display: block;
   border-top: 1px solid;
-  border-color: ${(props) => props.theme.colors.borderColorDark};
+  border-color: ${({ theme }) => theme.colors.border.divider};
 `;
 
 export const CardContentWrapper = styled.div`
@@ -40,7 +40,7 @@ export const CardContentWrapper = styled.div`
 `;
 
 export const HeadlineElement = styled.div`
-  color: ${(props) => props.theme.colors.fontColorDark};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.main)};
   font-size: 120%;
   font-weight: 500;
   line-height: 150%;
@@ -48,7 +48,7 @@ export const HeadlineElement = styled.div`
 `;
 
 export const SubHeadlineElement = styled(HeadlineElement)`
-  color: ${(props) => props.theme.colors.fontColorDark};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.main)};
   font-size: 80%;
   font-weight: 500;
   line-height: 120%;

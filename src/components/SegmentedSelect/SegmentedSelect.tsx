@@ -22,9 +22,8 @@ const StyledSegmentedOption = styled.div<{ isActive: boolean }>`
   flex-basis: 0;
   padding: 1rem;
   background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.darkBackgroundColor : theme.colors.darkBackgroundColor};
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.fontColorLight : theme.colors.fontColorDark};
+    isActive ? theme.colors.action.active : theme.colors.action.main};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.action.main)};
   font-weight: bold;
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
   text-align: center;

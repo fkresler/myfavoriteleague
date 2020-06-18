@@ -1,49 +1,52 @@
 import { MyFavoriteLeagueTheme } from 'styled-components';
+import { ThemeColor } from '@/types';
+import { getTextColorByBackground } from './colors';
 
 export const lightTheme: MyFavoriteLeagueTheme = {
   colors: {
     brand: {
-      main: '#01b6f5',
-      dark: '',
-      light: '',
+      main: ThemeColor.BRAND,
+      dark: `darken(${ThemeColor.BRAND}, 50%)`,
+      light: `lighten(${ThemeColor.BRAND}, 50%)`,
     },
     background: {
-      main: '#FFFFFF',
-      secondary: '#00A7E1',
-      highlight: '',
-      disabled: '#F6F7F9',
+      main: ThemeColor.LIGHT,
+      secondary: ThemeColor.LIGHT_SECONDARY,
+      highlight: `darken(${ThemeColor.LIGHT_SECONDARY}, 25%)`,
+      disabled: ThemeColor.GREY,
     },
     text: {
-      main: '#050C24',
-      disabled: '#D7D9E2',
+      light: ThemeColor.TEXT_LIGHT,
+      dark: ThemeColor.TEXT_DARK,
+      getTextColorByBackground,
     },
     action: {
-      main: '#01b6f5',
-      active: '#F6F7F9',
-      hover: '#F6F7F9',
-      disabled: '#F6F7F9',
+      main: ThemeColor.LIGHT_SECONDARY,
+      active: `darken(${ThemeColor.LIGHT_SECONDARY}, 25%)`,
+      hover: `darken(${ThemeColor.LIGHT_SECONDARY}, 15%)`,
+      disabled: ThemeColor.GREY,
     },
     border: {
-      main: '#A4A7B5',
-      divider: '#D7D9E2',
-      disabled: 'rgba(82, 95, 127, 0.15)',
+      main: ThemeColor.GREY2,
+      divider: ThemeColor.GREY3,
+      disabled: ThemeColor.DISABLED,
     },
     success: {
-      main: '#13CE66',
+      main: ThemeColor.SUCCESS,
     },
     error: {
-      main: '#FF4949',
+      main: ThemeColor.ERROR,
     },
     warning: {
-      main: '#FFC82C',
+      main: ThemeColor.WARNING,
     },
   },
   shadows: {
-    brand: '0 0 2px #01b6f5',
-    success: '0 0 2px #13CE66',
-    error: '0 0 2px #FF4949',
-    warning: '0 0 2px #FFC82C',
-    main: '0 0 2px 0 #A4A7B5',
+    brand: `0 0 2px ${ThemeColor.BRAND}`,
+    success: `0 0 2px ${ThemeColor.SUCCESS}`,
+    error: `0 0 2px ${ThemeColor.ERROR}`,
+    warning: `0 0 2px ${ThemeColor.WARNING}`,
+    main: `0 0 2px 0 ${ThemeColor.DARK}`,
   },
   borderRadius: {
     main: '0.3rem',
@@ -71,47 +74,48 @@ export const lightTheme: MyFavoriteLeagueTheme = {
 export const darkTheme: MyFavoriteLeagueTheme = {
   colors: {
     brand: {
-      main: '#01b6f5',
-      dark: '',
-      light: '',
+      main: ThemeColor.BRAND,
+      dark: `lighten(${ThemeColor.BRAND}, 50%)`,
+      light: `darken(${ThemeColor.BRAND}, 50%)`,
     },
     background: {
-      main: '093A3E',
-      secondary: '#001011',
-      highlight: '',
-      disabled: '#F6F7F9',
+      main: ThemeColor.LIGHT,
+      secondary: ThemeColor.DARK_SECONDARY,
+      highlight: `lighten(${ThemeColor.DARK_SECONDARY}, 25%)`,
+      disabled: ThemeColor.GREY,
     },
     text: {
-      main: '#F0F4FA',
-      disabled: '#D7D9E2',
+      light: ThemeColor.TEXT_LIGHT,
+      dark: ThemeColor.TEXT_DARK,
+      getTextColorByBackground,
     },
     action: {
-      main: '#01b6f5',
-      active: '#F6F7F9',
-      hover: '#F6F7F9',
-      disabled: '#F6F7F9',
+      main: ThemeColor.DARK_SECONDARY,
+      active: `lighten(${ThemeColor.DARK_SECONDARY}, 25%)`,
+      hover: `lighten(${ThemeColor.DARK_SECONDARY}, 15%)`,
+      disabled: ThemeColor.GREY,
     },
     border: {
-      main: '#A4A7B5',
-      divider: '#D7D9E2',
-      disabled: 'rgba(82, 95, 127, 0.15)',
+      main: ThemeColor.GREY2,
+      divider: ThemeColor.GREY3,
+      disabled: ThemeColor.DISABLED,
     },
     success: {
-      main: '#13CE66',
+      main: ThemeColor.SUCCESS,
     },
     error: {
-      main: '#FF4949',
+      main: ThemeColor.ERROR,
     },
     warning: {
-      main: '#FFC82C',
+      main: ThemeColor.WARNING,
     },
   },
   shadows: {
-    brand: '0 0 2px #01b6f5',
-    success: '0 0 2px #13CE66',
-    error: '0 0 2px #FF4949',
-    warning: '0 0 2px #FFC82C',
-    main: '0 0 2px 0 #A4A7B5',
+    brand: `0 0 2px ${ThemeColor.BRAND}`,
+    success: `0 0 2px ${ThemeColor.SUCCESS}`,
+    error: `0 0 2px ${ThemeColor.ERROR}`,
+    warning: `0 0 2px ${ThemeColor.WARNING}`,
+    main: `0 0 2px 0 ${ThemeColor.DARK}`,
   },
   borderRadius: {
     main: '0.3rem',
