@@ -51,7 +51,7 @@ export const updateTierList = (id: string, data: Partial<TierListData>): TierLis
     type: 'UPDATE_TIERLIST',
     payload: {
       id,
-      ...{ data },
+      ...data,
     },
   };
 };
@@ -87,7 +87,7 @@ export const updateChampionList = (id: string, data: Partial<ChampionListData>):
     type: 'UPDATE_CHAMPIONLIST',
     payload: {
       id,
-      ...{ data },
+      ...data,
     },
   };
 };
@@ -127,7 +127,7 @@ export const updateChampionListEntry = (
     type: 'UPDATE_CHAMPIONLISTENTRY',
     payload: {
       id,
-      ...{ data },
+      ...data,
     },
   };
 };

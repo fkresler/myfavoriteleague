@@ -10,6 +10,12 @@ export type DnDTierListItemData<T> = T & {
   type: DnDTierListTypes;
 };
 
+export enum TierListTemplate {
+  GENERAL = 'General (Default)',
+  TRUETIERLIST = 'Tierlist',
+  EMPTY = 'Empty',
+}
+
 export type ChampionListEntryData = {
   id: string;
   championId: string;

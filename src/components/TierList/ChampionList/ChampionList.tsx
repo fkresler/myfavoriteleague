@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import { Card, Button } from 'react-rainbow-components';
+import Card from '@/components/Card';
+import { Button } from 'react-rainbow-components';
 import ChampionListModal from '@/components/TierList/ChampionListModal';
 import {
   DnDTierListTypes,
@@ -105,12 +106,9 @@ const ChampionList: React.FC<IChampionList> = ({
       </Button>
     </StyledChampionListFooter>
   );
-  const CardFooter: JSX.Element | undefined = description ? (
-    <StyledChampionListFooter>{description}</StyledChampionListFooter>
-  ) : undefined;
   return (
     <div ref={dropRef}>
-      <Card title={name} actions={CardActions} footer={CardFooter}>
+      <Card headline={name} subHeadline={description} action={CardActions}>
         <StyledChampionContainer>
           {sortedEntries &&
             sortedEntries.map((champion) => (
