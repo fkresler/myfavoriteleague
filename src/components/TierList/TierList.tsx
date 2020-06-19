@@ -150,13 +150,15 @@ const TierList: React.FC<ITierList> = ({
       <StyledAddChampionListRow>{AddChampionList}</StyledAddChampionListRow>
       <StyledTierListActionRow>
         {EditTierList}
-        <Button
-          type="button"
-          variant="destructive"
-          onClick={() => dispatch(tierListActions.deleteTierList(id))}
-        >
-          Delete this list
-        </Button>
+        {isRemovable && (
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={() => dispatch(tierListActions.deleteTierList(id))}
+          >
+            Delete this list
+          </Button>
+        )}
       </StyledTierListActionRow>
     </>
   );
