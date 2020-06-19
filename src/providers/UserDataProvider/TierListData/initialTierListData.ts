@@ -74,12 +74,15 @@ export const getTierListTemplate = (
   template?: TierListTemplate,
 ): ChampionListData[] => {
   switch (template) {
-    case TierListTemplate.GENERAL:
+    case TierListTemplate.GENERAL: {
       return getGeneralTemplate(tierListId);
-    case TierListTemplate.TRUETIERLIST:
-      return getTierListTemplate(tierListId);
-    case TierListTemplate.EMPTY:
+    }
+    case TierListTemplate.TRUETIERLIST: {
+      return getTrueTierListTemplate(tierListId);
+    }
+    case TierListTemplate.EMPTY: {
       return [];
+    }
     default:
       return getGeneralTemplate(tierListId);
   }

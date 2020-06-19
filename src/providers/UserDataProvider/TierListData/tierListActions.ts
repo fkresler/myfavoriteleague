@@ -1,4 +1,11 @@
-import { TierListData, ChampionListData, ChampionListEntryData, TierListAction } from '@/types';
+import {
+  TierListData,
+  ChampionListData,
+  ChampionListEntryData,
+  TierListAction,
+  TierListTemplate,
+} from '@/types';
+import { getTierListTemplate } from './initialTierListData';
 
 const computeNewTierListId = (addendum?: string) => {
   return new Date().getTime().toString() + Math.random() + addendum;
@@ -29,11 +36,14 @@ export const addTierList = (
   authorId: string,
   name: string,
   data: Partial<TierListData>,
+  tlTemplate?: TierListTemplate,
 ): TierListAction => {
+  const tierListId = data.id || computeNewTierListId();
+  const championLists = tlTemplate ? getTierListTemplate(tierListId, tlTemplate) : data.lists || [];
   return {
     type: 'ADD_TIERLIST',
     payload: {
-      id: data.id || computeNewTierListId(),
+      id: tierListId,
       authorId,
       name,
       mode: data.mode || null,
@@ -41,7 +51,7 @@ export const addTierList = (
       isPublic: data.isPublic || false,
       isRemovable: data.isRemovable || true,
       order: data.order || 0,
-      lists: data.lists || [],
+      lists: championLists,
     },
   };
 };

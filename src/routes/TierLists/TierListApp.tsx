@@ -61,9 +61,12 @@ const TierListApp: React.FC = () => {
     <>
       <TierListModal
         isModalOpen={isAddTierListModalOpen}
-        handleTierListData={(tlName) => {
+        isCreateMode
+        handleTierListData={(tlName, tlTemplate) => {
           if (authUser) {
-            dispatch(tierListActions.addTierList(authUser.uid, tlName, { order: data.length }));
+            dispatch(
+              tierListActions.addTierList(authUser.uid, tlName, { order: data.length }, tlTemplate),
+            );
           }
         }}
         closeModalBox={() => setTierListModalOpen(false)}
