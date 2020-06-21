@@ -5,6 +5,7 @@ import useChampionData from '@/hooks/useChampionData';
 interface IChampionBox {
   championId: string;
   isHighlighted?: boolean;
+  isDisabled?: boolean;
   onClick?: () => void;
 }
 
@@ -27,7 +28,12 @@ const StyledInvalidContent = styled(StyledChampionBox)`
   background-color: grey;
 `;
 
-const ChampionBox: React.FC<IChampionBox> = ({ championId, isHighlighted, onClick }) => {
+export const ChampionBox: React.FC<IChampionBox> = ({
+  championId,
+  isHighlighted,
+  isDisabled,
+  onClick,
+}) => {
   const championData = useChampionData(championId);
 
   if (championData) {

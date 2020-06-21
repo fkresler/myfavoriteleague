@@ -1,3 +1,1 @@
-import ChampionBox from './ChampionBox';
-
-export default ChampionBox;
+export * from './ChampionBox';
