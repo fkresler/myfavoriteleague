@@ -57,7 +57,11 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
             );
           })}
       </ChampionSelectionWrapper>
-      {onSubmit && <Button onClick={() => onSubmit(currentSelection)}>Submit!</Button>}
+      {onSubmit && (
+        <Button variant="success" onClick={() => onSubmit(currentSelection)}>
+          Submit!
+        </Button>
+      )}
     </StyledChampionSelect>
   );
 };
