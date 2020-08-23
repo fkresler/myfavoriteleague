@@ -105,8 +105,8 @@ const TierListApp: React.FC = () => {
           {data && (
             <SegmentedSelect
               choices={tierListSelectData}
-              currentlySelectedChoice={selectedList}
-              onChoiceSelection={selectList}
+              selectedId={selectedList}
+              onSelect={selectList}
             />
           )}
           {AddTierList}
