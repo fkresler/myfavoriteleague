@@ -55,10 +55,15 @@ export const SegmentedSelect: React.FC<ISegmentedSelect> = ({
   const renderedChoices = choices?.sort((a, b) => a.order - b.order);
   const defaultSelectedId =
     renderedChoices && renderedChoices.length > 0 ? renderedChoices[0].id : '';
-  const [localSelectedId, setLocalSelectedId] = React.useState<string>(initialSelectedId || '');
+  const [localSelectedId, setLocalSelectedId] = React.useState<string>(
+    initialSelectedId || defaultSelectedId,
+  );
   const renderedSelectedId = selectedId || localSelectedId || defaultSelectedId;
 
   const handleSelection = (id: string) => {
+    if (id === renderedSelectedId) {
+      return;
+    }
     setLocalSelectedId(id);
     if (onSelect) {
       onSelect(id);
@@ -71,10 +76,11 @@ export const SegmentedSelect: React.FC<ISegmentedSelect> = ({
 
   return (
     <SegmentedSelectWrapper>
-      <SegmentedSelectContent>
+      <SegmentedSelectContent data-testid="segmented-list">
         {renderedChoices.map((choice) => (
           <SegmentedChoice
             key={choice.id}
+            data-testid={choice.id === renderedSelectedId ? 'choice-selected' : 'choice-unselected'}
             isActive={choice.id === renderedSelectedId}
             onClick={() => handleSelection(choice.id)}
           >

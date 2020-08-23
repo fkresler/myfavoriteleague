@@ -40,6 +40,7 @@
     "weedwick-api": "^1.0.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^10.4.9",
     "@types/jest": "25.2.1",
     "@types/node": "13.13.5",
     "@types/react": "^16.9.22",
