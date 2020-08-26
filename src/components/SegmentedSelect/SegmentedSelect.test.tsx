@@ -66,7 +66,12 @@ describe('SegmentedSelect', () => {
       expect(mockedOnSelect).toHaveBeenLastCalledWith('E');
       expect(mockedOnSelect).toHaveBeenCalledTimes(3);
     });
-    it('renders the first element as selected when no selection is provided', () => {});
+    it('renders the first element as selected when no selection is provided', () => {
+      render(<SegmentedSelect choices={defaultChoices} />);
+      const selectedChoice = screen.getByTestId('choice-selected');
+      const expectedChoice = screen.getByText('B');
+      expect(selectedChoice).toEqual(expectedChoice);
+    });
   });
   describe('Uncontrolled mode', () => {
     it('renders the initially selected choice as selected', () => {
@@ -88,7 +93,17 @@ describe('SegmentedSelect', () => {
     });
   });
   describe('Controlled mode', () => {
-    it('renders the selected choice as selected', () => {});
-    it('overwrites the uncontrolled mode behavior every time', () => {});
+    it('renders the selected choice as selected', () => {
+      render(<SegmentedSelect choices={defaultChoices} selectedId="E" />);
+      const selectedChoice = screen.getByTestId('choice-selected');
+      const expectedChoice = screen.getByText('E');
+      expect(selectedChoice).toEqual(expectedChoice);
+    });
+    it('overwrites the uncontrolled mode behavior every time', () => {
+      render(<SegmentedSelect choices={defaultChoices} initialSelectedId="A" selectedId="C" />);
+      const selectedChoice = screen.getByTestId('choice-selected');
+      const expectedChoice = screen.getByText('C');
+      expect(selectedChoice).toEqual(expectedChoice);
+    });
   });
 });
