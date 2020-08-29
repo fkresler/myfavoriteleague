@@ -15,35 +15,44 @@ export const StaticLeagueContext = React.createContext<IStaticLeagueProvider>({
   },
 });
 
-export const StaticLeagueProvider: React.FunctionComponent = ({ children }) => {
+export const StaticLeagueProvider: React.FC<{ mockData?: IStaticLeagueProvider }> = ({
+  mockData,
+  children,
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [championData, setChampionData] = useState<DataDragonChampions | null>(null);
+
   useEffect(() => {
-    let abortFn: () => void;
-    setIsLoading(true);
-    const fetchAndSetData = async () => {
-      const staticApi = new Weedwick();
-      const championResponse = await staticApi.getChampionData();
-      const { data, abort } = championResponse;
-      abortFn = abort;
-      if (data) {
-        setChampionData(data);
-      }
-      setIsLoading(false);
-    };
-    fetchAndSetData();
+    let abortFn = () => {};
+    if (!mockData) {
+      setIsLoading(true);
+      const fetchAndSetData = async () => {
+        const staticApi = new Weedwick();
+        const championResponse = await staticApi.getChampionData();
+        const { data, abort } = championResponse;
+        abortFn = abort;
+        if (data) {
+          setChampionData(data);
+        }
+        setIsLoading(false);
+      };
+      fetchAndSetData();
+    }
     return () => {
       abortFn();
     };
-  }, []);
+  }, [mockData]);
+
   return (
     <StaticLeagueContext.Provider
-      value={{
-        state: {
-          isLoading,
-          championData,
-        },
-      }}
+      value={
+        mockData || {
+          state: {
+            isLoading,
+            championData,
+          },
+        }
+      }
     >
       {children}
     </StaticLeagueContext.Provider>

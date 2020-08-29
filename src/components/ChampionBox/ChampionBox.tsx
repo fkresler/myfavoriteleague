@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import useChampionData from '@/hooks/useChampionData';
+import { FaInfoCircle } from 'react-icons/fa';
+import { getChampionImageUrl } from '@/utils/championInfoUtils';
 
 interface IChampionBox {
+  className?: string;
   championId: string;
+  imageUrl?: string;
+  info?: string;
   isRounded?: boolean;
   isHighlighted?: boolean;
   isDisabled?: boolean;
@@ -15,13 +20,17 @@ const StyledChampionBox = styled.div<{
   isDisabled?: boolean;
   isRounded?: boolean;
 }>`
-  display: inline-block;
+  display: block;
+  position: relative;
+  width: 5rem;
   max-width: 5rem;
+  height: 5rem;
   max-height: 5rem;
+  background-color: grey;
   border-radius: ${({ isRounded }) => (isRounded ? '100%' : '0')};
   border: ${({ theme, isHighlighted }) =>
     isHighlighted
-      ? `5px solid ${theme.colors.action.active}`
+      ? `3px solid ${theme.colors.action.active}`
       : `1px solid ${theme.colors.action.main}`};
   ${({ theme, isDisabled }) =>
     isDisabled &&
@@ -32,8 +41,8 @@ const StyledChampionBox = styled.div<{
   overflow: hidden;
 
   img {
-    width: 5rem;
-    height: auto;
+    width: 100%;
+    height: 100%;
     ${({ isDisabled }) =>
       isDisabled &&
       `
@@ -42,39 +51,48 @@ const StyledChampionBox = styled.div<{
   }
 `;
 
-const StyledInvalidContent = styled(StyledChampionBox)`
-  background-color: grey;
+const StyledInfoIconWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
 `;
 
 export const ChampionBox: React.FC<IChampionBox> = ({
+  className,
   championId,
+  imageUrl: explicitImageUrl,
+  info,
   isRounded,
   isHighlighted,
   isDisabled,
   onClick,
 }) => {
   const championData = useChampionData(championId);
+  const { name, image, version } = championData || {};
+  const { full: imageName } = image || {};
+  const implicitImageUrl = getChampionImageUrl(version, imageName);
+  const hasInfo = !!info && info !== '';
+  const renderedImageUrl = explicitImageUrl || implicitImageUrl || undefined;
 
-  if (championData) {
-    const {
-      name,
-      image: { full },
-      version,
-    } = championData;
-    const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${full}`;
-    return (
-      <StyledChampionBox
-        isRounded={isRounded}
-        isHighlighted={isHighlighted}
-        isDisabled={isDisabled}
-        onClick={onClick}
-      >
-        <img src={imageUrl} alt={name} />
-      </StyledChampionBox>
-    );
-  }
-
-  return <StyledInvalidContent />;
+  return (
+    <StyledChampionBox
+      className={className}
+      isRounded={isRounded}
+      isHighlighted={isHighlighted}
+      isDisabled={isDisabled}
+      onClick={onClick}
+    >
+      {hasInfo && (
+        <StyledInfoIconWrapper data-testid="info-icon">
+          <FaInfoCircle />
+        </StyledInfoIconWrapper>
+      )}
+      {renderedImageUrl && (
+        <img data-testid="champion-image" loading="lazy" src={renderedImageUrl} alt={name} />
+      )}
+    </StyledChampionBox>
+  );
 };
 
 export default ChampionBox;
