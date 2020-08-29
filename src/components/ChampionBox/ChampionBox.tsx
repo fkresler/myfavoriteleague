@@ -6,6 +6,7 @@ import { getChampionImageUrl } from '@/utils/championInfoUtils';
 
 interface IChampionBox {
   className?: string;
+  testId?: string;
   championId: string;
   imageUrl?: string;
   info?: string;
@@ -60,6 +61,7 @@ const StyledInfoIconWrapper = styled.div`
 
 export const ChampionBox: React.FC<IChampionBox> = ({
   className,
+  testId,
   championId,
   imageUrl: explicitImageUrl,
   info,
@@ -78,6 +80,7 @@ export const ChampionBox: React.FC<IChampionBox> = ({
   return (
     <StyledChampionBox
       className={className}
+      data-testid={testId || 'champion-box'}
       isRounded={isRounded}
       isHighlighted={isHighlighted}
       isDisabled={isDisabled}

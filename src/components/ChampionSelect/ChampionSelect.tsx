@@ -5,9 +5,11 @@ import { useAllChampionData } from '@/hooks/useChampionData';
 import { ChampionBox } from '@/components/ChampionBox';
 
 export interface IChampionSelect {
-  selectedChampions?: string[];
+  className?: string;
+  testId?: string;
+  initialSelection?: string[];
   disabledChampions?: string[];
-  onSelect?: (selectedChampion: string) => void;
+  onSelectionChange?: (championSelection: string[]) => void;
   onSubmit?: (selectedChampions: string[]) => void;
 }
 
@@ -28,30 +30,47 @@ const ChampionSelectionWrapper = styled.div`
 `;
 
 export const ChampionSelect: React.FC<IChampionSelect> = ({
-  selectedChampions = [],
+  className,
+  testId,
+  initialSelection = [],
   disabledChampions = [],
-  onSelect,
+  onSelectionChange,
   onSubmit,
 }) => {
   const allChampions = useAllChampionData();
-  const [currentSelection, setCurrentSelection] = React.useState<string[]>(selectedChampions);
+  const [currentSelection, setCurrentSelection] = React.useState<string[]>(initialSelection);
+
+  const handleSelect = (championId: string) => {
+    let newSelection: string[];
+    if (currentSelection.includes(championId)) {
+      newSelection = currentSelection.filter((selectedChampion) => selectedChampion !== championId);
+      setCurrentSelection(newSelection);
+    } else {
+      newSelection = currentSelection.concat(championId);
+      setCurrentSelection(newSelection);
+    }
+    return onSelectionChange && onSelectionChange(newSelection);
+  };
+
   return (
-    <StyledChampionSelect>
+    <StyledChampionSelect className={className} data-testid={testId || 'champion-select'}>
       <ChampionSelectionWrapper>
         {allChampions &&
           Object.keys(allChampions).map((key) => {
             const thisChampionId = allChampions[key].id;
+            const isChampionDisabled = disabledChampions.includes(thisChampionId);
+            const isChampionHighlighted = currentSelection.includes(thisChampionId);
             return (
               <ChampionBox
                 key={key}
+                testId="champion-box"
                 championId={thisChampionId}
-                isHighlighted={currentSelection.includes(thisChampionId)}
-                isDisabled={disabledChampions.includes(thisChampionId)}
+                isHighlighted={isChampionHighlighted}
+                isDisabled={isChampionDisabled}
                 onClick={() => {
-                  if (onSelect) {
-                    onSelect(thisChampionId);
+                  if (!isChampionDisabled) {
+                    handleSelect(thisChampionId);
                   }
-                  setCurrentSelection(currentSelection.concat(thisChampionId).sort());
                 }}
               />
             );
@@ -59,7 +78,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
       </ChampionSelectionWrapper>
       {onSubmit && (
         <Button variant="success" onClick={() => onSubmit(currentSelection)}>
-          Submit!
+          These are my champions!
         </Button>
       )}
     </StyledChampionSelect>
