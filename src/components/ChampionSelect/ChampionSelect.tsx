@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'react-rainbow-components';
+import { Button, Input } from 'react-rainbow-components';
 import { useAllChampionData } from '@/hooks/useChampionData';
 import { ChampionBox } from '@/components/ChampionBox';
 
@@ -9,24 +9,43 @@ export interface IChampionSelect {
   testId?: string;
   initialSelection?: string[];
   disabledChampions?: string[];
+  showFilter?: boolean;
   onSelectionChange?: (championSelection: string[]) => void;
   onSubmit?: (selectedChampions: string[]) => void;
 }
 
 const StyledChampionSelect = styled.div`
-  display: block;
-  background-color: ${({ theme }) => theme.colors.action.main};
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
 `;
 
-const ChampionSelectionWrapper = styled.div`
+const FilterWrapper = styled.div`
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: center;
+`;
+
+const ChampionSelectWrapper = styled.div`
+  flex: 2 1 auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
 
   & > * {
     margin: 1rem;
   }
+`;
+
+const ActionButtonWrapper = styled.div`
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0.5rem;
 `;
 
 export const ChampionSelect: React.FC<IChampionSelect> = ({
@@ -34,11 +53,18 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
   testId,
   initialSelection = [],
   disabledChampions = [],
+  showFilter,
   onSelectionChange,
   onSubmit,
 }) => {
-  const allChampions = useAllChampionData();
+  const allChampions = useAllChampionData() || {};
   const [currentSelection, setCurrentSelection] = React.useState<string[]>(initialSelection);
+  const [currentFilter, setCurrentFilter] = React.useState<string>('');
+
+  const filterRegExp = new RegExp(currentFilter, 'i');
+  const filteredChampions = Object.keys(allChampions).filter((key) => {
+    return allChampions[key].name.search(filterRegExp) > -1;
+  });
 
   const handleSelect = (championId: string) => {
     let newSelection: string[];
@@ -54,32 +80,44 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
 
   return (
     <StyledChampionSelect className={className} data-testid={testId || 'champion-select'}>
-      <ChampionSelectionWrapper>
-        {allChampions &&
-          Object.keys(allChampions).map((key) => {
-            const thisChampionId = allChampions[key].id;
-            const isChampionDisabled = disabledChampions.includes(thisChampionId);
-            const isChampionHighlighted = currentSelection.includes(thisChampionId);
-            return (
-              <ChampionBox
-                key={key}
-                testId="champion-box"
-                championId={thisChampionId}
-                isHighlighted={isChampionHighlighted}
-                isDisabled={isChampionDisabled}
-                onClick={() => {
-                  if (!isChampionDisabled) {
-                    handleSelect(thisChampionId);
-                  }
-                }}
-              />
-            );
-          })}
-      </ChampionSelectionWrapper>
+      {showFilter && (
+        <FilterWrapper>
+          <Input
+            label="Filter"
+            hideLabel
+            placeholder="Search champions ..."
+            value={currentFilter}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrentFilter(e.target.value)}
+          />
+        </FilterWrapper>
+      )}
+      <ChampionSelectWrapper>
+        {filteredChampions.map((key) => {
+          const thisChampionId = allChampions[key].id;
+          const isChampionDisabled = disabledChampions.includes(thisChampionId);
+          const isChampionHighlighted = currentSelection.includes(thisChampionId);
+          return (
+            <ChampionBox
+              key={key}
+              testId="champion-box"
+              championId={thisChampionId}
+              isHighlighted={isChampionHighlighted}
+              isDisabled={isChampionDisabled}
+              onClick={() => {
+                if (!isChampionDisabled) {
+                  handleSelect(thisChampionId);
+                }
+              }}
+            />
+          );
+        })}
+      </ChampionSelectWrapper>
       {onSubmit && (
-        <Button variant="success" onClick={() => onSubmit(currentSelection)}>
-          These are my champions!
-        </Button>
+        <ActionButtonWrapper>
+          <Button variant="success" onClick={() => onSubmit(currentSelection)}>
+            These are my champions!
+          </Button>
+        </ActionButtonWrapper>
       )}
     </StyledChampionSelect>
   );

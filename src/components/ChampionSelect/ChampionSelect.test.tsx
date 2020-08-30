@@ -74,4 +74,24 @@ describe('ChampionSelect', () => {
     expect(debugSubmit).toHaveBeenCalledTimes(2);
     expect(debugSubmit).toHaveBeenLastCalledWith(['Aatrox']);
   });
+  it('renders no filter by default', () => {
+    render(<ChampionSelect />, mockedStaticProviderData);
+    expect(screen.queryByRole('textbox')).toBeNull();
+  });
+  it('renders a filter when showFilter is set', () => {
+    render(<ChampionSelect showFilter />, mockedStaticProviderData);
+    expect(screen.getByRole('textbox')).toBeTruthy();
+  });
+  it('renders only filtered results when a filter value is set', () => {
+    render(<ChampionSelect showFilter />, mockedStaticProviderData);
+    const inputElement = screen.getByRole('textbox');
+    expect(inputElement).toBeTruthy();
+    expect(inputElement.textContent).toEqual('');
+    fireEvent.keyPress(inputElement, { key: 'A', code: 'KeyA' });
+    expect(screen.queryAllByTestId('champion-box').length).toEqual(3);
+    fireEvent.change(inputElement, { target: { value: 'Ah' } });
+    expect(screen.queryAllByTestId('champion-box').length).toEqual(1);
+    fireEvent.change(inputElement, { target: { value: 'B' } });
+    expect(screen.queryByTestId('champion-box')).toBeNull();
+  });
 });
