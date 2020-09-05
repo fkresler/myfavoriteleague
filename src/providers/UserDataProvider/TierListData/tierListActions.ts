@@ -34,7 +34,6 @@ export const setTierLists = (tierLists: TierListData[]): TierListAction => {
 
 export const addTierList = (
   authorId: string,
-  name: string,
   data: Partial<TierListData>,
   tlTemplate?: TierListTemplate,
 ): TierListAction => {
@@ -45,7 +44,7 @@ export const addTierList = (
     payload: {
       id: tierListId,
       authorId,
-      name,
+      name: data.name || '',
       mode: data.mode || null,
       role: data.role || null,
       isPublic: data.isPublic || false,
@@ -114,7 +113,6 @@ export const deleteChampionList = (id: string): TierListAction => {
 export const addChampionListEntry = (
   tierListId: string,
   championListId: string,
-  championId: string,
   data: Partial<ChampionListEntryData>,
 ): TierListAction => {
   return {
@@ -122,8 +120,8 @@ export const addChampionListEntry = (
     payload: {
       tierListId,
       championListId,
-      championId,
       id: data.id || computeNewTierListId(),
+      championId: data.championId || '',
       note: data.note || null,
     },
   };

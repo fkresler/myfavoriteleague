@@ -9,6 +9,7 @@ export interface IChampionSelect {
   testId?: string;
   initialSelection?: string[];
   disabledChampions?: string[];
+  excludedChampions?: string[];
   showFilter?: boolean;
   onSelectionChange?: (championSelection: string[]) => void;
   onSubmit?: (selectedChampions: string[]) => void;
@@ -53,6 +54,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
   testId,
   initialSelection = [],
   disabledChampions = [],
+  excludedChampions = [],
   showFilter,
   onSelectionChange,
   onSubmit,
@@ -96,6 +98,9 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
           const thisChampionId = allChampions[key].id;
           const isChampionDisabled = disabledChampions.includes(thisChampionId);
           const isChampionHighlighted = currentSelection.includes(thisChampionId);
+          if (excludedChampions.includes(thisChampionId)) {
+            return null;
+          }
           return (
             <ChampionBox
               key={key}

@@ -58,6 +58,10 @@ describe('ChampionSelect', () => {
     expect(debugSelectionChange).toHaveBeenCalledTimes(1);
     expect(debugSelectionChange).toHaveBeenLastCalledWith(['Ahri']);
   });
+  it('does not render excluded champions', () => {
+    render(<ChampionSelect excludedChampions={['Aatrox']} />, mockedStaticProviderData);
+    expect(screen.queryAllByTestId('champion-box').length).toEqual(2);
+  });
   it('renders a submit button when an onSubmit function is provided', () => {
     render(<ChampionSelect onSubmit={jest.fn()} />, mockedStaticProviderData);
     expect(screen.getByText('These are my champions!')).toBeTruthy();

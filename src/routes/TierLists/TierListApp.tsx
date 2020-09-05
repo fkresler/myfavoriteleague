@@ -65,7 +65,11 @@ const TierListApp: React.FC = () => {
         handleTierListData={(tlName, tlTemplate) => {
           if (authUser) {
             dispatch(
-              tierListActions.addTierList(authUser.uid, tlName, { order: data.length }, tlTemplate),
+              tierListActions.addTierList(
+                authUser.uid,
+                { name: tlName, order: data.length },
+                tlTemplate,
+              ),
             );
           }
         }}

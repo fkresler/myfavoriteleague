@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import ChampionBox from '@/components/ChampionBox';
-import { DnDTierListTypes, DnDTierListItemData, ChampionListEntryData } from '@/types';
+import { DnDTierListTypes, ChampionListEntryData } from '@/types';
 import useChampionData from '@/hooks/useChampionData';
 
 const StyledChampionEntry = styled.div`
@@ -34,33 +34,27 @@ const StyledChampionEntry = styled.div`
 `;
 
 export type IChampionListEntry = ChampionListEntryData & {
-  updateChampionEntry: (championEntryId: string, note: string) => void;
-  deleteChampionEntry: (championEntryId: string) => void;
+  onUpdate?: (data: Partial<ChampionListEntryData>) => void;
+  onDelete?: (championEntryId: string) => void;
 };
 
-const ChampionEntry: React.FC<IChampionListEntry> = ({
+export const ChampionEntry: React.FC<IChampionListEntry> = ({
   id,
   championId,
   note,
-  deleteChampionEntry,
+  onDelete = () => {},
 }) => {
   const championData = useChampionData(championId);
-  let imageUrl: string | undefined;
-  if (championData) {
-    const {
-      image: { full },
-      version,
-    } = championData;
-    imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${full}`;
-  }
-  const dndItemData: DnDTierListItemData<ChampionListEntryData> = {
-    type: DnDTierListTypes.ChampionElement,
-    id,
-    note,
-    championId,
-  };
+  const dataVersion = championData?.version;
+  const imageName = championData?.image?.full;
+  const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${dataVersion}/img/champion/${imageName}`;
   const [, dragRef, preview] = useDrag({
-    item: dndItemData,
+    item: {
+      type: DnDTierListTypes.ChampionElement,
+      id,
+      note,
+      championId,
+    },
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.4 : 1,
     }),
@@ -70,7 +64,7 @@ const ChampionEntry: React.FC<IChampionListEntry> = ({
       ref={dragRef}
       onContextMenu={(event) => {
         event.preventDefault();
-        deleteChampionEntry(id);
+        onDelete(id);
       }}
     >
       {imageUrl && <DragPreviewImage connect={preview} src={imageUrl} />}

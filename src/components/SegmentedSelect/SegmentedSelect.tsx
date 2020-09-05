@@ -12,9 +12,11 @@ export interface ISegmentedSelect {
   onSelect?: (selectedId: string) => void;
 }
 
+const segmentedHeight: string = '3rem';
+
 const SegmentedSelectWrapper = styled.div`
   display: block;
-  height: 3rem;
+  height: ${segmentedHeight};
   overflow: hidden;
   border-radius: 5px;
 `;
@@ -34,7 +36,8 @@ const SegmentedSelectContent = styled.div`
 const SegmentedChoice = styled.div<{ isActive: boolean }>`
   display: block;
   text-align: center;
-  padding: 1rem;
+  line-height: ${segmentedHeight};
+  padding: 0 0.5rem;
   flex-grow: 1;
   flex-basis: 0;
   user-select: none;

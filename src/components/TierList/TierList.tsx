@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'react-rainbow-components';
-import { FaPlus } from 'react-icons/fa';
+import { ButtonIcon } from 'react-rainbow-components';
+import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 import { TierListData, TierListAction } from '@/types';
 import { tierListActions } from '@/providers/UserDataProvider';
 import ChampionList from './ChampionList';
@@ -22,13 +22,6 @@ const StyledAddChampionListRow = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-`;
-
-const StyledTierListActionRow = styled.div`
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export type ITierList = TierListData & {
@@ -71,15 +64,14 @@ const TierList: React.FC<ITierList> = ({
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
-      <Button
+      <ButtonIcon
         type="button"
-        variant="neutral"
+        variant="base"
+        icon={<FaEdit />}
         onClick={() => {
           setTierListModalOpen(true);
         }}
-      >
-        Edit this list
-      </Button>
+      />
     </>
   );
 
@@ -94,15 +86,14 @@ const TierList: React.FC<ITierList> = ({
         }
         closeModalBox={() => setChampionListModalOpen(false)}
       />
-      <Button
+      <ButtonIcon
         type="button"
         variant="success"
+        icon={<FaPlus />}
         onClick={() => {
           setChampionListModalOpen(true);
         }}
-      >
-        <FaPlus size="3rem" />
-      </Button>
+      />
     </>
   );
 
@@ -112,54 +103,42 @@ const TierList: React.FC<ITierList> = ({
         {sortedChampionLists &&
           sortedChampionLists.map((championList) => (
             <ChampionList
+              isDroppable
               key={championList.id}
               id={championList.id}
               name={championList.name}
               description={championList.description}
               order={championList.order}
               entries={championList.entries}
-              updateChampionList={(clId, clName, clDescription, clOrder) =>
-                dispatch(
-                  tierListActions.updateChampionList(clId, {
-                    name: clName,
-                    description: clDescription,
-                    order: clOrder,
-                  }),
-                )
+              onUpdate={(clId, data) => dispatch(tierListActions.updateChampionList(clId, data))}
+              onDelete={(clId) => dispatch(tierListActions.deleteChampionList(clId))}
+              onAddEntry={(clId, data) =>
+                dispatch(tierListActions.addChampionListEntry(id, clId, data))
               }
-              deleteChampionList={(clId) => dispatch(tierListActions.deleteChampionList(clId))}
-              addChampionEntry={(clId, championId, note) =>
-                dispatch(
-                  tierListActions.addChampionListEntry(id, clId, championId, {
-                    note,
-                  }),
-                )
+              onUpdateEntry={(ceId, data) =>
+                dispatch(tierListActions.updateChampionListEntry(ceId, data))
               }
-              updateChampionEntry={(clId, ceId, note) =>
-                dispatch(tierListActions.updateChampionListEntry(ceId, { note }))
-              }
-              moveChampionEntry={(clId, ceId) => {
+              onDropEntry={(clId, ceId) => {
                 dispatch(tierListActions.moveChampionListEntry(ceId, id, clId));
               }}
-              deleteChampionEntry={(clId, ceId) =>
+              onDeleteEntry={(clId, ceId) =>
                 dispatch(tierListActions.deleteChampionListEntry(ceId))
               }
             />
           ))}
       </StyledChampionListSpacer>
-      <StyledAddChampionListRow>{AddChampionList}</StyledAddChampionListRow>
-      <StyledTierListActionRow>
+      <StyledAddChampionListRow>
+        {AddChampionList}
         {EditTierList}
         {isRemovable && (
-          <Button
+          <ButtonIcon
             type="button"
-            variant="destructive"
+            variant="base"
+            icon={<FaTrash />}
             onClick={() => dispatch(tierListActions.deleteTierList(id))}
-          >
-            Delete this list
-          </Button>
+          />
         )}
-      </StyledTierListActionRow>
+      </StyledAddChampionListRow>
     </>
   );
 };
