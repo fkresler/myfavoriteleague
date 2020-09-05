@@ -21,25 +21,24 @@ export const StaticLeagueProvider: React.FC<{ mockData?: IStaticLeagueProvider }
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [championData, setChampionData] = useState<DataDragonChampions | null>(null);
+  let isComponentRendered = true;
 
   useEffect(() => {
-    let abortFn = () => {};
     if (!mockData) {
       setIsLoading(true);
-      const fetchAndSetData = async () => {
+      (async () => {
         const staticApi = new Weedwick();
-        const championResponse = await staticApi.getChampionData();
-        const { data, abort } = championResponse;
-        abortFn = abort;
-        if (data) {
+        const data = await staticApi.getChampionData();
+        if (data && isComponentRendered) {
           setChampionData(data);
         }
-        setIsLoading(false);
-      };
-      fetchAndSetData();
+        if (isComponentRendered) {
+          setIsLoading(false);
+        }
+      })();
     }
     return () => {
-      abortFn();
+      isComponentRendered = false;
     };
   }, [mockData]);
 
