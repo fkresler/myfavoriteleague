@@ -9,6 +9,7 @@ export const useTierListData = () => {
   const Firebase = React.useContext(FirebaseContext);
   const userId = Firebase.authUser ? Firebase.authUser.uid : null;
   const [hasLoaded, setHasLoaded] = React.useState<boolean>(false);
+  const [hasChanged, setHasChanged] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
   const [state, dispatch] = React.useReducer(tierListReducer, []);
@@ -50,6 +51,7 @@ export const useTierListData = () => {
             await Firebase.Firebase.firestore.collection('tierlists').doc(userId).set({
               data: state,
             });
+            setHasChanged(false);
           } catch (e) {
             setIsError(true);
           }
@@ -57,6 +59,7 @@ export const useTierListData = () => {
         }
         default: {
           dispatch(action);
+          setHasChanged(true);
         }
       }
     }
@@ -65,6 +68,7 @@ export const useTierListData = () => {
   return {
     state: {
       hasLoaded,
+      hasChanged,
       isLoading,
       isError,
       data: state,

@@ -25,6 +25,7 @@ const StyledAddChampionListRow = styled.div`
 `;
 
 export type ITierList = TierListData & {
+  allowSingleUseEntriesOnly?: boolean;
   dispatch: (action: TierListAction) => void;
 };
 
@@ -38,11 +39,20 @@ const TierList: React.FC<ITierList> = ({
   isRemovable,
   order,
   lists,
+  allowSingleUseEntriesOnly,
   dispatch,
 }) => {
   const [isEditTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
   const [isAddChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
   const sortedChampionLists = lists.sort((clA, clB) => clA.order - clB.order);
+
+  const championsInUse = lists
+    .map((championList) => {
+      return championList.entries.map((entry) => {
+        return entry.championId;
+      });
+    })
+    .flat();
 
   const EditTierList: React.ReactNode = (
     <>
