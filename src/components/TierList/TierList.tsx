@@ -114,13 +114,14 @@ const TierList: React.FC<ITierList> = ({
           sortedChampionLists.map((championList) => (
             <ChampionList
               isDroppable
+              nonAddableChampions={allowSingleUseEntriesOnly ? championsInUse : []}
               key={championList.id}
               id={championList.id}
               name={championList.name}
               description={championList.description}
               order={championList.order}
               entries={championList.entries}
-              onUpdate={(clId, data) => dispatch(tierListActions.updateChampionList(clId, data))}
+              onEdit={(clId, data) => dispatch(tierListActions.updateChampionList(clId, data))}
               onDelete={(clId) => dispatch(tierListActions.deleteChampionList(clId))}
               onAddEntry={(clId, data) =>
                 dispatch(tierListActions.addChampionListEntry(id, clId, data))

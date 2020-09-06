@@ -130,6 +130,7 @@ const TierListApp: React.FC<{}> = () => {
         </StyledSegmentedSection>
         {currentTierListData && (
           <TierList
+            allowSingleUseEntriesOnly
             id={currentTierListData.id}
             authorId={currentTierListData.authorId}
             name={currentTierListData.name}

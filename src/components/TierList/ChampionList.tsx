@@ -32,7 +32,8 @@ const StyledChampionListFooter = styled.div`
 
 export type IChampionList = ChampionListData & {
   isDroppable?: boolean;
-  onUpdate?: (championListId: string, data: Partial<ChampionListData>) => void;
+  nonAddableChampions?: string[];
+  onEdit?: (championListId: string, data: Partial<ChampionListData>) => void;
   onDelete?: (championListId: string) => void;
   onAddEntry?: (championListId: string, data: Partial<ChampionListEntryData>) => void;
   onUpdateEntry?: (championListId: string, data: Partial<ChampionListEntryData>) => void;
@@ -47,7 +48,8 @@ export const ChampionList: React.FC<IChampionList> = ({
   order,
   entries,
   isDroppable,
-  onUpdate = () => {},
+  nonAddableChampions,
+  onEdit = () => {},
   onDelete = () => {},
   onAddEntry = () => {},
   onUpdateEntry = () => {},
@@ -90,6 +92,7 @@ export const ChampionList: React.FC<IChampionList> = ({
       >
         <ChampionSelect
           showFilter
+          excludedChampions={nonAddableChampions}
           onSelectionChange={(selection) => setSelectedChampions(selection)}
         />
       </Modal>
@@ -108,7 +111,7 @@ export const ChampionList: React.FC<IChampionList> = ({
         isModalOpen={isEditModalOpen}
         initialChampionListData={{ id, name, description, order, entries }}
         handleChampionListData={(clName, clDescription) =>
-          onUpdate(id, {
+          onEdit(id, {
             name: clName,
             description: clDescription,
             order,
