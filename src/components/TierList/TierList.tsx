@@ -44,7 +44,7 @@ const TierList: React.FC<ITierList> = ({
   const [isAddChampionListModalOpen, setChampionListModalOpen] = React.useState<boolean>(false);
   const sortedChampionLists = lists.sort((clA, clB) => clA.order - clB.order);
 
-  const EditTierList: JSX.Element = (
+  const EditTierList: React.ReactNode = (
     <>
       <TierListModal
         isModalOpen={isEditTierListModalOpen}
@@ -75,7 +75,7 @@ const TierList: React.FC<ITierList> = ({
     </>
   );
 
-  const AddChampionList: JSX.Element = (
+  const AddChampionList: React.ReactNode = (
     <>
       <ChampionListModal
         isModalOpen={isAddChampionListModalOpen}

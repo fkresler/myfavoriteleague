@@ -68,7 +68,7 @@ export const ChampionList: React.FC<IChampionList> = ({
     entryB.championId > entryA.championId ? -1 : 1,
   );
 
-  const AddChampionEntry: JSX.Element = (
+  const AddChampionEntry: React.ReactNode = (
     <>
       <Modal
         id="championentry-modal"
@@ -102,7 +102,7 @@ export const ChampionList: React.FC<IChampionList> = ({
     </>
   );
 
-  const CardActions: JSX.Element = (
+  const CardActions: React.ReactNode = (
     <StyledChampionListFooter>
       <ChampionListModal
         isModalOpen={isEditModalOpen}

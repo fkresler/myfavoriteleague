@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'react-rainbow-components';
+import { Button, ButtonIcon } from 'react-rainbow-components';
 import TierList from '@/components/TierList';
 import TierListModal from '@/components/TierList/TierListModal';
 import SegmentedSelect from '@/components/SegmentedSelect';
 import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
+import { FaPlus } from 'react-icons/fa';
 
 const StyledSegmentedSection = styled.div`
   margin: 1.5rem 0;
@@ -23,7 +24,7 @@ const StyledSegmentedSection = styled.div`
   }
 `;
 
-const TierListApp: React.FC = () => {
+const TierListApp: React.FC<{}> = () => {
   const { authUser } = React.useContext(FirebaseContext);
   const { tierlists } = React.useContext(UserDataContext);
   const {
@@ -31,6 +32,7 @@ const TierListApp: React.FC = () => {
     dispatch,
   } = tierlists;
   const [selectedList, selectList] = React.useState<string | undefined>(undefined);
+  const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
 
   const tierListSelectData = data.map((tierList) => ({
     id: tierList.id,
@@ -38,26 +40,21 @@ const TierListApp: React.FC = () => {
     order: tierList.order,
   }));
   const currentTierListData = data.find((tierList) => tierList.id === selectedList);
-  const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (!hasLoaded) {
       dispatch(tierListActions.fetchTierLists());
     }
-  }, [authUser]);
+  }, [authUser, hasLoaded, dispatch]);
 
   React.useEffect(() => {
     if (!selectedList) {
       const defaultSelectedElement = data.length > 0 ? data[0].id : undefined;
       selectList(defaultSelectedElement);
     }
-  }, [hasLoaded]);
+  }, [hasLoaded, data, selectedList]);
 
-  const TierListLoading: JSX.Element = <div>Loading ...</div>;
-
-  const TierListError: JSX.Element = <div>Something odd happened oof</div>;
-
-  const AddTierList: JSX.Element = (
+  const AddTierList: React.ReactNode = (
     <>
       <TierListModal
         isModalOpen={isAddTierListModalOpen}
@@ -75,13 +72,16 @@ const TierListApp: React.FC = () => {
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
-      <Button type="button" variant="success" onClick={() => setTierListModalOpen(true)}>
-        +
-      </Button>
+      <ButtonIcon
+        type="button"
+        variant="success"
+        icon={<FaPlus />}
+        onClick={() => setTierListModalOpen(true)}
+      />
     </>
   );
 
-  const SaveTierListsButton: JSX.Element = (
+  const SaveTierListsButton: React.ReactNode = (
     <Button
       type="button"
       variant="success"
@@ -94,11 +94,11 @@ const TierListApp: React.FC = () => {
   );
 
   if (isLoading) {
-    return TierListLoading;
+    return <div>Loading ...</div>;
   }
 
   if (isError) {
-    return TierListError;
+    return <div>Something odd happened oof</div>;
   }
 
   if (data && data.length > 0) {
