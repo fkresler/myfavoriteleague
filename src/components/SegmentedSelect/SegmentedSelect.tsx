@@ -16,7 +16,6 @@ const segmentedHeight: string = '3rem';
 
 const SegmentedSelectWrapper = styled.div`
   display: block;
-  height: ${segmentedHeight};
   overflow: hidden;
   border-radius: 5px;
 `;
@@ -24,13 +23,10 @@ const SegmentedSelectWrapper = styled.div`
 const SegmentedSelectContent = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  margin-bottom: -50px;
-  padding-bottom: 50px;
 `;
 
 const SegmentedChoice = styled.div<{ isActive: boolean }>`
@@ -42,7 +38,6 @@ const SegmentedChoice = styled.div<{ isActive: boolean }>`
   flex-basis: 0;
   user-select: none;
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
-  font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
   text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
   background-color: ${({ isActive, theme }) =>
     isActive ? theme.colors.action.active : theme.colors.action.main};

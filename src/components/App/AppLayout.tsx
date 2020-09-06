@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
 const GeneralLayout = styled.div`
   display: block;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.background.main};
   color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.main)};
@@ -40,7 +40,7 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
 const ContentLayout = styled.div<{ isNavbarOpen: boolean }>`
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   z-index: 1;
   transition: all 0.5s ease-out;
@@ -134,7 +134,7 @@ const NavigationLink = styled.div`
 `;
 
 interface IAppLayout {
-  navLinks?: JSX.Element[];
+  navLinks?: React.ReactNode[];
 }
 
 const AppLayout: React.FC<IAppLayout> = ({ navLinks = [], children }) => {
