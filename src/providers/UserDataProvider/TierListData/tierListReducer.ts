@@ -80,6 +80,26 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       });
       return newTierListState;
     }
+    case 'CLEAR_CHAMPIONLIST': {
+      const { id } = action.payload;
+      const newTierListState = state.map((tierList) => {
+        if (tierList.lists.some((championList) => championList.id === id)) {
+          const championListsArray = tierList.lists ? tierList.lists : [];
+          const newChampionListsArray = championListsArray.map((championListItem) => {
+            return {
+              ...championListItem,
+              entries: championListItem.id === id ? [] : [...championListItem.entries],
+            };
+          });
+          return {
+            ...tierList,
+            lists: newChampionListsArray,
+          };
+        }
+        return { ...tierList };
+      });
+      return newTierListState;
+    }
     case 'DELETE_CHAMPIONLIST': {
       const { id } = action.payload;
       const newTierListState = state.map((tierList) => {

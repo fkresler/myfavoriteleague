@@ -122,6 +122,7 @@ const TierList: React.FC<ITierList> = ({
               order={championList.order}
               entries={championList.entries}
               onEdit={(clId, data) => dispatch(tierListActions.updateChampionList(clId, data))}
+              onClear={(clId) => dispatch(tierListActions.clearChampionList(clId))}
               onDelete={(clId) => dispatch(tierListActions.deleteChampionList(clId))}
               onAddEntry={(clId, data) =>
                 dispatch(tierListActions.addChampionListEntry(id, clId, data))

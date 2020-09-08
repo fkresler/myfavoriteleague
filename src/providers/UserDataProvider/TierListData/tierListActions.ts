@@ -101,6 +101,15 @@ export const updateChampionList = (id: string, data: Partial<ChampionListData>):
   };
 };
 
+export const clearChampionList = (id: string): TierListAction => {
+  return {
+    type: 'CLEAR_CHAMPIONLIST',
+    payload: {
+      id,
+    },
+  };
+};
+
 export const deleteChampionList = (id: string): TierListAction => {
   return {
     type: 'DELETE_CHAMPIONLIST',

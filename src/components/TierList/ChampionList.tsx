@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import { FaBan, FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaTimesCircle } from 'react-icons/fa';
 import Card from '@/components/Card';
 import { Button, ButtonIcon, Modal } from 'react-rainbow-components';
 import ChampionListModal from '@/components/TierList/ChampionListModal';
@@ -34,6 +34,7 @@ export type IChampionList = ChampionListData & {
   isDroppable?: boolean;
   nonAddableChampions?: string[];
   onEdit?: (championListId: string, data: Partial<ChampionListData>) => void;
+  onClear?: (championListId: string) => void;
   onDelete?: (championListId: string) => void;
   onAddEntry?: (championListId: string, data: Partial<ChampionListEntryData>) => void;
   onUpdateEntry?: (championListId: string, data: Partial<ChampionListEntryData>) => void;
@@ -50,6 +51,7 @@ export const ChampionList: React.FC<IChampionList> = ({
   isDroppable,
   nonAddableChampions,
   onEdit = () => {},
+  onClear = () => {},
   onDelete = () => {},
   onAddEntry = () => {},
   onUpdateEntry = () => {},
@@ -126,7 +128,12 @@ export const ChampionList: React.FC<IChampionList> = ({
         icon={<FaEdit />}
         onClick={() => setEditModalOpen(true)}
       />
-      <ButtonIcon type="button" variant="base" icon={<FaBan />} onClick={() => {}} />
+      <ButtonIcon
+        type="button"
+        variant="base"
+        icon={<FaTimesCircle />}
+        onClick={() => onClear(id)}
+      />
       <ButtonIcon type="button" variant="base" icon={<FaTrash />} onClick={() => onDelete(id)} />
     </StyledChampionListFooter>
   );

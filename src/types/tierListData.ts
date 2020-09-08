@@ -53,6 +53,7 @@ export type TierListAction =
   | IDeleteTierListAction
   | IAddChampionListAction
   | IUpdateChampionListAction
+  | IClearChampionListAction
   | IDeleteChampionListAction
   | IAddChampionListEntryAction
   | IUpdateChampionListEntryAction
@@ -103,6 +104,13 @@ export type IAddChampionListAction = {
 export type IUpdateChampionListAction = {
   type: 'UPDATE_CHAMPIONLIST';
   payload: Partial<ChampionListData> & {
+    id: string;
+  };
+};
+
+export type IClearChampionListAction = {
+  type: 'CLEAR_CHAMPIONLIST';
+  payload: {
     id: string;
   };
 };
