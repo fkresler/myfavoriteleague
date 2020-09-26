@@ -4,14 +4,18 @@
   "private": true,
   "scripts": {
     "preinstall": "rm -f node_modules/@",
+    "preuninstall": "rm -f node_modules/@",
     "postinstall": "ln -s `pwd`/src node_modules/@",
+    "postuninstall": "ln -s `pwd`/src node_modules/@",
     "depupgrade": "yarn preinstall & yarn upgrade-interactive",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "yarn eslint src --ext js,ts,jsx,tsx",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -40,6 +44,13 @@
     "weedwick-api": "^1.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@storybook/addon-actions": "^6.0.22",
+    "@storybook/addon-essentials": "^6.0.22",
+    "@storybook/addon-links": "^6.0.22",
+    "@storybook/node-logger": "^6.0.22",
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@storybook/react": "^6.0.22",
     "@testing-library/react": "^11.0.2",
     "@types/jest": "26.0.13",
     "@types/node": "14.6.4",
@@ -49,6 +60,7 @@
     "@types/styled-components": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
+    "babel-loader": "^8.1.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-typescript": "^10.0.0",
@@ -63,6 +75,7 @@
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "prettier": "^2.0.5",
+    "react-is": "^16.13.1",
     "source-map-explorer": "^2.3.1",
     "typescript": "4.0.2"
   }
