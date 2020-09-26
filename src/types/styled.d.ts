@@ -2,7 +2,7 @@ import 'styled-components';
 import { ThemeColor } from './colors';
 
 declare module 'styled-components' {
-  export interface MyFavoriteLeagueTheme {
+  export interface DefaultTheme {
     colors: {
       brand: {
         main: string;

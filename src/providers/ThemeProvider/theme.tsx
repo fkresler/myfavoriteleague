@@ -1,9 +1,9 @@
-import { MyFavoriteLeagueTheme } from 'styled-components';
+import { DefaultTheme } from 'styled-components';
 import { ThemeColor } from '@/types';
 import { lighten, darken } from 'polished';
 import { getTextColorByBackground } from './colors';
 
-export const lightTheme: MyFavoriteLeagueTheme = {
+export const lightTheme: DefaultTheme = {
   colors: {
     brand: {
       main: ThemeColor.BRAND,
@@ -72,7 +72,7 @@ export const lightTheme: MyFavoriteLeagueTheme = {
   },
 };
 
-export const darkTheme: MyFavoriteLeagueTheme = {
+export const darkTheme: DefaultTheme = {
   colors: {
     brand: {
       main: ThemeColor.BRAND,

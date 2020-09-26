@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { ThemeContext, MyFavoriteLeagueTheme } from 'styled-components';
+import styled, { ThemeContext, DefaultTheme } from 'styled-components';
 
 const DebugColorWrapper = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ const ThemeColor: React.FC<{ text: string; color: string }> = ({ text, color }) 
 };
 
 const Styleguide: React.FC = () => {
-  const theme: MyFavoriteLeagueTheme = React.useContext(ThemeContext);
+  const theme: DefaultTheme = React.useContext(ThemeContext);
   return (
     <>
       <h2>Brand Colors</h2>
