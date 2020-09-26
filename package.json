@@ -26,7 +26,6 @@
     ]
   },
   "dependencies": {
-    "@blueprintjs/core": "^3.26.0",
     "firebase": "^7.9.1",
     "polished": "^3.6.5",
     "react": "^16.12.0",
