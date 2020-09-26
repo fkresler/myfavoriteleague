@@ -1,4 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# My Favorite League
+
+**MyFavoriteLeague** is an application that tries to solve the overwhelming complexity for a player in an ever-increasing roster of League champions and improving with those champions. In order to do so it features different modules:
+
+- **ChampionList**: This module can be used by players to rank their champions in a pre-defined tierlist or create their completely customized tierlist on their own
+- **Note**: This module can be used by players to create notes for their learning experiences on specific lanes, champions or matchups or anything else players want to note and tag it to easily find it later on
 
 ## Available Scripts
 
