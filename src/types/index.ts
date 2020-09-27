@@ -1,6 +1,5 @@
 export { default as Routes } from './routes';
 export * from './authentication';
-export * from './colors';
 export * from './league';
 export * from './noteData';
 export * from './tierListData';

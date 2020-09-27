@@ -15,4 +15,12 @@ export enum ThemeColor {
   WARNING = '#FFC82C',
 }
 
+export const DarkToneColors: ThemeColor[] = [
+  ThemeColor.LIGHT_SECONDARY,
+  ThemeColor.DARK,
+  ThemeColor.DARK_SECONDARY,
+  ThemeColor.DISABLED,
+  ThemeColor.SUCCESS,
+];
+
 export default ThemeColor;

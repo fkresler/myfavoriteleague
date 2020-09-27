@@ -1,13 +1,7 @@
-import { ThemeColor } from '@/types';
-
-export const darkToneColors: ThemeColor[] = [
-  ThemeColor.LIGHT_SECONDARY,
-  ThemeColor.DARK,
-  ThemeColor.DARK_SECONDARY,
-];
+import { ThemeColor, DarkToneColors } from './colors';
 
 export const getTextColorByBackground = (backgroundColor: ThemeColor): ThemeColor => {
-  const isDarkToneBackground = darkToneColors.find(
+  const isDarkToneBackground = DarkToneColors.find(
     (singleColor) => singleColor === backgroundColor,
   );
   if (isDarkToneBackground) {

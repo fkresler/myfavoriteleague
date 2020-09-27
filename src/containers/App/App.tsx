@@ -17,22 +17,8 @@ import {
   Styleguide,
   TierLists,
 } from '@/routes';
-import { lightTheme, darkTheme } from '@/providers/ThemeProvider/theme';
+import { lightTheme, darkTheme } from '@/theme';
 import AppLayout from './AppLayout';
-
-const App: React.FC = () => {
-  return (
-    <FirebaseProvider>
-      <StaticLeagueProvider>
-        <UserDataProvider>
-          <DndProvider backend={HTML5Backend}>
-            <ThemedApp />
-          </DndProvider>
-        </UserDataProvider>
-      </StaticLeagueProvider>
-    </FirebaseProvider>
-  );
-};
 
 const ThemedApp: React.FC = () => {
   const { usersettings } = React.useContext(UserDataContext);
@@ -59,6 +45,20 @@ const ThemedApp: React.FC = () => {
         </AppLayout>
       </ThemeProvider>
     </Router>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <FirebaseProvider>
+      <StaticLeagueProvider>
+        <UserDataProvider>
+          <DndProvider backend={HTML5Backend}>
+            <ThemedApp />
+          </DndProvider>
+        </UserDataProvider>
+      </StaticLeagueProvider>
+    </FirebaseProvider>
   );
 };
 
