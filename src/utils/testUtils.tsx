@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { darkTheme } from '@/providers/ThemeProvider/theme';
+import { darkTheme } from '@/theme';
 import { StaticLeagueProvider, IStaticLeagueProvider } from '@/providers/StaticLeagueProvider';
 
 export const renderWithTheme = (children: React.ReactNode) => {
