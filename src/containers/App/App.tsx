@@ -7,16 +7,7 @@ import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
 import { UserDataContext, UserDataProvider } from '@/providers/UserDataProvider';
-import {
-  Home,
-  Notes,
-  NotFound,
-  ResetPassword,
-  SignIn,
-  SignUp,
-  Styleguide,
-  TierLists,
-} from '@/routes';
+import { Home, Notes, NotFound, ResetPassword, SignIn, SignUp, TierLists } from '@/routes';
 import { lightTheme, darkTheme } from '@/theme';
 import AppLayout from './AppLayout';
 
@@ -39,7 +30,6 @@ const ThemedApp: React.FC = () => {
             <Route exact path={Routes.PASSWORD_FORGET} component={ResetPassword} />
             <Route exact path={Routes.CHAMPION_LISTS} component={TierLists} />
             <Route exact path={Routes.NOTES} component={Notes} />
-            <Route exact path={Routes.STYLEGUIDE} component={Styleguide} />
             <Route path="*" component={NotFound} />
           </Switch>
         </AppLayout>
