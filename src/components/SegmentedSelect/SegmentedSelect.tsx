@@ -12,7 +12,7 @@ export interface ISegmentedSelect {
   onSelect?: (selectedId: string) => void;
 }
 
-const segmentedHeight: string = '3rem';
+const segmentedHeight = '3rem';
 
 const SegmentedSelectWrapper = styled.div`
   display: block;

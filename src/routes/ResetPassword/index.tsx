@@ -18,7 +18,7 @@ const ResetPasswordPage: React.FC = () => {
   const [passwordResetEmail, setPasswordResetEmail] = useState<string>('');
   const [passwordResetError, setPasswordResetError] = useState<string | null>(null);
 
-  const isDataValid: boolean = !!passwordResetEmail;
+  const isDataValid = !!passwordResetEmail;
 
   const onInputChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
     setPasswordResetError(null);
