@@ -17,12 +17,14 @@
   },
   "extends": [
     "airbnb-typescript",
-    "prettier/react",
-    "prettier/@typescript-eslint",
-    "prettier",
+    "airbnb/hooks",
     "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier",
+    "prettier/react",
+    "prettier/@typescript-eslint"
   ],
   "plugins": ["@typescript-eslint", "jsx-a11y", "prettier", "import"],
   "settings": {
