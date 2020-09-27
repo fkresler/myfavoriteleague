@@ -37,7 +37,13 @@
     }
   },
   "rules": {
-    "@typescript-eslint/indent": ["off"],
+    "@typescript-eslint/lines-between-class-members": ["error"],
+    "no-redeclare": "off",
+    "@typescript-eslint/no-redeclare": ["error"],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "indent": "off",
+    "@typescript-eslint/indent": ["error"],
     "react/prop-types": "off",
     "arrow-parens": ["error", "always"],
     "prettier/prettier": ["error"],
