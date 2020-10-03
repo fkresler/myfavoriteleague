@@ -128,7 +128,8 @@ const NavigationLink = styled.div`
       theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
     font-weight: bold;
     text-decoration: underline;
-    text-decoration-color: ${(props) => props.theme.colors.text.secondary};
+    text-decoration-color: ${({ theme }) =>
+      theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
     cursor: pointer;
   }
 `;

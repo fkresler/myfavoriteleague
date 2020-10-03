@@ -33,7 +33,7 @@ const TierListModal: React.FC<ITierListModal> = ({
   React.useEffect(() => {
     setTlName(name);
     setTlNameError(undefined);
-  }, [isModalOpen]);
+  }, [isModalOpen, name]);
 
   return (
     <Modal

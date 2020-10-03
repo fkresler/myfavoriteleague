@@ -16,17 +16,15 @@
     "node": true
   },
   "extends": [
-    "airbnb-typescript",
-    "airbnb/hooks",
+    "plugin:react/all",
     "plugin:import/errors",
     "plugin:import/typescript",
-    //"plugin:@typescript-eslint/recommended",
-    //"plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "airbnb-typescript",
+    "airbnb/hooks",
     "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint"
+    "prettier/react"
   ],
-  "plugins": ["@typescript-eslint", "jsx-a11y", "prettier", "import"],
+  "plugins": ["@typescript-eslint", "jsx-a11y", "prettier", "import", "react"],
   "settings": {
     "import/extensions": [".js", ".ts", ".jsx", ".tsx"],
     "import/resolver": {
@@ -37,13 +35,9 @@
     }
   },
   "rules": {
-    // "@typescript-eslint/lines-between-class-members": ["error"],
-    // "no-redeclare": "off",
-    // "@typescript-eslint/no-redeclare": ["error"],
-    // "no-shadow": "off",
-    // "@typescript-eslint/no-shadow": ["error"],
-    // "indent": "off",
-    "@typescript-eslint/indent": ["error"],
+    "@typescript-eslint/indent": ["off"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"],
     "react/prop-types": "off",
     "arrow-parens": ["error", "always"],
     "prettier/prettier": ["error"],

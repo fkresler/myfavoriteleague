@@ -5,69 +5,69 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
       brand: {
-        main: string;
-        dark: string;
-        light: string;
+        main: ThemeColor;
+        dark: ThemeColor;
+        light: ThemeColor;
       };
       background: {
-        main: string;
-        secondary: string;
-        highlight: string;
-        disabled: string;
+        main: ThemeColor;
+        secondary: ThemeColor;
+        highlight: ThemeColor;
+        disabled: ThemeColor;
       };
       text: {
-        light: string;
-        dark: string;
+        light: ThemeColor;
+        dark: ThemeColor;
         getTextColorByBackground: (color: ThemeColor) => ThemeColor;
       };
       action: {
-        main: string;
-        active: string;
-        hover: string;
-        disabled: string;
+        main: ThemeColor;
+        active: ThemeColor;
+        hover: ThemeColor;
+        disabled: ThemeColor;
       };
       border: {
-        main: string;
-        divider: string;
-        disabled: string;
+        main: ThemeColor;
+        divider: ThemeColor;
+        disabled: ThemeColor;
       };
       success: {
-        main: string;
+        main: ThemeColor;
       };
       error: {
-        main: string;
+        main: ThemeColor;
       };
       warning: {
-        main: string;
+        main: ThemeColor;
       };
     };
     shadows: {
-      brand: string;
-      success: string;
-      error: string;
-      warning: string;
-      main: string;
+      brand: ThemeColor;
+      success: ThemeColor;
+      error: ThemeColor;
+      warning: ThemeColor;
+      main: ThemeColor;
     };
     borderRadius: {
-      main: string;
+      main: ThemeColor;
     };
     fontSizes: {
-      headlineSmall: string;
-      headlineMedium: string;
-      headlineLarge: string;
-      textSmall: string;
-      textMedium: string;
-      textLarge: string;
+      headlineSmall: ThemeColor;
+      headlineMedium: ThemeColor;
+      headlineLarge: ThemeColor;
+      textSmall: ThemeColor;
+      textMedium: ThemeColor;
+      textLarge: ThemeColor;
     };
     margins: {
-      marginSmall: string;
-      marginMedium: string;
-      marginLarge: string;
+      marginSmall: ThemeColor;
+      marginMedium: ThemeColor;
+      marginLarge: ThemeColor;
     };
     paddings: {
-      paddingSmall: string;
-      paddingMedium: string;
-      paddingLarge: string;
+      paddingSmall: ThemeColor;
+      paddingMedium: ThemeColor;
+      paddingLarge: ThemeColor;
     };
   }
 }

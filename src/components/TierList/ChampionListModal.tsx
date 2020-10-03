@@ -29,10 +29,8 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
   }, [clName]);
 
   React.useEffect(() => {
-    setClName(name);
     setClNameError(undefined);
-    setClDescription(description);
-  }, [isModalOpen]);
+  }, [name, description, isModalOpen]);
 
   return (
     <Modal

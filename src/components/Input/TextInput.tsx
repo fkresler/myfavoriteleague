@@ -13,8 +13,8 @@ export interface ITextInput {
   isDisabled?: boolean;
   isRequired?: boolean;
   hasAutoFocus?: boolean;
-  onChange?: (e) => void;
-  onKeyPress?: (e) => void;
+  onChange?: (e: React.ChangeEvent) => void;
+  onKeyPress?: (e: React.KeyboardEvent) => void;
 }
 
 const StyledInput = styled.input`

@@ -19,13 +19,13 @@ const Notes: React.FC = () => {
     if (!hasLoaded) {
       dispatch(noteActions.fetchNotes());
     }
-  }, [authUser]);
+  }, [authUser, dispatch, hasLoaded]);
 
-  const NotesLoading: JSX.Element = <div>Loading ...</div>;
+  const NotesLoading: React.ReactNode = <div>Loading ...</div>;
 
-  const NotesError: JSX.Element = <div>Something odd happened oof</div>;
+  const NotesError: React.ReactNode = <div>Something odd happened oof</div>;
 
-  const AddNoteModal: JSX.Element = (
+  const AddNoteModal: React.ReactNode = (
     <>
       <NoteModal
         isOpen={isAddNoteModalOpen}
@@ -41,7 +41,7 @@ const Notes: React.FC = () => {
     </>
   );
 
-  const SaveNotesButton: JSX.Element = (
+  const SaveNotesButton: React.ReactNode = (
     <Button variant="success" onClick={() => dispatch(noteActions.pushNotes())}>
       Save Notes
     </Button>
