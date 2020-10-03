@@ -31,9 +31,7 @@ const ResetPasswordPage: React.FC = () => {
     if (isDataValid) {
       Firebase.doPasswordReset(passwordResetEmail)
         .then(() => setPasswordResetEmail(''))
-        .catch(() =>
-          setPasswordResetError('Could not submit your request! Try again sometimes later ...'),
-        );
+        .catch(() => setPasswordResetError('Could not submit your request! Try again sometimes later ...'));
     } else {
       setPasswordResetError('Please enter a valid email address!');
     }

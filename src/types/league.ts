@@ -1,6 +1,6 @@
 export enum GameMode {
   'SR' = 'Summoners Rift',
-  'ARAM' = 'ARAM',
+  'ARAM' = 'ARAM'
 }
 
 export enum PositionalRole {
@@ -9,7 +9,7 @@ export enum PositionalRole {
   'JNG' = 'Jungle',
   'MID' = 'Mid',
   'BOT' = 'Bot',
-  'SUP' = 'Support',
+  'SUP' = 'Support'
 }
 
 export default PositionalRole;

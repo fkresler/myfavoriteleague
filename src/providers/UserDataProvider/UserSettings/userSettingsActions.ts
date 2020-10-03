@@ -1,29 +1,21 @@
 import { UserSettingsAction, UserSettingsData } from '@/types';
 
-export const fetchUserSettings = (): UserSettingsAction => {
-  return {
-    type: 'FETCH_SETTINGS',
-  };
-};
+export const fetchUserSettings = (): UserSettingsAction => ({
+  type: 'FETCH_SETTINGS',
+});
 
-export const pushUserSettings = (): UserSettingsAction => {
-  return {
-    type: 'PUSH_SETTINGS',
-  };
-};
+export const pushUserSettings = (): UserSettingsAction => ({
+  type: 'PUSH_SETTINGS',
+});
 
-export const setUserSettings = (userSettings: UserSettingsData): UserSettingsAction => {
-  return {
-    type: 'SET_SETTINGS',
-    payload: {
-      useDarkTheme: userSettings.useDarkTheme,
-      summonerName: userSettings.summonerName,
-    },
-  };
-};
+export const setUserSettings = (userSettings: UserSettingsData): UserSettingsAction => ({
+  type: 'SET_SETTINGS',
+  payload: {
+    useDarkTheme: userSettings.useDarkTheme,
+    summonerName: userSettings.summonerName,
+  },
+});
 
-export const toggleDarkTheme = (): UserSettingsAction => {
-  return {
-    type: 'TOGGLE_THEME',
-  };
-};
+export const toggleDarkTheme = (): UserSettingsAction => ({
+  type: 'TOGGLE_THEME',
+});

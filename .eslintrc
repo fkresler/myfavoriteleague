@@ -15,7 +15,7 @@
     "jest": true,
     "node": true
   },
-  "extends": ["prettier", "react-app", "airbnb/hooks", "airbnb-typescript"],
+  "extends": ["react-app", "airbnb-typescript", "prettier", "prettier/react"],
   "plugins": ["@typescript-eslint", "import", "jsx-a11y", "react-hooks", "prettier"],
   "settings": {
     "import/extensions": [".js", ".ts", ".jsx", ".tsx"],
@@ -27,6 +27,7 @@
     }
   },
   "rules": {
+    "import/no-extraneous-dependencies": ["off"],
     "react/prop-types": ["off"],
     "@typescript-eslint/no-unused-vars": ["warn"]
   }

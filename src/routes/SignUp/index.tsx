@@ -26,9 +26,10 @@ const SignUpPage: React.FC = () => {
   const { Firebase } = useContext(FirebaseContext);
   const history = useHistory();
   const [signUpData, setSignUpData] = useState<SignUpData>(initialSignUpState);
-  const { email, password, passwordRepeat, error } = signUpData;
-  const isDataValid: boolean =
-    !!email && !!password && !!passwordRepeat && password === passwordRepeat;
+  const {
+    email, password, passwordRepeat, error,
+  } = signUpData;
+  const isDataValid: boolean = !!email && !!password && !!passwordRepeat && password === passwordRepeat;
   const onInputChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
     const eventTarget = event.target as HTMLInputElement;
     setSignUpData({

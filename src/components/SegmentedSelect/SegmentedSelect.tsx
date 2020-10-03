@@ -39,8 +39,7 @@ const SegmentedChoice = styled.div<{ isActive: boolean }>`
   user-select: none;
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
   text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.action.active : theme.colors.action.main};
+  background-color: ${({ isActive, theme }) => (isActive ? theme.colors.action.active : theme.colors.action.main)};
   color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.action.main)};
 `;
 
@@ -51,8 +50,7 @@ export const SegmentedSelect: React.FC<ISegmentedSelect> = ({
   onSelect,
 }) => {
   const renderedChoices = choices?.sort((a, b) => a.order - b.order);
-  const defaultSelectedId =
-    renderedChoices && renderedChoices.length > 0 ? renderedChoices[0].id : '';
+  const defaultSelectedId = renderedChoices && renderedChoices.length > 0 ? renderedChoices[0].id : '';
   const [localSelectedId, setLocalSelectedId] = React.useState<string>(
     initialSelectedId || defaultSelectedId,
   );

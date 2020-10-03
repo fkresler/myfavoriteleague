@@ -22,9 +22,8 @@ const ModalBackground = styled.div<{ isOpen: boolean }>`
   background: ${({ theme }) => theme.colors.background.disabled};
   position: fixed;
   transition: opacity 0.3s, z-index 0.3s;
-  ${(isOpen) =>
-    isOpen &&
-    `
+  ${(isOpen) => isOpen
+    && `
             visibility: visible;
             z-index: 1000000;
             opacity: 0.5;

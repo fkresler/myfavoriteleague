@@ -13,7 +13,9 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       return [...state, newTierList];
     }
     case 'UPDATE_TIERLIST': {
-      const { id, name, mode, role, isPublic, isRemovable, order } = action.payload;
+      const {
+        id, name, mode, role, isPublic, isRemovable, order,
+      } = action.payload;
       const newTierListState = state.map((tierList) => {
         if (tierList.id === id) {
           return {
@@ -60,17 +62,15 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       const newTierListState = state.map((tierList) => {
         if (tierList.lists.some((championList) => championList.id === id)) {
           const championListsArray = tierList.lists ? tierList.lists : [];
-          const newChampionListsArray = championListsArray.map((championListItem) => {
-            return {
-              ...championListItem,
-              ...(championListItem.id === id && {
-                ...updatedData,
-                entries: updatedData.entries
-                  ? [...updatedData.entries]
-                  : [...championListItem.entries],
-              }),
-            };
-          });
+          const newChampionListsArray = championListsArray.map((championListItem) => ({
+            ...championListItem,
+            ...(championListItem.id === id && {
+              ...updatedData,
+              entries: updatedData.entries
+                ? [...updatedData.entries]
+                : [...championListItem.entries],
+            }),
+          }));
           return {
             ...tierList,
             lists: newChampionListsArray,
@@ -85,12 +85,10 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       const newTierListState = state.map((tierList) => {
         if (tierList.lists.some((championList) => championList.id === id)) {
           const championListsArray = tierList.lists ? tierList.lists : [];
-          const newChampionListsArray = championListsArray.map((championListItem) => {
-            return {
-              ...championListItem,
-              entries: championListItem.id === id ? [] : [...championListItem.entries],
-            };
-          });
+          const newChampionListsArray = championListsArray.map((championListItem) => ({
+            ...championListItem,
+            entries: championListItem.id === id ? [] : [...championListItem.entries],
+          }));
           return {
             ...tierList,
             lists: newChampionListsArray,
@@ -147,12 +145,10 @@ export const tierListReducer = (state: TierListData[], action: TierListAction): 
       const newTierListState = state.map((tierList) => {
         const championListsArray = tierList.lists ? tierList.lists : [];
         const newChampionListsArray = championListsArray.map((championListItem) => {
-          const newEntriesArray = championListItem.entries.map((entryItem) => {
-            return {
-              ...entryItem,
-              ...(entryItem.id === id && { ...updatedData }),
-            };
-          });
+          const newEntriesArray = championListItem.entries.map((entryItem) => ({
+            ...entryItem,
+            ...(entryItem.id === id && { ...updatedData }),
+          }));
           return {
             ...championListItem,
             entries: newEntriesArray,

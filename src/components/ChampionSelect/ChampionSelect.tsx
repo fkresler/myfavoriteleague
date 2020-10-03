@@ -64,9 +64,9 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
   const [currentFilter, setCurrentFilter] = React.useState<string>('');
 
   const filterRegExp = new RegExp(currentFilter, 'i');
-  const filteredChampions = Object.keys(allChampions).filter((key) => {
-    return allChampions[key].name.search(filterRegExp) > -1;
-  });
+  const filteredChampions = Object.keys(allChampions).filter(
+    (key) => allChampions[key].name.search(filterRegExp) > -1,
+  );
 
   const handleSelect = (championId: string) => {
     let newSelection: string[];

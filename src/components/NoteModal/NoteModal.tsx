@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Input, Modal, Textarea } from 'react-rainbow-components';
+import {
+  Button, Input, Modal, Textarea,
+} from 'react-rainbow-components';
 import { NoteData } from '@/types';
 
 const NoteModal: React.FC<{
@@ -26,12 +28,10 @@ const NoteModal: React.FC<{
       </form>
       <Button
         variant="success"
-        onClick={() =>
-          onConfirm({
-            title: noteTitle,
-            text: noteText,
-          })
-        }
+        onClick={() => onConfirm({
+          title: noteTitle,
+          text: noteText,
+        })}
       >
         Save Note
       </Button>

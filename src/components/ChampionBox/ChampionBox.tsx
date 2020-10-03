@@ -29,13 +29,11 @@ const StyledChampionBox = styled.div<{
   max-height: 5rem;
   background-color: grey;
   border-radius: ${({ isRounded }) => (isRounded ? '100%' : '0')};
-  border: ${({ theme, isHighlighted }) =>
-    isHighlighted
-      ? `3px solid ${theme.colors.action.active}`
-      : `1px solid ${theme.colors.action.main}`};
-  ${({ theme, isDisabled }) =>
-    isDisabled &&
-    `
+  border: ${({ theme, isHighlighted }) => (isHighlighted
+    ? `3px solid ${theme.colors.action.active}`
+    : `1px solid ${theme.colors.action.main}`)};
+  ${({ theme, isDisabled }) => isDisabled
+    && `
     border: 1px solid ${theme.colors.action.disabled};
   `}
   box-sizing: border-box;
@@ -44,9 +42,8 @@ const StyledChampionBox = styled.div<{
   img {
     width: 100%;
     height: 100%;
-    ${({ isDisabled }) =>
-      isDisabled &&
-      `
+    ${({ isDisabled }) => isDisabled
+      && `
     filter: grayscale(100%);
   `}
   }

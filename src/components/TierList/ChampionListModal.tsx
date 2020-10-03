@@ -1,5 +1,7 @@
 import React from 'react';
-import { Modal, Button, Input, Textarea } from 'react-rainbow-components';
+import {
+  Modal, Button, Input, Textarea,
+} from 'react-rainbow-components';
 import { ChampionListData } from '@/types';
 
 export type IChampionListModal = {

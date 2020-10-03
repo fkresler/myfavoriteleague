@@ -28,7 +28,9 @@ const TierListApp: React.FC<{}> = () => {
   const { authUser } = React.useContext(FirebaseContext);
   const { tierlists } = React.useContext(UserDataContext);
   const {
-    state: { hasLoaded, hasChanged, isLoading, isError, data },
+    state: {
+      hasLoaded, hasChanged, isLoading, isError, data,
+    },
     dispatch,
   } = tierlists;
   const [selectedList, selectList] = React.useState<string | undefined>(undefined);

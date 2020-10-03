@@ -7,7 +7,9 @@ import Routes from '@/types/routes';
 import StaticLeagueProvider from '@/providers/StaticLeagueProvider';
 import FirebaseProvider from '@/providers/FirebaseProvider';
 import { UserDataContext, UserDataProvider } from '@/providers/UserDataProvider';
-import { Home, Notes, NotFound, ResetPassword, SignIn, SignUp, TierLists } from '@/routes';
+import {
+  Home, Notes, NotFound, ResetPassword, SignIn, SignUp, TierLists,
+} from '@/routes';
 import { lightTheme, darkTheme } from '@/theme';
 import AppLayout from './AppLayout';
 
@@ -38,18 +40,16 @@ const ThemedApp: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <FirebaseProvider>
-      <StaticLeagueProvider>
-        <UserDataProvider>
-          <DndProvider backend={HTML5Backend}>
-            <ThemedApp />
-          </DndProvider>
-        </UserDataProvider>
-      </StaticLeagueProvider>
-    </FirebaseProvider>
-  );
-};
+const App: React.FC = () => (
+  <FirebaseProvider>
+    <StaticLeagueProvider>
+      <UserDataProvider>
+        <DndProvider backend={HTML5Backend}>
+          <ThemedApp />
+        </DndProvider>
+      </UserDataProvider>
+    </StaticLeagueProvider>
+  </FirebaseProvider>
+);
 
 export default App;

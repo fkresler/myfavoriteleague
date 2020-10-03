@@ -10,6 +10,8 @@
     "depupgrade": "yarn preinstall & yarn upgrade-interactive",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "eslint src --ext js,ts,jsx,tsx",
+    "types": "tsc --noEmit",
+    "check:all": "yarn types && yarn lint",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

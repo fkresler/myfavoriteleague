@@ -1,5 +1,7 @@
 import React from 'react';
-import { Modal, Button, Input, Select } from 'react-rainbow-components';
+import {
+  Modal, Button, Input, Select,
+} from 'react-rainbow-components';
 import { TierListData, TierListTemplate } from '@/types';
 
 export type ITierListModal = {

@@ -6,7 +6,9 @@ const TagInput: React.FC<{
   isDisabled?: boolean;
   onTagAdd?: (newTag: string[]) => void;
   onTagRemove?: (removedIndex?: number) => void;
-}> = ({ values = [], isDisabled = false, onTagAdd, onTagRemove }) => {
+}> = ({
+  values = [], isDisabled = false, onTagAdd, onTagRemove,
+}) => {
   const [tags, setTags] = React.useState<string[]>(values);
   const [inputValue, setInputValue] = React.useState<string>('');
 

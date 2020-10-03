@@ -47,11 +47,7 @@ const TierList: React.FC<ITierList> = ({
   const sortedChampionLists = lists.sort((clA, clB) => clA.order - clB.order);
 
   const championsInUse = lists
-    .map((championList) => {
-      return championList.entries.map((entry) => {
-        return entry.championId;
-      });
-    })
+    .map((championList) => championList.entries.map((entry) => entry.championId))
     .flat();
 
   const EditTierList: React.ReactNode = (
@@ -89,11 +85,9 @@ const TierList: React.FC<ITierList> = ({
     <>
       <ChampionListModal
         isModalOpen={isAddChampionListModalOpen}
-        handleChampionListData={(clName, clDescription) =>
-          dispatch(
-            tierListActions.addChampionList(id, { name: clName, description: clDescription }),
-          )
-        }
+        handleChampionListData={(clName, clDescription) => dispatch(
+          tierListActions.addChampionList(id, { name: clName, description: clDescription }),
+        )}
         closeModalBox={() => setChampionListModalOpen(false)}
       />
       <ButtonIcon
@@ -110,8 +104,8 @@ const TierList: React.FC<ITierList> = ({
   return (
     <>
       <StyledChampionListSpacer>
-        {sortedChampionLists &&
-          sortedChampionLists.map((championList) => (
+        {sortedChampionLists
+          && sortedChampionLists.map((championList) => (
             <ChampionList
               isDroppable
               nonAddableChampions={allowSingleUseEntriesOnly ? championsInUse : []}
@@ -124,18 +118,12 @@ const TierList: React.FC<ITierList> = ({
               onEdit={(clId, data) => dispatch(tierListActions.updateChampionList(clId, data))}
               onClear={(clId) => dispatch(tierListActions.clearChampionList(clId))}
               onDelete={(clId) => dispatch(tierListActions.deleteChampionList(clId))}
-              onAddEntry={(clId, data) =>
-                dispatch(tierListActions.addChampionListEntry(id, clId, data))
-              }
-              onUpdateEntry={(ceId, data) =>
-                dispatch(tierListActions.updateChampionListEntry(ceId, data))
-              }
+              onAddEntry={(clId, data) => dispatch(tierListActions.addChampionListEntry(id, clId, data))}
+              onUpdateEntry={(ceId, data) => dispatch(tierListActions.updateChampionListEntry(ceId, data))}
               onDropEntry={(clId, ceId) => {
                 dispatch(tierListActions.moveChampionListEntry(ceId, id, clId));
               }}
-              onDeleteEntry={(clId, ceId) =>
-                dispatch(tierListActions.deleteChampionListEntry(ceId))
-              }
+              onDeleteEntry={(clId, ceId) => dispatch(tierListActions.deleteChampionListEntry(ceId))}
             />
           ))}
       </StyledChampionListSpacer>

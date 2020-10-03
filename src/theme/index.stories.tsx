@@ -26,14 +26,12 @@ const StyledThemeColorBlock = styled.div<{ bgColor: string }>`
   background-color: ${({ bgColor }) => bgColor};
 `;
 
-const ThemeColor: React.FC<{ text: string; color: string }> = ({ text, color }) => {
-  return (
-    <StyledThemeColorWrapper>
-      <StyledThemeColorBlock bgColor={color} />
-      <div>{text}</div>
-    </StyledThemeColorWrapper>
-  );
-};
+const ThemeColor: React.FC<{ text: string; color: string }> = ({ text, color }) => (
+  <StyledThemeColorWrapper>
+    <StyledThemeColorBlock bgColor={color} />
+    <div>{text}</div>
+  </StyledThemeColorWrapper>
+);
 
 export const TextColors = () => {
   const theme = React.useContext(ThemeContext);

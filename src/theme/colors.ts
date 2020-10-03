@@ -12,7 +12,7 @@ export enum ThemeColor {
   DISABLED = 'rgba(82, 95, 127, 0.15)',
   SUCCESS = '#13CE66',
   ERROR = '#FF4949',
-  WARNING = '#FFC82C',
+  WARNING = '#FFC82C'
 }
 
 export const DarkToneColors: ThemeColor[] = [

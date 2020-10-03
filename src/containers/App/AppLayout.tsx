@@ -31,8 +31,7 @@ const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`
   transform: ${({ isNavbarOpen }) => (isNavbarOpen ? 'scaleX(1)' : 'scaleX(0)')};
   transform-origin: 0% 100%;
   background-color: ${({ theme }) => theme.colors.background.secondary};
-  color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   transition: all 0.5s ease-out;
   z-index: 3;
 `;
@@ -70,16 +69,14 @@ const HeaderBar = styled.div`
   align-items: center;
   line-height: 5rem;
   background-color: ${({ theme }) => theme.colors.background.secondary};
-  color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   z-index: 2;
 `;
 
 const HeaderElement = styled.div`
   display: inline-block;
   cursor: pointer;
-  color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   padding-left: 1rem;
   padding-right: 1rem;
 `;
@@ -94,8 +91,7 @@ const ContentWrapper = styled.div`
 const FooterBar = styled.div`
   background-color: ${({ theme }) => theme.colors.background.secondary};
   padding: 2rem 1rem;
-  color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   line-height: 200%;
 `;
 
@@ -103,8 +99,7 @@ const CloseButton = styled.div`
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
-  color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   font-weight: bold;
   font-size: 200%;
   cursor: pointer;
@@ -114,22 +109,18 @@ const NavigationLink = styled.div`
   display: block;
   margin-top: 4rem;
   white-space: nowrap;
-  color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   font-weight: bold;
   text-decoration: underline;
-  text-decoration-color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+  text-decoration-color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
   cursor: pointer;
 
   & * {
     white-space: nowrap;
-    color: ${({ theme }) =>
-      theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+    color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
     font-weight: bold;
     text-decoration: underline;
-    text-decoration-color: ${({ theme }) =>
-      theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+    text-decoration-color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
     cursor: pointer;
   }
 `;
