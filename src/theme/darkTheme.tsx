@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
-import { ThemeColor } from '@/types';
 import { lighten, darken } from 'polished';
+import { ThemeColor } from './colors';
 import { getTextColorByBackground } from './utils';
 
 export const darkTheme: DefaultTheme = {

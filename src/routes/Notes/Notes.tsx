@@ -11,9 +11,7 @@ const Notes: React.FC = () => {
   const { notes } = React.useContext(UserDataContext);
   const [isAddNoteModalOpen, setIsAddNoteModalOpen] = React.useState<boolean>(false);
   const {
-    state: {
-      hasLoaded, isLoading, isError, data,
-    },
+    state: { hasLoaded, isLoading, isError, data },
     dispatch,
   } = notes;
 
@@ -50,11 +48,11 @@ const Notes: React.FC = () => {
   );
 
   if (isLoading) {
-    return NotesLoading;
+    return <>{NotesLoading}</>;
   }
 
   if (isError) {
-    return NotesError;
+    return <>{NotesError}</>;
   }
 
   return (

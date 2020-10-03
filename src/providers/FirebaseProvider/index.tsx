@@ -14,8 +14,12 @@ export const FirebaseContext = React.createContext<IFirebaseContext>({
   authUser: undefined,
 });
 
-export const FirebaseProvider: React.FunctionComponent = ({ children }) => {
-  const [authUser, setAuthUser] = React.useState<User | undefined>(undefined);
+export const FirebaseProvider: React.FC<Partial<IFirebaseContext>> = ({
+  children,
+  Firebase: fireApp,
+  authUser,
+}) => {
+  const [currentAuthUser, setAuthUser] = React.useState<User | undefined>(undefined);
 
   React.useEffect(() => {
     const unlisten = FirebaseApp.auth.onAuthStateChanged((user) => {
@@ -31,8 +35,8 @@ export const FirebaseProvider: React.FunctionComponent = ({ children }) => {
   return (
     <FirebaseContext.Provider
       value={{
-        Firebase: FirebaseApp,
-        authUser,
+        Firebase: fireApp || FirebaseApp,
+        authUser: authUser || currentAuthUser,
       }}
     >
       {children}

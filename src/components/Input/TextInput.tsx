@@ -34,6 +34,8 @@ export const TextInput: React.FC<ITextInput> = ({
   isDisabled,
   onChange,
   onKeyPress,
-}) => {};
+}) => {
+  return <div>TextInput</div>;
+};
 
 export default TextInput;
