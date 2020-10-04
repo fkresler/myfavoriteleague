@@ -2,7 +2,7 @@ import React from 'react';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { NoteAction, NoteData, AsyncNoteData } from '@/types';
 import * as noteActions from './noteActions';
-import noteReducer from './noteReducer';
+import { noteReducer } from './noteReducer';
 
 export const initialNoteData: AsyncNoteData = {
   hasLoaded: false,

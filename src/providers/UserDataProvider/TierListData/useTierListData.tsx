@@ -2,7 +2,7 @@ import React from 'react';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { TierListAction, TierListData } from '@/types';
 import * as tierListActions from './tierListActions';
-import tierListReducer from './tierListReducer';
+import { tierListReducer } from './tierListReducer';
 import { createDefaultTierListData } from './initialTierListData';
 
 export const useTierListData = () => {

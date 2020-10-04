@@ -2,44 +2,91 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { ThemeProvider, DefaultTheme } from 'styled-components';
 import { darkTheme } from '@/theme';
-import { FirebaseContext } from '@/providers/FirebaseProvider';
-import { StaticLeagueContext } from '@/providers/StaticLeagueProvider';
-import { UserDataContext } from '@/providers/UserDataProvider';
+import { StaticLeagueContext, StaticLeagueData } from '@/providers/StaticLeagueProvider';
+import {
+  UserDataContext,
+  useTierListData,
+  useNoteData,
+  useUserSettingsData,
+} from '@/providers/UserDataProvider';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Router } from 'react-router-dom';
+import { ChampionDataMock } from '@/mocks/StaticChampionDataMock';
 
-const AllProviders: React.FC<{
-  customTheme?: DefaultTheme,
-  customFirebaseData?: ,
-  customStaticData?: ,
-  customUserData?: ,
-  customHistory?: string,
-}> = ({
+interface MockedProviderData {
+  customTheme: DefaultTheme;
+  customStaticData: StaticLeagueData;
+  customTierListData: ReturnType<typeof useTierListData>;
+  customNoteData: ReturnType<typeof useNoteData>;
+  customUserSettingsData: ReturnType<typeof useUserSettingsData>;
+}
+
+const AllProviders: React.FC<Partial<MockedProviderData>> = ({
   children,
   customTheme = darkTheme,
-  customFirebaseData,
-  customStaticData,
-  customUserData,
-  customHistory,
+  customStaticData = {
+    isLoading: false,
+    hasError: false,
+    championData: ChampionDataMock,
+  },
+  customTierListData = {
+    state: {
+      hasLoaded: true,
+      hasChanged: false,
+      isLoading: false,
+      isError: false,
+      data: [],
+    },
+    dispatch: () => {},
+  },
+  customNoteData = {
+    state: {
+      hasLoaded: true,
+      hasChanged: false,
+      isLoading: false,
+      isError: false,
+      data: [],
+    },
+    dispatch: () => {},
+  },
+  customUserSettingsData = {
+    state: {
+      hasLoaded: true,
+      hasChanged: false,
+      isLoading: false,
+      isError: false,
+      data: {},
+    },
+    dispatch: () => {},
+  },
 }) => (
-  <FirebaseContext.Provider value={customFirebaseData}>
-    <StaticLeagueContext.Provider value={customStaticData}>
-      <UserDataContext.Provider value={customUserData}>
-        <DndProvider backend={HTML5Backend}>
-          <Router history={customHistory}>
-            <ThemeProvider theme={customTheme}>
-              {children}
-            </ThemeProvider>
-          </Router>
-        </DndProvider>
-      </UserDataContext.Provider>
-    </StaticLeagueContext.Provider>
-  </FirebaseContext.Provider>
+  <StaticLeagueContext.Provider value={customStaticData}>
+    <UserDataContext.Provider
+      value={{
+        tierlists: customTierListData,
+        notes: customNoteData,
+        usersettings: customUserSettingsData,
+      }}
+    >
+      <DndProvider backend={HTML5Backend}>
+        <ThemeProvider theme={customTheme}>{children}</ThemeProvider>
+      </DndProvider>
+    </UserDataContext.Provider>
+  </StaticLeagueContext.Provider>
 );
 
-const customRender = (ui: React.ReactNode, options) => {
-  return render(<AllProviders {...options}>{ui}</AllProviders>);
+const customRender = (ui: React.ReactElement, data?: Partial<MockedProviderData>) => {
+  return render(
+    <AllProviders
+      customTheme={data?.customTheme}
+      customStaticData={data?.customStaticData}
+      customTierListData={data?.customTierListData}
+      customNoteData={data?.customNoteData}
+      customUserSettingsData={data?.customUserSettingsData}
+    >
+      {ui}
+    </AllProviders>,
+  );
 };
 
 // re-export everything

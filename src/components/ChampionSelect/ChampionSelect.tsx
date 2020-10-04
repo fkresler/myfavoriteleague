@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Input } from 'react-rainbow-components';
-import { useAllChampionData } from '@/hooks/useChampionData';
+import { useAllChampionData } from '@/providers/StaticLeagueProvider/useChampionData';
 import { ChampionBox } from '@/components/ChampionBox';
 
 export interface IChampionSelect {
@@ -59,7 +59,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
   onSelectionChange,
   onSubmit,
 }) => {
-  const allChampions = useAllChampionData() || {};
+  const { data: allChampions = {} } = useAllChampionData();
   const [currentSelection, setCurrentSelection] = React.useState<string[]>(initialSelection);
   const [currentFilter, setCurrentFilter] = React.useState<string>('');
 

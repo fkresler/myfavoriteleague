@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
-import {
-  FaPlus, FaEdit, FaTrash, FaTimesCircle,
-} from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaTimesCircle } from 'react-icons/fa';
 import Card from '@/components/Card';
 import { Button, ButtonIcon, Modal } from 'react-rainbow-components';
 import ChampionListModal from '@/components/TierList/ChampionListModal';
@@ -44,7 +42,7 @@ export type IChampionList = ChampionListData & {
   onDeleteEntry?: (championListId: string, championEntryId: string) => void;
 };
 
-export const ChampionList: React.FC<IChampionList> = ({
+const ChampionList: React.FC<IChampionList> = ({
   id,
   name,
   description,
@@ -70,7 +68,9 @@ export const ChampionList: React.FC<IChampionList> = ({
     },
   });
 
-  const sortedEntries = entries.sort((entryA, entryB) => (entryB.championId > entryA.championId ? -1 : 1));
+  const sortedEntries = entries.sort((entryA, entryB) =>
+    entryB.championId > entryA.championId ? -1 : 1,
+  );
 
   const AddChampionEntry: React.ReactNode = (
     <>
@@ -79,7 +79,7 @@ export const ChampionList: React.FC<IChampionList> = ({
         size="large"
         isOpen={isChampionEntryModalOpen}
         onRequestClose={() => setChampionEntryModalOpen(false)}
-        footer={(
+        footer={
           <Button
             type="button"
             variant="success"
@@ -90,7 +90,7 @@ export const ChampionList: React.FC<IChampionList> = ({
           >
             These are my champions!
           </Button>
-        )}
+        }
       >
         <ChampionSelect
           showFilter
@@ -118,12 +118,14 @@ export const ChampionList: React.FC<IChampionList> = ({
           order,
           entries,
         }}
-        handleChampionListData={(clName, clDescription) => onEdit(id, {
-          name: clName,
-          description: clDescription,
-          order,
-          entries,
-        })}
+        handleChampionListData={(clName, clDescription) =>
+          onEdit(id, {
+            name: clName,
+            description: clDescription,
+            order,
+            entries,
+          })
+        }
         closeModalBox={() => setEditModalOpen(false)}
       />
       <ButtonIcon
@@ -146,8 +148,8 @@ export const ChampionList: React.FC<IChampionList> = ({
     <div ref={isDroppable ? dropRef : undefined}>
       <Card headline={name} subHeadline={description} action={CardActions}>
         <StyledChampionContainer>
-          {sortedEntries
-            && sortedEntries.map((champion) => (
+          {sortedEntries &&
+            sortedEntries.map((champion) => (
               <ChampionListEntry
                 key={champion.id}
                 id={champion.id}

@@ -2,7 +2,7 @@ import React from 'react';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserSettingsAction, UserSettingsData, AsyncUserSettingsData } from '@/types';
 import * as userSettingsActions from './userSettingsActions';
-import userSettingsReducer from './userSettingsReducer';
+import { userSettingsReducer } from './userSettingsReducer';
 
 export const initialUserSettingsData: UserSettingsData = {
   summonerName: '',

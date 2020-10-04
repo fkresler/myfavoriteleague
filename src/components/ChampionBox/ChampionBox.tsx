@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useChampionData from '@/hooks/useChampionData';
+import { useChampionData } from '@/providers/StaticLeagueProvider/useChampionData';
 import { FaInfoCircle } from 'react-icons/fa';
 import { getChampionImageUrl } from '@/utils/championInfoUtils';
 
@@ -29,11 +29,13 @@ const StyledChampionBox = styled.div<{
   max-height: 5rem;
   background-color: grey;
   border-radius: ${({ isRounded }) => (isRounded ? '100%' : '0')};
-  border: ${({ theme, isHighlighted }) => (isHighlighted
-    ? `3px solid ${theme.colors.action.active}`
-    : `1px solid ${theme.colors.action.main}`)};
-  ${({ theme, isDisabled }) => isDisabled
-    && `
+  border: ${({ theme, isHighlighted }) =>
+    isHighlighted
+      ? `3px solid ${theme.colors.action.active}`
+      : `1px solid ${theme.colors.action.main}`};
+  ${({ theme, isDisabled }) =>
+    isDisabled &&
+    `
     border: 1px solid ${theme.colors.action.disabled};
   `}
   box-sizing: border-box;
@@ -42,8 +44,9 @@ const StyledChampionBox = styled.div<{
   img {
     width: 100%;
     height: 100%;
-    ${({ isDisabled }) => isDisabled
-      && `
+    ${({ isDisabled }) =>
+      isDisabled &&
+      `
     filter: grayscale(100%);
   `}
   }
@@ -67,7 +70,7 @@ export const ChampionBox: React.FC<IChampionBox> = ({
   isDisabled,
   onClick,
 }) => {
-  const championData = useChampionData(championId);
+  const { data: championData } = useChampionData(championId);
   const { name, image, version } = championData || {};
   const { full: imageName } = image || {};
   const implicitImageUrl = getChampionImageUrl(version, imageName);

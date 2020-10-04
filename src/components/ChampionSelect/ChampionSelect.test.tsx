@@ -1,24 +1,16 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-import { renderWithStaticData as render } from '@/utils/testUtils';
-import { ChampionDataMock } from '@/mocks/StaticChampionDataMock';
+import { render } from '@/utils/testUtils';
 import { ChampionSelect } from './ChampionSelect';
-
-const mockedStaticProviderData = {
-  state: {
-    isLoading: false,
-    championData: ChampionDataMock,
-  },
-};
 
 describe('ChampionSelect', () => {
   it('renders all available champions', () => {
-    render(<ChampionSelect />, mockedStaticProviderData);
+    render(<ChampionSelect />);
     expect(screen.queryAllByTestId('champion-box').length).toEqual(3);
   });
   it('calls the onSelectionChange function when adding champions to the selection', () => {
     const debugSelectionChange = jest.fn();
-    render(<ChampionSelect onSelectionChange={debugSelectionChange} />, mockedStaticProviderData);
+    render(<ChampionSelect onSelectionChange={debugSelectionChange} />);
     expect(screen.queryAllByTestId('champion-box').length).toEqual(3);
     fireEvent.click(screen.queryAllByTestId('champion-box')[0]);
     expect(debugSelectionChange).toHaveBeenCalledTimes(1);
@@ -29,7 +21,7 @@ describe('ChampionSelect', () => {
   });
   it('calls the onSelectionChange function when adding to and removing champions from the selection', () => {
     const debugSelectionChange = jest.fn();
-    render(<ChampionSelect onSelectionChange={debugSelectionChange} />, mockedStaticProviderData);
+    render(<ChampionSelect onSelectionChange={debugSelectionChange} />);
     fireEvent.click(screen.queryAllByTestId('champion-box')[0]);
     expect(debugSelectionChange).toHaveBeenCalledTimes(1);
     expect(debugSelectionChange).toHaveBeenLastCalledWith(['Aatrox']);
@@ -47,7 +39,6 @@ describe('ChampionSelect', () => {
         disabledChampions={['Aatrox', 'Akali']}
         onSelectionChange={debugSelectionChange}
       />,
-      mockedStaticProviderData,
     );
     fireEvent.click(screen.queryAllByTestId('champion-box')[0]);
     expect(debugSelectionChange).toHaveBeenCalledTimes(0);
@@ -59,16 +50,16 @@ describe('ChampionSelect', () => {
     expect(debugSelectionChange).toHaveBeenLastCalledWith(['Ahri']);
   });
   it('does not render excluded champions', () => {
-    render(<ChampionSelect excludedChampions={['Aatrox']} />, mockedStaticProviderData);
+    render(<ChampionSelect excludedChampions={['Aatrox']} />);
     expect(screen.queryAllByTestId('champion-box').length).toEqual(2);
   });
   it('renders a submit button when an onSubmit function is provided', () => {
-    render(<ChampionSelect onSubmit={jest.fn()} />, mockedStaticProviderData);
+    render(<ChampionSelect onSubmit={jest.fn()} />);
     expect(screen.getByText('These are my champions!')).toBeTruthy();
   });
   it('calls the provided onSubmit function when the submit button is clicked', () => {
     const debugSubmit = jest.fn();
-    render(<ChampionSelect onSubmit={debugSubmit} />, mockedStaticProviderData);
+    render(<ChampionSelect onSubmit={debugSubmit} />);
     expect(debugSubmit).toHaveBeenCalledTimes(0);
     fireEvent.click(screen.getByText('These are my champions!'));
     expect(debugSubmit).toHaveBeenCalledTimes(1);
@@ -79,15 +70,15 @@ describe('ChampionSelect', () => {
     expect(debugSubmit).toHaveBeenLastCalledWith(['Aatrox']);
   });
   it('renders no filter by default', () => {
-    render(<ChampionSelect />, mockedStaticProviderData);
+    render(<ChampionSelect />);
     expect(screen.queryByRole('textbox')).toBeNull();
   });
   it('renders a filter when showFilter is set', () => {
-    render(<ChampionSelect showFilter />, mockedStaticProviderData);
+    render(<ChampionSelect showFilter />);
     expect(screen.getByRole('textbox')).toBeTruthy();
   });
   it('renders only filtered results when a filter value is set', () => {
-    render(<ChampionSelect showFilter />, mockedStaticProviderData);
+    render(<ChampionSelect showFilter />);
     const inputElement = screen.getByRole('textbox');
     expect(inputElement).toBeTruthy();
     expect(inputElement.textContent).toEqual('');

@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Weedwick, { DataDragonChampions } from 'weedwick-api';
 
-export interface IStaticLeagueProvider {
-  state: {
-    isLoading: boolean;
-    hasError: boolean;
-    championData: DataDragonChampions | null;
-  };
+export interface StaticLeagueData {
+  isLoading: boolean;
+  hasError: boolean;
+  championData: DataDragonChampions | undefined;
 }
 
-export const StaticLeagueContext = React.createContext<IStaticLeagueProvider>({
-  state: {
-    isLoading: true,
-    hasError: false,
-    championData: null,
-  },
+export const StaticLeagueContext = React.createContext<StaticLeagueData>({
+  isLoading: true,
+  hasError: false,
+  championData: undefined,
 });
 
-export const StaticLeagueProvider: React.FC<{
-  mockData?: IStaticLeagueProvider;
-}> = ({ mockData, children }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [hasError, setHasError] = useState<boolean>(false);
-  const [championData, setChampionData] = useState<DataDragonChampions | null>(null);
+const StaticLeagueProvider: React.FC<Partial<StaticLeagueData>> = ({
+  isLoading: inIsLoading = true,
+  hasError: inHasError = false,
+  championData: inChampionData,
+  children,
+}) => {
+  const [isLoading, setIsLoading] = useState<boolean>(inIsLoading);
+  const [hasError, setHasError] = useState<boolean>(inHasError);
+  const [championData, setChampionData] = useState<DataDragonChampions | undefined>(inChampionData);
 
   useEffect(() => {
-    if (mockData) {
+    if (championData) {
       return;
     }
     setIsLoading(true);
@@ -44,19 +43,15 @@ export const StaticLeagueProvider: React.FC<{
       setHasError(true);
       setIsLoading(false);
     }
-  }, [mockData]);
+  }, [championData]);
 
   return (
     <StaticLeagueContext.Provider
-      value={
-        mockData || {
-          state: {
-            isLoading,
-            hasError,
-            championData,
-          },
-        }
-      }
+      value={{
+        isLoading,
+        hasError,
+        championData,
+      }}
     >
       {children}
     </StaticLeagueContext.Provider>

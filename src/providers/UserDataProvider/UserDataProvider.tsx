@@ -11,7 +11,7 @@ import { useTierListData, initialAsyncTierListData } from './TierListData';
 import { useNoteData, initialNoteData } from './NoteData';
 import { useUserSettingsData, initialAsyncUserSettingsData } from './UserSettings';
 
-type UserData = {
+export interface UserData {
   tierlists: {
     state: AsyncTierListData;
     dispatch: (action: TierListAction) => void;
@@ -24,7 +24,7 @@ type UserData = {
     state: AsyncUserSettingsData;
     dispatch: (action: UserSettingsAction) => void;
   };
-};
+}
 
 export const UserDataContext = React.createContext<UserData>({
   tierlists: {
@@ -41,7 +41,12 @@ export const UserDataContext = React.createContext<UserData>({
   },
 });
 
-export const UserDataProvider: React.FC = ({ children }) => {
+export const UserDataProvider: React.FC<Partial<UserData>> = ({
+  tierlists,
+  notes,
+  usersettings,
+  children,
+}) => {
   const { state: tierListState, dispatch: tierListDispatch } = useTierListData();
   const { state: noteState, dispatch: noteDispatch } = useNoteData();
   const { state: userSettingsState, dispatch: userSettingsDispatch } = useUserSettingsData();
@@ -49,15 +54,15 @@ export const UserDataProvider: React.FC = ({ children }) => {
   return (
     <UserDataContext.Provider
       value={{
-        tierlists: {
+        tierlists: tierlists || {
           state: tierListState,
           dispatch: tierListDispatch,
         },
-        notes: {
+        notes: notes || {
           state: noteState,
           dispatch: noteDispatch,
         },
-        usersettings: {
+        usersettings: usersettings || {
           state: userSettingsState,
           dispatch: userSettingsDispatch,
         },

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDrag, DragPreviewImage } from 'react-dnd';
 import ChampionBox from '@/components/ChampionBox';
 import { DnDTierListTypes, ChampionListEntryData } from '@/types';
-import useChampionData from '@/hooks/useChampionData';
+import { useChampionData } from '@/providers/StaticLeagueProvider/useChampionData';
 
 const StyledChampionEntry = styled.div`
   display: inline-block;
@@ -18,7 +18,8 @@ const StyledChampionEntry = styled.div`
     left: 0;
     z-index: 1;
     background-color: ${({ theme }) => theme.colors.background.secondary};
-    color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+    color: ${({ theme }) =>
+    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
     padding: 0.5rem;
     text-align: center;
     transition: opacity 0.3s;
@@ -43,7 +44,7 @@ export const ChampionEntry: React.FC<IChampionListEntry> = ({
   note,
   onDelete = () => {},
 }) => {
-  const championData = useChampionData(championId);
+  const { data: championData } = useChampionData(championId);
   const dataVersion = championData?.version;
   const imageName = championData?.image?.full;
   const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${dataVersion}/img/champion/${imageName}`;
