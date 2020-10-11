@@ -1,54 +1,39 @@
 import 'styled-components';
+import { ThemeColor, TextColor } from './colors';
 
 declare module 'styled-components' {
+  export interface ColorGroup {
+    default: ThemeColor;
+    text: TextColor;
+  }
   export interface DefaultTheme {
     colors: {
-      brand: {
-        main: string;
-        dark: string;
-        light: string;
-      };
-      background: {
-        main: string;
-        secondary: string;
-        highlight: string;
-        disabled: string;
-      };
-      text: {
-        light: string;
-        dark: string;
-        getTextColorByBackground: (color: string) => string;
-      };
-      action: {
-        main: string;
-        active: string;
-        hover: string;
-        disabled: string;
-      };
-      border: {
-        main: string;
-        divider: string;
-        disabled: string;
-      };
-      success: {
-        main: string;
-      };
-      error: {
-        main: string;
-      };
-      warning: {
-        main: string;
-      };
+      brand: ColorGroup;
+      base: ColorGroup;
+      primary: ColorGroup;
+      highlight: ColorGroup;
+      disabled: ColorGroup;
+      greyNormal: ColorGroup;
+      greyLight: ColorGroup;
+      greyDark: ColorGroup;
+      success: ColorGroup;
+      error: ColorGroup;
+      warning: ColorGroup;
+    };
+    borders: {
+      default: string;
+      highlight: string;
+      active: string;
+      success: string;
+      error: string;
+      warning: string;
     };
     shadows: {
+      default: string;
       brand: string;
       success: string;
       error: string;
       warning: string;
-      main: string;
-    };
-    borderRadius: {
-      main: string;
     };
     fontSizes: {
       headlineSmall: string;

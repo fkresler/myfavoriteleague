@@ -1,101 +1,56 @@
 import React from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 
-const DebugColorWrapper = styled.div`
+const ThemeListing = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-
-  & > * {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    min-width: 10rem;
-  }
+  flex-wrap: wrap;
 `;
 
-const StyledThemeColorWrapper = styled.div`
+const ThemeColorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  margin: 1rem;
 `;
 
-const StyledThemeColorBlock = styled.div<{ bgColor: string }>`
+const ThemeColorBlock = styled.div<{ colorName: keyof DefaultTheme['colors'] }>`
   display: block;
-  width: 3rem;
-  height: 3rem;
-  background-color: ${({ bgColor }) => bgColor};
+  min-width: 3rem;
+  min-height: 3rem;
+  padding: 0.5rem;
+  background-color: ${({ theme, colorName }) => theme.colors[colorName].default};
+  color: ${({ theme, colorName }) => theme.colors[colorName].text};
+  border: ${({ theme }) => `1px solid ${theme.colors.greyNormal.default}`};
 `;
 
-const ThemeColor: React.FC<{ text: string; color: string }> = ({ text, color }) => (
-  <StyledThemeColorWrapper>
-    <StyledThemeColorBlock bgColor={color} />
-    <div>{text}</div>
-  </StyledThemeColorWrapper>
+const ColorGroupExample: React.FC<{ colorName: keyof DefaultTheme['colors'] }> = ({
+  colorName,
+}) => (
+  <ThemeColorWrapper>
+    <ThemeColorBlock colorName={colorName}>Text</ThemeColorBlock>
+    <div>{colorName}</div>
+  </ThemeColorWrapper>
 );
 
-export const TextColors = () => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <DebugColorWrapper>
-      <ThemeColor text="Light" color={theme.colors.text.light} />
-      <ThemeColor text="Dark" color={theme.colors.text.dark} />
-    </DebugColorWrapper>
-  );
+export default {
+  title: 'Basics',
 };
 
-export const BrandColors = () => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <DebugColorWrapper>
-      <ThemeColor text="Main" color={theme.colors.brand.main} />
-      <ThemeColor text="Dark" color={theme.colors.brand.dark} />
-      <ThemeColor text="Light" color={theme.colors.brand.light} />
-    </DebugColorWrapper>
-  );
-};
-
-export const BackgroundColors = () => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <DebugColorWrapper>
-      <ThemeColor text="Main" color={theme.colors.background.main} />
-      <ThemeColor text="Secondary" color={theme.colors.background.secondary} />
-      <ThemeColor text="Highlight" color={theme.colors.background.highlight} />
-      <ThemeColor text="Disabled" color={theme.colors.background.disabled} />
-    </DebugColorWrapper>
-  );
-};
-
-export const ActionColors = () => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <DebugColorWrapper>
-      <ThemeColor text="Main" color={theme.colors.action.main} />
-      <ThemeColor text="Active" color={theme.colors.action.active} />
-      <ThemeColor text="Hover" color={theme.colors.action.hover} />
-      <ThemeColor text="Disabled" color={theme.colors.action.disabled} />
-    </DebugColorWrapper>
-  );
-};
-
-export const BorderColors = () => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <DebugColorWrapper>
-      <ThemeColor text="Main" color={theme.colors.border.main} />
-      <ThemeColor text="Divider" color={theme.colors.border.divider} />
-      <ThemeColor text="Disabled" color={theme.colors.border.disabled} />
-    </DebugColorWrapper>
-  );
-};
-
-export const FeedbackColors = () => {
-  const theme = React.useContext(ThemeContext);
-  return (
-    <DebugColorWrapper>
-      <ThemeColor text="colorPositive" color={theme.colors.success.main} />
-      <ThemeColor text="colorNegative" color={theme.colors.error.main} />
-      <ThemeColor text="colorWarning" color={theme.colors.warning.main} />
-    </DebugColorWrapper>
-  );
-};
+export const Colors = () => (
+  <ThemeListing>
+    <ColorGroupExample colorName="brand" />
+    <ColorGroupExample colorName="base" />
+    <ColorGroupExample colorName="primary" />
+    <ColorGroupExample colorName="highlight" />
+    <ColorGroupExample colorName="disabled" />
+    <ColorGroupExample colorName="greyNormal" />
+    <ColorGroupExample colorName="greyLight" />
+    <ColorGroupExample colorName="greyDark" />
+    <ColorGroupExample colorName="success" />
+    <ColorGroupExample colorName="error" />
+    <ColorGroupExample colorName="warning" />
+  </ThemeListing>
+);

@@ -1,56 +1,67 @@
 import { DefaultTheme } from 'styled-components';
-import { lighten, darken } from 'polished';
-import { ThemeColor } from './colors';
-import { getTextColorByBackground } from './utils';
+import { TextColor, ThemeColor } from './colors';
 
 export const lightTheme: DefaultTheme = {
   colors: {
     brand: {
-      main: ThemeColor.BRAND,
-      dark: darken(0.25, ThemeColor.BRAND),
-      light: lighten(0.25, ThemeColor.BRAND),
+      default: ThemeColor.BRAND,
+      text: TextColor.TEXT_DARK,
     },
-    background: {
-      main: ThemeColor.LIGHT,
-      secondary: ThemeColor.LIGHT_SECONDARY,
-      highlight: darken(0.15, ThemeColor.LIGHT_SECONDARY),
-      disabled: ThemeColor.GREY,
+    base: {
+      default: ThemeColor.BASE_LIGHT,
+      text: TextColor.TEXT_DARK,
     },
-    text: {
-      light: ThemeColor.TEXT_LIGHT,
-      dark: ThemeColor.TEXT_DARK,
-      getTextColorByBackground,
+    primary: {
+      default: ThemeColor.PRIMARY_LIGHT,
+      text: TextColor.TEXT_LIGHT,
     },
-    action: {
-      main: ThemeColor.LIGHT_SECONDARY,
-      active: darken(0.25, ThemeColor.LIGHT_SECONDARY),
-      hover: darken(0.15, ThemeColor.LIGHT_SECONDARY),
-      disabled: ThemeColor.GREY,
+    highlight: {
+      default: ThemeColor.PRIMARY_LIGHT,
+      text: TextColor.TEXT_LIGHT,
     },
-    border: {
-      main: ThemeColor.GREY2,
-      divider: ThemeColor.GREY3,
-      disabled: ThemeColor.DISABLED,
+    disabled: {
+      default: ThemeColor.GREY_DARK,
+      text: TextColor.TEXT_DARK_TRANSPARENT,
+    },
+    greyNormal: {
+      default: ThemeColor.GREY,
+      text: TextColor.TEXT_DARK,
+    },
+    greyLight: {
+      default: ThemeColor.GREY_LIGHT,
+      text: TextColor.TEXT_DARK,
+    },
+    greyDark: {
+      default: ThemeColor.GREY_DARK,
+      text: TextColor.TEXT_LIGHT,
     },
     success: {
-      main: ThemeColor.SUCCESS,
+      default: ThemeColor.SUCCESS,
+      text: TextColor.TEXT_LIGHT,
     },
     error: {
-      main: ThemeColor.ERROR,
+      default: ThemeColor.ERROR,
+      text: TextColor.TEXT_DARK,
     },
     warning: {
-      main: ThemeColor.WARNING,
+      default: ThemeColor.WARNING,
+      text: TextColor.TEXT_DARK,
     },
   },
-  shadows: {
-    brand: `0 0 4px ${lighten(0.25, ThemeColor.BRAND)}`,
-    success: `0 0 4px ${lighten(0.25, ThemeColor.SUCCESS)}`,
-    error: `0 0 4px ${lighten(0.25, ThemeColor.ERROR)}`,
-    warning: `0 0 4px ${lighten(0.25, ThemeColor.WARNING)}`,
-    main: `0 0 4px 0 ${lighten(0.25, ThemeColor.DARK)}`,
+  borders: {
+    default: ThemeColor.GREY,
+    highlight: ThemeColor.GREY_DARK,
+    active: ThemeColor.BRAND,
+    success: ThemeColor.SUCCESS,
+    error: ThemeColor.ERROR,
+    warning: ThemeColor.WARNING,
   },
-  borderRadius: {
-    main: '0.3rem',
+  shadows: {
+    default: `0 0 4px ${ThemeColor.GREY}`,
+    brand: `0 0 4px ${ThemeColor.BRAND}`,
+    success: `0 0 4px ${ThemeColor.SUCCESS}`,
+    error: `0 0 4px ${ThemeColor.ERROR}`,
+    warning: `0 0 4px ${ThemeColor.WARNING}`,
   },
   fontSizes: {
     headlineSmall: '1rem',

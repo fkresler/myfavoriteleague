@@ -24,20 +24,58 @@ export interface ITextInput {
   isRequired?: boolean;
   /** Sets the auto-focus flag when set */
   hasAutoFocus?: boolean;
+  /** Indicates whether to render a fixed width or full width */
+  isFullWidth?: boolean;
   /** Function that is called when the value of the input field changes */
-  onChange?: (e: React.ChangeEvent) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Function that is called whenever a key is pressed on the input field */
-  onKeyPress?: (e: React.KeyboardEvent) => void;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const StyledInput = styled.input<{ hasError?: boolean }>`
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+
+  & input,
+  & label {
+    transition: all 0.2s;
+  }
+`;
+
+const StyledInput = styled.input<{ hasError?: boolean; isFullWidth?: boolean }>`
   display: block;
+  width: ${({ isFullWidth }) => (isFullWidth ? '100%' : 'auto')};
   padding: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.background.main};
-  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.background.main)};
+  background-color: ${({ theme }) => theme.colors.base.default};
+  color: ${({ theme }) => theme.colors.base.text};
   border: 1px solid
-    ${({ hasError, theme }) => (hasError ? theme.colors.error.main : theme.colors.border.main)};
+    ${({ hasError, theme }) => (hasError ? theme.borders.error : theme.borders.default)};
   border-radius: 3px;
+
+  &::placeholder {
+    opacity: 0;
+    transition: inherit;
+  }
+
+  &:focus::placeholder {
+    opacity: 1;
+  }
+
+  &:placeholder-shown + label {
+    cursor: text;
+    max-width: 66.66%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform-origin: left bottom;
+    transform: translate(0.5rem, 1.5rem);
+  }
+
+  &:not(:placeholder-shown) + label,
+  &:focus + label {
+    transform: translate(0, 0) scale(1);
+    cursor: pointer;
+  }
 `;
 
 export const TextInput: React.FC<ITextInput> = ({
@@ -50,21 +88,45 @@ export const TextInput: React.FC<ITextInput> = ({
   hasError,
   isReadOnly,
   isDisabled,
+  isRequired,
+  hasAutoFocus,
+  isFullWidth,
   onChange,
   onKeyPress,
 }) => {
+  const [currentValue, setCurrentValue] = React.useState<string | undefined>(value);
+
+  React.useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
+
+  const usedLabel = label || placeholder;
+  const renderedLabel = `${usedLabel}${isRequired ? ' *' : ''}`;
+
+  const customOnChange: typeof onChange = (e) => {
+    setCurrentValue(e.target.value);
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
   return (
-    <>
-      {label && <div>{label}</div>}
+    <InputWrapper>
       <StyledInput
+        id="some-input"
+        autoFocus={hasAutoFocus}
         className={className}
-        value={value}
+        value={currentValue}
         placeholder={placeholder}
         hasError={hasError}
-        onChange={onChange}
+        readOnly={isReadOnly}
+        disabled={isDisabled}
+        isFullWidth={isFullWidth}
+        onChange={customOnChange}
         onKeyPress={onKeyPress}
       />
-    </>
+      {label && <label htmlFor="some-input">{renderedLabel}</label>}
+    </InputWrapper>
   );
 };
 

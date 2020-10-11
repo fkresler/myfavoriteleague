@@ -17,9 +17,8 @@ const StyledChampionEntry = styled.div`
     top: -50%;
     left: 0;
     z-index: 1;
-    background-color: ${({ theme }) => theme.colors.background.secondary};
-    color: ${({ theme }) =>
-    theme.colors.text.getTextColorByBackground(theme.colors.background.secondary)};
+    background-color: ${({ theme }) => theme.colors.greyDark.default};
+    color: ${({ theme }) => theme.colors.greyDark.text};
     padding: 0.5rem;
     text-align: center;
     transition: opacity 0.3s;

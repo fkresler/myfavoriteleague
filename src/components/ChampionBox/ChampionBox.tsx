@@ -30,13 +30,11 @@ const StyledChampionBox = styled.div<{
   background-color: grey;
   border-radius: ${({ isRounded }) => (isRounded ? '100%' : '0')};
   border: ${({ theme, isHighlighted }) =>
-    isHighlighted
-      ? `3px solid ${theme.colors.action.active}`
-      : `1px solid ${theme.colors.action.main}`};
+    isHighlighted ? `3px solid ${theme.borders.active}` : `1px solid ${theme.borders.default}`};
   ${({ theme, isDisabled }) =>
     isDisabled &&
     `
-    border: 1px solid ${theme.colors.action.disabled};
+    border: 1px solid ${theme.borders.default};
   `}
   box-sizing: border-box;
   overflow: hidden;

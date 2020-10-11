@@ -30,7 +30,8 @@
     "@typescript-eslint/indent": ["off"],
     "import/no-extraneous-dependencies": ["off"],
     "react/prop-types": ["off"],
-    "@typescript-eslint/no-unused-vars": ["warn"]
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "@typescript-eslint/comma-dangle": ["off"]
   },
   "overrides": [
     {

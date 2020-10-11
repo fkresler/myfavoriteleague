@@ -40,8 +40,9 @@ const SegmentedChoice = styled.div<{ isActive: boolean }>`
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
   text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
   background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.action.active : theme.colors.action.main};
-  color: ${({ theme }) => theme.colors.text.getTextColorByBackground(theme.colors.action.main)};
+    isActive ? theme.colors.highlight.default : theme.colors.primary.default};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.highlight.text : theme.colors.primary.text};
 `;
 
 const SegmentedSelect: React.FC<ISegmentedSelect> = ({

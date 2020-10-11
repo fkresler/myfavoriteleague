@@ -13,7 +13,7 @@ export default {
   },
   args: {
     label: 'Input Label',
-    value: 'Entered text',
+    value: '',
     placeholder: 'Please enter something',
     hasError: false,
     isReadOnly: false,
