@@ -10,6 +10,7 @@ import { UserDataContext, userSettingsActions } from '@/providers/UserDataProvid
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
+    font-family: "Arial", sans-serif;
   }
 `;
 
