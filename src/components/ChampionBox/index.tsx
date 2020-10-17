@@ -1,3 +1,4 @@
-import ChampionBox from './ChampionBox';
+import { ChampionBox } from './ChampionBox';
 
+export * from './ChampionBox';
 export default ChampionBox;

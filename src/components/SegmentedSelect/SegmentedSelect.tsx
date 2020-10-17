@@ -7,50 +7,87 @@ export interface ISegmentedSelect {
     name: string;
     order: number;
   }[];
-  currentlySelectedChoice?: string;
-  onChoiceSelection?: (toBeSelectedChoice: string) => void;
+  initialSelectedId?: string;
+  selectedId?: string;
+  onSelect?: (selectedId: string) => void;
 }
 
-const StyledSegmentedSelect = styled.div`
-  display: flex;
-  border-radius: 3px;
-  overflow: scroll;
+const segmentedHeight = '3rem';
+
+const SegmentedSelectWrapper = styled.div`
+  display: block;
+  overflow: hidden;
+  border-radius: 5px;
 `;
 
-const StyledSegmentedOption = styled.div<{ isActive: boolean }>`
+const SegmentedSelectContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const SegmentedChoice = styled.div<{ isActive: boolean }>`
+  display: block;
+  text-align: center;
+  line-height: ${segmentedHeight};
+  padding: 0 0.5rem;
   flex-grow: 1;
   flex-basis: 0;
-  padding: 1rem;
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.mainColorDark : theme.colors.mainColorLighter};
-  color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.fontColorLight : theme.colors.fontColorDark};
-  font-weight: bold;
-  cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
-  text-align: center;
-  text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
   user-select: none;
+  cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
+  text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.highlight.default : theme.colors.primary.default};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.highlight.text : theme.colors.primary.text};
 `;
 
 const SegmentedSelect: React.FC<ISegmentedSelect> = ({
-  choices = [],
-  currentlySelectedChoice,
-  onChoiceSelection = () => {},
+  choices,
+  initialSelectedId,
+  selectedId,
+  onSelect,
 }) => {
-  const sortedChoices = choices.sort((itemA, itemB) => itemA.order - itemB.order);
+  const renderedChoices = choices?.sort((a, b) => a.order - b.order);
+  const defaultSelectedId =
+    renderedChoices && renderedChoices.length > 0 ? renderedChoices[0].id : '';
+  const [localSelectedId, setLocalSelectedId] = React.useState<string>(
+    initialSelectedId || defaultSelectedId,
+  );
+  const renderedSelectedId = selectedId || localSelectedId || defaultSelectedId;
+
+  const handleSelection = (id: string) => {
+    if (id === renderedSelectedId) {
+      return;
+    }
+    setLocalSelectedId(id);
+    if (onSelect) {
+      onSelect(id);
+    }
+  };
+
+  if (!renderedChoices) {
+    return <></>;
+  }
+
   return (
-    <StyledSegmentedSelect>
-      {sortedChoices &&
-        sortedChoices.map((choice) => (
-          <StyledSegmentedOption
+    <SegmentedSelectWrapper>
+      <SegmentedSelectContent data-testid="segmented-list">
+        {renderedChoices.map((choice) => (
+          <SegmentedChoice
             key={choice.id}
-            isActive={choice.id === currentlySelectedChoice}
-            onClick={() => onChoiceSelection(choice.id)}
+            data-testid={choice.id === renderedSelectedId ? 'choice-selected' : 'choice-unselected'}
+            isActive={choice.id === renderedSelectedId}
+            onClick={() => handleSelection(choice.id)}
           >
             {choice.name}
-          </StyledSegmentedOption>
+          </SegmentedChoice>
         ))}
-    </StyledSegmentedSelect>
+      </SegmentedSelectContent>
+    </SegmentedSelectWrapper>
   );
 };
 

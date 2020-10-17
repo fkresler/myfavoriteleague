@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'react-rainbow-components';
+import { Button, ButtonIcon } from 'react-rainbow-components';
 import TierList from '@/components/TierList';
+import TierListModal from '@/components/TierList/TierListModal';
 import SegmentedSelect from '@/components/SegmentedSelect';
-import TierListModal from '@/components/TierListModal';
-import { ITierListApp } from '@/types/tierLists';
+import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
+import { FirebaseContext } from '@/providers/FirebaseProvider';
+import { FaPlus } from 'react-icons/fa';
 
 const StyledSegmentedSection = styled.div`
   margin: 1.5rem 0;
@@ -22,63 +24,125 @@ const StyledSegmentedSection = styled.div`
   }
 `;
 
-const TierListApp: React.FC<ITierListApp> = ({ data: tierListData, selectedList, methods }) => {
-  const tierListSelectData = tierListData.map((tierList) => ({
-    id: tierList.tierListId,
+const TierListApp: React.FC<{}> = () => {
+  const { authUser } = React.useContext(FirebaseContext);
+  const { tierlists } = React.useContext(UserDataContext);
+  const {
+    state: {
+      hasLoaded, hasChanged, isLoading, isError, data,
+    },
+    dispatch,
+  } = tierlists;
+  const [selectedList, selectList] = React.useState<string | undefined>(undefined);
+  const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
+
+  const tierListSelectData = data.map((tierList) => ({
+    id: tierList.id,
     name: tierList.name,
     order: tierList.order,
   }));
-  const currentTierListData = tierListData.find((tierList) => tierList.tierListId === selectedList);
-  const { selectList, createTierList, saveTierLists } = methods;
-  const [isAddTierListModalOpen, setTierListModalOpen] = React.useState<boolean>(false);
+  const currentTierListData = data.find((tierList) => tierList.id === selectedList);
 
-  const AddTierList: JSX.Element = (
+  React.useEffect(() => {
+    if (!hasLoaded) {
+      dispatch(tierListActions.fetchTierLists());
+    }
+  }, [authUser, hasLoaded, dispatch]);
+
+  React.useEffect(() => {
+    if (!selectedList) {
+      const defaultSelectedElement = data.length > 0 ? data[0].id : undefined;
+      selectList(defaultSelectedElement);
+    }
+  }, [hasLoaded, data, selectedList]);
+
+  React.useEffect(() => {
+    const hintUnsavedData = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      if (hasChanged) {
+        e.returnValue = true;
+      }
+    };
+    window.addEventListener('beforeunload', hintUnsavedData);
+    return () => {
+      window.removeEventListener('beforeunload', hintUnsavedData);
+    };
+  }, [hasChanged]);
+
+  const AddTierList: React.ReactNode = (
     <>
       <TierListModal
         isModalOpen={isAddTierListModalOpen}
-        handleTierListData={(tlName) => createTierList(tlName, tierListData.length)}
+        isCreateMode
+        handleTierListData={(tlName, tlTemplate) => {
+          if (authUser) {
+            dispatch(
+              tierListActions.addTierList(
+                authUser.uid,
+                { name: tlName, order: data.length },
+                tlTemplate,
+              ),
+            );
+          }
+        }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
-      <Button type="button" variant="success" onClick={() => setTierListModalOpen(true)}>
-        +
-      </Button>
+      <ButtonIcon
+        type="button"
+        variant="success"
+        icon={<FaPlus />}
+        onClick={() => setTierListModalOpen(true)}
+      />
     </>
   );
 
-  const SaveTierListsButton: JSX.Element = (
+  const SaveTierListsButton: React.ReactNode = (
     <Button
       type="button"
       variant="success"
       onClick={() => {
-        saveTierLists(tierListData);
+        dispatch(tierListActions.pushTierLists());
       }}
     >
       Save Tierlists
     </Button>
   );
 
-  if (tierListData && tierListData.length > 0) {
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
+  if (isError) {
+    return <div>Something odd happened oof</div>;
+  }
+
+  if (data && data.length > 0) {
     return (
       <>
         {SaveTierListsButton}
         <StyledSegmentedSection>
-          {tierListData && (
+          {data && (
             <SegmentedSelect
               choices={tierListSelectData}
-              currentlySelectedChoice={selectedList}
-              onChoiceSelection={selectList}
+              selectedId={selectedList}
+              onSelect={selectList}
             />
           )}
           {AddTierList}
         </StyledSegmentedSection>
         {currentTierListData && (
           <TierList
-            tierListId={currentTierListData.tierListId}
+            allowSingleUseEntriesOnly
+            id={currentTierListData.id}
             authorId={currentTierListData.authorId}
             name={currentTierListData.name}
+            mode={currentTierListData.mode}
+            role={currentTierListData.role}
+            isPublic={currentTierListData.isPublic}
+            isRemovable={currentTierListData.isRemovable}
             order={currentTierListData.order}
             lists={currentTierListData.lists}
-            methods={methods}
+            dispatch={dispatch}
           />
         )}
       </>

@@ -1,50 +1,99 @@
 import React from 'react';
 import styled from 'styled-components';
-import useChampionData from '@/hooks/useChampionData';
+import { useChampionData } from '@/providers/StaticLeagueProvider/useChampionData';
+import { FaInfoCircle } from 'react-icons/fa';
+import { getChampionImageUrl } from '@/utils/championInfoUtils';
 
 interface IChampionBox {
+  className?: string;
+  testId?: string;
   championId: string;
+  imageUrl?: string;
+  info?: string;
+  isRounded?: boolean;
   isHighlighted?: boolean;
+  isDisabled?: boolean;
   onClick?: () => void;
 }
 
-const StyledChampionBox = styled.div<{ isHighlighted?: boolean }>`
-  display: inline-block;
+const StyledChampionBox = styled.div<{
+  isHighlighted?: boolean;
+  isDisabled?: boolean;
+  isRounded?: boolean;
+}>`
+  display: block;
+  position: relative;
+  width: 5rem;
   max-width: 5rem;
+  height: 5rem;
   max-height: 5rem;
-  border-radius: 100%;
-  border: ${({ isHighlighted }) => (isHighlighted ? '5px solid green' : '1px solid grey')};
+  background-color: grey;
+  border-radius: ${({ isRounded }) => (isRounded ? '100%' : '0')};
+  border: ${({ theme, isHighlighted }) =>
+    isHighlighted ? `3px solid ${theme.borders.active}` : `1px solid ${theme.borders.default}`};
+  ${({ theme, isDisabled }) =>
+    isDisabled &&
+    `
+    border: 1px solid ${theme.borders.default};
+  `}
   box-sizing: border-box;
   overflow: hidden;
 
   img {
-    width: 5rem;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    ${({ isDisabled }) =>
+      isDisabled &&
+      `
+    filter: grayscale(100%);
+  `}
   }
 `;
 
-const StyledInvalidContent = styled(StyledChampionBox)`
-  background-color: grey;
+const StyledInfoIconWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
 `;
 
-const ChampionBox: React.FC<IChampionBox> = ({ championId, isHighlighted, onClick }) => {
-  const championData = useChampionData(championId);
+export const ChampionBox: React.FC<IChampionBox> = ({
+  className,
+  testId,
+  championId,
+  imageUrl: explicitImageUrl,
+  info,
+  isRounded,
+  isHighlighted,
+  isDisabled,
+  onClick,
+}) => {
+  const { data: championData } = useChampionData(championId);
+  const { name, image, version } = championData || {};
+  const { full: imageName } = image || {};
+  const implicitImageUrl = getChampionImageUrl(version, imageName);
+  const hasInfo = !!info && info !== '';
+  const renderedImageUrl = explicitImageUrl || implicitImageUrl || undefined;
 
-  if (championData) {
-    const {
-      name,
-      image: { full },
-      version,
-    } = championData;
-    const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${full}`;
-    return (
-      <StyledChampionBox isHighlighted={isHighlighted} onClick={onClick}>
-        <img src={imageUrl} alt={name} />
-      </StyledChampionBox>
-    );
-  }
-
-  return <StyledInvalidContent />;
+  return (
+    <StyledChampionBox
+      className={className}
+      data-testid={testId || 'champion-box'}
+      isRounded={isRounded}
+      isHighlighted={isHighlighted}
+      isDisabled={isDisabled}
+      onClick={onClick}
+    >
+      {hasInfo && (
+        <StyledInfoIconWrapper data-testid="info-icon">
+          <FaInfoCircle />
+        </StyledInfoIconWrapper>
+      )}
+      {renderedImageUrl && (
+        <img data-testid="champion-image" loading="lazy" src={renderedImageUrl} alt={name} />
+      )}
+    </StyledChampionBox>
+  );
 };
 
 export default ChampionBox;

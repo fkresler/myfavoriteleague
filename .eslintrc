@@ -1,4 +1,5 @@
 {
+  "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -14,12 +15,9 @@
     "jest": true,
     "node": true
   },
-  "extends": ["airbnb-typescript", "prettier", "prettier/react"],
-  "plugins": ["jsx-a11y", "prettier"],
+  "extends": ["react-app", "airbnb-typescript", "prettier", "prettier/react"],
+  "plugins": ["@typescript-eslint", "import", "jsx-a11y", "react-hooks", "prettier"],
   "settings": {
-    "react": {
-      "version": "detect"
-    },
     "import/extensions": [".js", ".ts", ".jsx", ".tsx"],
     "import/resolver": {
       "node": {
@@ -30,10 +28,20 @@
   },
   "rules": {
     "@typescript-eslint/indent": ["off"],
-    "react/prop-types": "off",
-    "arrow-parens": ["error", "always"],
-    "prettier/prettier": ["error"],
-    "import/no-named-as-default": ["off"],
-    "import/no-extraneous-dependencies": ["off"]
-  }
+    "import/no-extraneous-dependencies": ["off"],
+    "react/prop-types": ["off"],
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "@typescript-eslint/comma-dangle": ["off"]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.stories.ts",
+        "*.stories.tsx"
+      ],
+      "rules": {
+        "react/jsx-props-no-spreading": "off"
+      }
+    }
+  ]
 }
