@@ -33,6 +33,7 @@
     ]
   },
   "dependencies": {
+    "@uiw/react-md-editor": "^1.14.4",
     "firebase": "^7.22.0",
     "polished": "^3.6.5",
     "react": "^16.12.0",
