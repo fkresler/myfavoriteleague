@@ -1,21 +1,26 @@
 import React from 'react';
-import { INote } from '@/types';
-import { noteActions } from '@/providers/UserDataProvider';
+import { NoteData } from '@/types';
 import { Button } from 'react-rainbow-components';
-import Card from '@/components/Card';
+import Card, { CardSeperator } from '@/components/Card';
+import ReactMarkdown from 'react-markdown';
 
-const Note: React.FC<{ data: INote }> = ({ data }) => {
-  const {
-    id, title, text, dispatch,
-  } = data;
-  const DeleteAction: React.ReactNode = (
-    <Button variant="destructive" onClick={() => dispatch(noteActions.deleteNote(id))}>
-      Delete note
-    </Button>
-  );
+export interface NoteProps extends NoteData {
+  className?: string;
+  onDelete?: (id: string) => void;
+}
+
+const Note: React.FC<NoteProps> = ({ id, title, text, tags, onDelete }) => {
   return (
-    <Card headline={title} action={DeleteAction}>
-      <div>{text}</div>
+    <Card key={id} headline={title}>
+      <ReactMarkdown>{text}</ReactMarkdown>
+      <CardSeperator />
+      <div>
+        {onDelete && (
+          <Button variant="destructive" onClick={() => onDelete(id)}>
+            Delete note
+          </Button>
+        )}
+      </div>
     </Card>
   );
 };
