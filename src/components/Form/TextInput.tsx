@@ -6,10 +6,6 @@ export interface ITextInput {
   className?: string;
   /** Label text to be used for the input */
   label?: string;
-  /** Prefix node for the input field, e.g. an icon */
-  prefix?: React.ReactNode;
-  /** Suffix node for the input field, e.g. an icon */
-  suffix?: React.ReactNode;
   /** Current value of the input field */
   value?: string;
   /** Placeholder string for the input field */
@@ -81,8 +77,6 @@ const StyledInput = styled.input<{ hasError?: boolean; isFullWidth?: boolean }>`
 export const TextInput: React.FC<ITextInput> = ({
   className,
   label,
-  prefix,
-  suffix,
   value,
   placeholder,
   hasError,

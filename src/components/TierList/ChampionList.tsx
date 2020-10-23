@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import { FaPlus, FaEdit, FaTrash, FaTimesCircle } from 'react-icons/fa';
 import Card from '@/components/Card';
-import { Button, ButtonIcon, Modal } from 'react-rainbow-components';
+import { Button } from '@/components/Button';
+import { Modal } from '@/components/Modal';
 import ChampionListModal from '@/components/TierList/ChampionListModal';
 import {
   DnDTierListTypes,
@@ -75,13 +76,11 @@ const ChampionList: React.FC<IChampionList> = ({
   const AddChampionEntry: React.ReactNode = (
     <>
       <Modal
-        id="championentry-modal"
-        size="large"
+        size="huge"
         isOpen={isChampionEntryModalOpen}
         onRequestClose={() => setChampionEntryModalOpen(false)}
         footer={
           <Button
-            type="button"
             variant="success"
             onClick={() => {
               selectedChampions.map((championId) => onAddEntry(id, { championId }));
@@ -98,12 +97,9 @@ const ChampionList: React.FC<IChampionList> = ({
           onSelectionChange={(selection) => setSelectedChampions(selection)}
         />
       </Modal>
-      <ButtonIcon
-        type="button"
-        variant="success"
-        icon={<FaPlus />}
-        onClick={() => setChampionEntryModalOpen(true)}
-      />
+      <Button variant="success" onClick={() => setChampionEntryModalOpen(true)}>
+        <FaPlus />
+      </Button>
     </>
   );
 
@@ -128,19 +124,15 @@ const ChampionList: React.FC<IChampionList> = ({
         }
         closeModalBox={() => setEditModalOpen(false)}
       />
-      <ButtonIcon
-        type="button"
-        variant="base"
-        icon={<FaEdit />}
-        onClick={() => setEditModalOpen(true)}
-      />
-      <ButtonIcon
-        type="button"
-        variant="base"
-        icon={<FaTimesCircle />}
-        onClick={() => onClear(id)}
-      />
-      <ButtonIcon type="button" variant="base" icon={<FaTrash />} onClick={() => onDelete(id)} />
+      <Button variant="default" onClick={() => setEditModalOpen(true)}>
+        <FaEdit />
+      </Button>
+      <Button variant="default" onClick={() => onClear(id)}>
+        <FaTimesCircle />
+      </Button>
+      <Button variant="default" onClick={() => onDelete(id)}>
+        <FaTrash />
+      </Button>
     </StyledChampionListFooter>
   );
 

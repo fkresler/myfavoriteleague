@@ -1,6 +1,6 @@
 import React from 'react';
 import { NoteData } from '@/types';
-import { Button } from 'react-rainbow-components';
+import { Button } from '@/components/Button';
 import Card, { CardSeperator } from '@/components/Card';
 import ReactMarkdown from 'react-markdown';
 
@@ -16,7 +16,7 @@ const Note: React.FC<NoteProps> = ({ id, title, text, tags, onDelete }) => {
       <CardSeperator />
       <div>
         {onDelete && (
-          <Button variant="destructive" onClick={() => onDelete(id)}>
+          <Button variant="error" onClick={() => onDelete(id)}>
             Delete note
           </Button>
         )}

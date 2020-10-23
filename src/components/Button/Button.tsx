@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 export interface ButtonProps {
   /** Variation of the button */
-  variant: 'default' | 'brand' | 'success' | 'warning' | 'error' | 'disabled';
+  variant?: 'base' | 'brand' | 'constructive' | 'warning' | 'destructive' | 'disabled';
   /** Indicates whether the button is rounded or not */
-  isRounded?: boolean;
+  icon?: React.ReactNode;
   /** Indicates whether the button is full widht or not */
   isFullWidth?: boolean;
   /** Function that is called when clicking on the button */
@@ -31,7 +31,7 @@ const BrandButton = styled(BaseButton)`
   color: ${({ theme }) => theme.colors.brand.text};
 `;
 
-const SuccessButton = styled(BaseButton)`
+const ConstructiveButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.colors.success.default};
   color: ${({ theme }) => theme.colors.success.text};
 `;
@@ -41,7 +41,7 @@ const WarningButton = styled(BaseButton)`
   color: ${({ theme }) => theme.colors.warning.text};
 `;
 
-const ErrorButton = styled(BaseButton)`
+const DestructiveButton = styled(BaseButton)`
   background-color: ${({ theme }) => theme.colors.error.default};
   color: ${({ theme }) => theme.colors.error.text};
 `;
@@ -55,45 +55,46 @@ const DisabledButton = styled(BaseButton)`
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'default',
-  isRounded = false,
-  isFullWidth = true,
+  icon,
+  isFullWidth = false,
   onClick,
 }) => {
+  const isRounded = !!icon;
   switch (variant) {
     case 'brand':
       return (
         <BrandButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
-          {children}
+          {icon || children}
         </BrandButton>
       );
     case 'success':
       return (
-        <SuccessButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
-          {children}
-        </SuccessButton>
+        <ConstructiveButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
+          {icon || children}
+        </ConstructiveButton>
       );
     case 'warning':
       return (
         <WarningButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
-          {children}
+          {icon || children}
         </WarningButton>
       );
     case 'error':
       return (
-        <ErrorButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
-          {children}
-        </ErrorButton>
+        <DestructiveButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
+          {icon || children}
+        </DestructiveButton>
       );
     case 'disabled':
       return (
         <DisabledButton isFullWidth={isFullWidth} isRounded={isRounded}>
-          {children}
+          {icon || children}
         </DisabledButton>
       );
     default:
       return (
         <BaseButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
-          {children}
+          {icon || children}
         </BaseButton>
       );
   }

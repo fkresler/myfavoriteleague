@@ -1,11 +1,11 @@
 import React from 'react';
-import { Story } from '@storybook/react/types-6-0';
+import { Story } from '@storybook/react';
 import { ITextInput, TextInput } from './TextInput';
 
 const Template: Story<ITextInput> = (args) => <TextInput {...args} />;
 
 export default {
-  title: 'Components/Input/TextInput',
+  title: 'Components/Forms/TextInput',
   component: TextInput,
   argTypes: {
     onChange: { action: 'changed' },
@@ -23,4 +23,4 @@ export default {
   },
 };
 
-export const TextInputDefault = Template.bind({});
+export const TextInputBase = Template.bind({});

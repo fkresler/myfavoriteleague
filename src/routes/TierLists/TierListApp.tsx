@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, ButtonIcon } from 'react-rainbow-components';
+import { Button } from '@/components/Button';
 import TierList from '@/components/TierList';
 import TierListModal from '@/components/TierList/TierListModal';
 import SegmentedSelect from '@/components/SegmentedSelect';
@@ -28,9 +28,7 @@ const TierListApp: React.FC<{}> = () => {
   const { authUser } = React.useContext(FirebaseContext);
   const { tierlists } = React.useContext(UserDataContext);
   const {
-    state: {
-      hasLoaded, hasChanged, isLoading, isError, data,
-    },
+    state: { hasLoaded, hasChanged, isLoading, isError, data },
     dispatch,
   } = tierlists;
   const [selectedList, selectList] = React.useState<string | undefined>(undefined);
@@ -87,7 +85,7 @@ const TierListApp: React.FC<{}> = () => {
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
-      <ButtonIcon
+      <Button
         type="button"
         variant="success"
         icon={<FaPlus />}

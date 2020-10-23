@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Routes from '@/types/routes';
-import { Button } from 'react-rainbow-components';
+import { Button } from '@/components/Button';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 
 const HomePageContent = styled.div`

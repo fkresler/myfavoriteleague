@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Input } from 'react-rainbow-components';
+import { Button } from '@/components/Button';
+import { TextInput } from '@/components/Input/TextInput';
 import { useAllChampionData } from '@/providers/StaticLeagueProvider/useChampionData';
 import { ChampionBox } from '@/components/ChampionBox';
 
@@ -84,9 +85,8 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
     <StyledChampionSelect className={className} data-testid={testId || 'champion-select'}>
       {showFilter && (
         <FilterWrapper>
-          <Input
+          <TextInput
             label="Filter"
-            hideLabel
             placeholder="Search champions ..."
             value={currentFilter}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrentFilter(e.target.value)}

@@ -1,7 +1,7 @@
 import React from 'react';
-import {
-  Modal, Button, Input, Textarea,
-} from 'react-rainbow-components';
+import { Button } from '@/components/Button';
+import { Modal } from '@/components/Modal';
+import { TextInput } from '@/components/Input/TextInput';
 import { ChampionListData } from '@/types';
 
 export type IChampionListModal = {
@@ -36,25 +36,22 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
 
   return (
     <Modal
-      id="championlist-modal"
+      size="huge"
       isOpen={isModalOpen}
       onRequestClose={() => {
         closeModalBox();
       }}
     >
       <form id="championlist-form">
-        <Input
+        <TextInput
           label="Name"
           placeholder="e.g. 'S-Tier'"
-          required
-          type="text"
-          error={clNameError}
           value={clName}
           onChange={(e) => {
             setClName(e.target.value);
           }}
         />
-        <Textarea
+        <TextInput
           label="Description"
           placeholder="e.g. 'My absolute best stuff!'"
           value={clDescription}
@@ -63,7 +60,6 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
           }}
         />
         <Button
-          type="submit"
           variant="success"
           onClick={() => {
             handleChampionListData(clName, clDescription);
