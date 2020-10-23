@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/Button';
-import { TextInput } from '@/components/Input/TextInput';
+import { TextInput } from '@/components/Form/TextInput';
 import { useAllChampionData } from '@/providers/StaticLeagueProvider/useChampionData';
 import { ChampionBox } from '@/components/ChampionBox';
 

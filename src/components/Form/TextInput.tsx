@@ -14,7 +14,9 @@ export interface ITextInput {
   placeholder?: string;
   /** Indicates the error style rendering */
   hasError?: boolean;
-  /** Indicates the read-only style rendering and possibilities to use the field */
+  /** Indicates the read-only style rendering and possibilities to use the field
+   *  The field will be set automatically to read-only when a value is set without an onChange function
+   */
   isReadOnly?: boolean;
   /** Indicates disabled style rendering and possibilities to use the field */
   isDisabled?: boolean;
@@ -24,7 +26,9 @@ export interface ITextInput {
   hasAutoFocus?: boolean;
   /** Indicates whether to render a fixed width or full width */
   isFullWidth?: boolean;
-  /** Function that is called when the value of the input field changes */
+  /** Function that is called when the value of the input field changes
+   *  If you do not provide an onChange function while providing a value the field will be read-only
+   */
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   /** Function that is called whenever a key is pressed on the input field */
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -91,21 +95,9 @@ export const TextInput: React.FC<ITextInput> = ({
   onChange,
   onKeyPress,
 }) => {
-  const [currentValue, setCurrentValue] = React.useState<string | undefined>(value);
-
-  React.useEffect(() => {
-    setCurrentValue(value);
-  }, [value]);
-
   const usedLabel = label || placeholder;
   const renderedLabel = `${usedLabel}${isRequired ? ' *' : ''}`;
-
-  const customOnChange: typeof onChange = (e) => {
-    setCurrentValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
-  };
+  const renderedIsReadOnly = (!!value && !onChange) || isReadOnly;
 
   return (
     <InputWrapper>
@@ -113,13 +105,13 @@ export const TextInput: React.FC<ITextInput> = ({
         id={id}
         autoFocus={hasAutoFocus}
         className={className}
-        value={currentValue}
+        value={value}
         placeholder={placeholder}
         hasError={hasError}
-        readOnly={isReadOnly}
+        readOnly={renderedIsReadOnly}
         disabled={isDisabled}
         isFullWidth={isFullWidth}
-        onChange={customOnChange}
+        onChange={onChange}
         onKeyPress={onKeyPress}
       />
       {label && <label htmlFor={id}>{renderedLabel}</label>}
