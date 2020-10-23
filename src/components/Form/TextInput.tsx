@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 export interface ITextInput {
+  /** Unique identifier for this form field */
+  id: string;
   /** className for more styling customization */
   className?: string;
   /** Label text to be used for the input */
@@ -75,6 +77,7 @@ const StyledInput = styled.input<{ hasError?: boolean; isFullWidth?: boolean }>`
 `;
 
 export const TextInput: React.FC<ITextInput> = ({
+  id,
   className,
   label,
   value,
@@ -107,7 +110,7 @@ export const TextInput: React.FC<ITextInput> = ({
   return (
     <InputWrapper>
       <StyledInput
-        id="some-input"
+        id={id}
         autoFocus={hasAutoFocus}
         className={className}
         value={currentValue}
@@ -119,7 +122,7 @@ export const TextInput: React.FC<ITextInput> = ({
         onChange={customOnChange}
         onKeyPress={onKeyPress}
       />
-      {label && <label htmlFor="some-input">{renderedLabel}</label>}
+      {label && <label htmlFor={id}>{renderedLabel}</label>}
     </InputWrapper>
   );
 };

@@ -91,6 +91,7 @@ const customRender = (ui: React.ReactElement, data?: Partial<MockedProviderData>
 
 // re-export everything
 export * from '@testing-library/react';
+export * from '@testing-library/user-event';
 
 // override render method
 export { customRender as render };
