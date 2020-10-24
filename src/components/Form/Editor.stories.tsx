@@ -5,7 +5,7 @@ import { IEditor, Editor } from './Editor';
 const Template: Story<IEditor> = (args) => <Editor {...args} />;
 
 export default {
-  title: 'Components/Forms/Editor',
+  title: 'Components/Editor',
   component: Editor,
   argTypes: {
     onChange: { action: 'saved' },

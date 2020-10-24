@@ -54,7 +54,7 @@ const DisabledButton = styled(BaseButton)`
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  variant = 'default',
+  variant = 'base',
   icon,
   isFullWidth = false,
   onClick,
@@ -67,7 +67,7 @@ export const Button: React.FC<ButtonProps> = ({
           {icon || children}
         </BrandButton>
       );
-    case 'success':
+    case 'constructive':
       return (
         <ConstructiveButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
           {icon || children}
@@ -79,7 +79,7 @@ export const Button: React.FC<ButtonProps> = ({
           {icon || children}
         </WarningButton>
       );
-    case 'error':
+    case 'destructive':
       return (
         <DestructiveButton isFullWidth={isFullWidth} isRounded={isRounded} onClick={onClick}>
           {icon || children}

@@ -5,7 +5,7 @@ import { ITextInput, TextInput } from './TextInput';
 const Template: Story<ITextInput> = (args) => <TextInput {...args} />;
 
 export default {
-  title: 'Components/Forms/TextInput',
+  title: 'Components/TextInput',
   component: TextInput,
   argTypes: {
     onChange: { action: 'changed' },

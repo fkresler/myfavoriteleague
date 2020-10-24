@@ -57,7 +57,7 @@ export const SubHeadlineElement = styled(HeadlineElement)`
   letter-spacing: 0.3px;
 `;
 
-export const DefaultCard: React.FC<ICard> = ({
+export const Card: React.FC<ICard> = ({
   headline,
   subHeadline,
   showHeaderSeparator = true,
@@ -81,4 +81,4 @@ export const DefaultCard: React.FC<ICard> = ({
   </CardWrapper>
 );
 
-export default DefaultCard;
+export default Card;
