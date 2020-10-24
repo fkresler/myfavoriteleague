@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: "Arial", sans-serif;
+    background-color: ${({ theme }) => theme.colors.base.default};
+    color: ${({ theme }) => theme.colors.base.text};
   }
 `;
 
@@ -18,8 +20,6 @@ const GeneralLayout = styled.div`
   display: block;
   width: 100%;
   overflow: hidden;
-  background-color: ${({ theme }) => theme.colors.base.default};
-  color: ${({ theme }) => theme.colors.base.text};
 `;
 
 const SideNavigationBar = styled.div<{ isNavbarOpen: boolean }>`

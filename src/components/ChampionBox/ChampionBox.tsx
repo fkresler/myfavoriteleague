@@ -4,7 +4,7 @@ import { useChampionData } from '@/providers/StaticLeagueProvider/useChampionDat
 import { FaInfoCircle } from 'react-icons/fa';
 import { getChampionImageUrl } from '@/utils/championInfoUtils';
 
-interface IChampionBox {
+export interface IChampionBox {
   className?: string;
   testId?: string;
   championId: string;
