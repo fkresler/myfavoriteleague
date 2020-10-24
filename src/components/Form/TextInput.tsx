@@ -57,6 +57,7 @@ const StyledInput = styled.input<{ hasError?: boolean; isFullWidth?: boolean }>`
   &::placeholder {
     opacity: 0;
     transition: inherit;
+    color: ${({ theme }) => theme.colors.greyNormal.default};
   }
 
   &:focus::placeholder {
@@ -65,18 +66,20 @@ const StyledInput = styled.input<{ hasError?: boolean; isFullWidth?: boolean }>`
 
   &:placeholder-shown + label {
     cursor: text;
-    max-width: 66.66%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     transform-origin: left bottom;
     transform: translate(0.5rem, 1.5rem);
+    color: ${({ theme }) => theme.colors.greyNormal.default};
+    pointer-events: none;
   }
 
   &:not(:placeholder-shown) + label,
   &:focus + label {
     transform: translate(0, 0) scale(1);
     cursor: pointer;
+    color: ${({ theme }) => theme.colors.base.text};
   }
 `;
 

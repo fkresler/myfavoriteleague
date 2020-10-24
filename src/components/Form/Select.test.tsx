@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen, render } from '@/utils/testUtils';
+import userEvent from '@testing-library/user-event';
 import { Select } from './Select';
 
 const mockedOptions = [
@@ -66,5 +67,20 @@ describe('Select', () => {
     expect(screen.queryByDisplayValue('First')).toBeNull();
     expect(screen.queryByDisplayValue('Second')).toBeNull();
     expect(screen.queryByDisplayValue('Third')).toBeNull();
+  });
+  it('calls the provided onChange function on selecting options', () => {
+    const testOnChange = jest.fn();
+    render(
+      <Select
+        options={mockedOptions}
+        placeholder="Im a placeholder"
+        selectedId="first"
+        onChange={testOnChange}
+        customTestId="select"
+      />,
+    );
+    userEvent.selectOptions(screen.getByTestId('select'), screen.getByText('Second'));
+    expect(testOnChange).toHaveBeenCalledTimes(1);
+    expect(testOnChange).toHaveBeenCalledWith('second');
   });
 });

@@ -21,6 +21,8 @@ export interface SelectProps {
   isFullWidth?: boolean;
   /** Function to be called when the selected option is changed */
   onChange?: (id: string) => void;
+  /** Custom test id for testing purposes to query for the select */
+  customTestId?: string;
 }
 
 const StyledSelect = styled.select<{ isFullWidth?: boolean }>`
@@ -40,17 +42,21 @@ export const Select: React.FC<SelectProps> = ({
   isDisabled,
   isFullWidth,
   onChange,
+  customTestId,
 }) => {
-  const isSelectedValid = !!(selectedId || options.find((option) => option.id === selectedId));
+  const isSelectedPropValid = !!selectedId;
+  const isSelectedPropFound = !!options.find((option) => option.id === selectedId);
+  const isSelectedValid = isSelectedPropValid && isSelectedPropFound;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (onChange && !isDisabled) {
       onChange(e.target.value);
     }
   };
+
   return (
     <StyledSelect
-      data-testid="select"
+      data-testid={customTestId || 'select'}
       disabled={isDisabled}
       onChange={handleChange}
       isFullWidth={isFullWidth}
