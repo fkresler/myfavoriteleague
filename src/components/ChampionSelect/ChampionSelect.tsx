@@ -86,6 +86,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
       {showFilter && (
         <FilterWrapper>
           <TextInput
+            id="champion-select-filter"
             label="Filter"
             placeholder="Search champions ..."
             value={currentFilter}
@@ -119,7 +120,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
       </ChampionSelectWrapper>
       {onSubmit && (
         <ActionButtonWrapper>
-          <Button variant="success" onClick={() => onSubmit(currentSelection)}>
+          <Button variant="constructive" onClick={() => onSubmit(currentSelection)}>
             These are my champions!
           </Button>
         </ActionButtonWrapper>

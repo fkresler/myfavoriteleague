@@ -71,7 +71,7 @@ const TierList: React.FC<ITierList> = ({
         closeModalBox={() => setTierListModalOpen(false)}
       />
       <Button
-        variant="default"
+        variant="base"
         onClick={() => {
           setTierListModalOpen(true);
         }}
@@ -93,7 +93,7 @@ const TierList: React.FC<ITierList> = ({
         closeModalBox={() => setChampionListModalOpen(false)}
       />
       <Button
-        variant="success"
+        variant="constructive"
         onClick={() => {
           setChampionListModalOpen(true);
         }}
@@ -139,7 +139,7 @@ const TierList: React.FC<ITierList> = ({
         {AddChampionList}
         {EditTierList}
         {isRemovable && (
-          <Button variant="default" onClick={() => dispatch(tierListActions.deleteTierList(id))}>
+          <Button variant="base" onClick={() => dispatch(tierListActions.deleteTierList(id))}>
             <FaTrash />
           </Button>
         )}

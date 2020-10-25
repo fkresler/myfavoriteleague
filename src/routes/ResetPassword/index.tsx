@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
-import { Input, Button } from 'react-rainbow-components';
+import { TextInput } from '@/components/Form';
+import { Button } from '@/components/Button';
 
 const StyledForm = styled.form`
   display: flex;
@@ -31,7 +32,9 @@ const ResetPasswordPage: React.FC = () => {
     if (isDataValid) {
       Firebase.doPasswordReset(passwordResetEmail)
         .then(() => setPasswordResetEmail(''))
-        .catch(() => setPasswordResetError('Could not submit your request! Try again sometimes later ...'));
+        .catch(() =>
+          setPasswordResetError('Could not submit your request! Try again sometimes later ...'),
+        );
     } else {
       setPasswordResetError('Please enter a valid email address!');
     }
@@ -39,16 +42,14 @@ const ResetPasswordPage: React.FC = () => {
 
   return (
     <StyledForm onSubmit={(event) => onPasswordResetSubmit(event)}>
-      <Input
-        name="reset-email"
+      <TextInput
+        id="reset-email"
         type="email"
         placeholder="Your email"
         value={passwordResetEmail}
         onChange={(event) => onInputChange(event)}
       />
-      <Button type="submit" variant="success" disabled={!isDataValid}>
-        Send me instructions!
-      </Button>
+      <Button variant={isDataValid ? 'constructive' : 'disabled'}>Send me instructions!</Button>
       {passwordResetError && <div>{passwordResetError}</div>}
     </StyledForm>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useDrop } from 'react-dnd';
 import { FaPlus, FaEdit, FaTrash, FaTimesCircle } from 'react-icons/fa';
-import Card from '@/components/Card';
+import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import ChampionListModal from '@/components/TierList/ChampionListModal';
@@ -76,12 +76,11 @@ const ChampionList: React.FC<IChampionList> = ({
   const AddChampionEntry: React.ReactNode = (
     <>
       <Modal
-        size="huge"
         isOpen={isChampionEntryModalOpen}
         onRequestClose={() => setChampionEntryModalOpen(false)}
         footer={
           <Button
-            variant="success"
+            variant="constructive"
             onClick={() => {
               selectedChampions.map((championId) => onAddEntry(id, { championId }));
               setChampionEntryModalOpen(false);
@@ -97,7 +96,7 @@ const ChampionList: React.FC<IChampionList> = ({
           onSelectionChange={(selection) => setSelectedChampions(selection)}
         />
       </Modal>
-      <Button variant="success" onClick={() => setChampionEntryModalOpen(true)}>
+      <Button variant="constructive" onClick={() => setChampionEntryModalOpen(true)}>
         <FaPlus />
       </Button>
     </>
@@ -124,13 +123,13 @@ const ChampionList: React.FC<IChampionList> = ({
         }
         closeModalBox={() => setEditModalOpen(false)}
       />
-      <Button variant="default" onClick={() => setEditModalOpen(true)}>
+      <Button variant="base" onClick={() => setEditModalOpen(true)}>
         <FaEdit />
       </Button>
-      <Button variant="default" onClick={() => onClear(id)}>
+      <Button variant="base" onClick={() => onClear(id)}>
         <FaTimesCircle />
       </Button>
-      <Button variant="default" onClick={() => onDelete(id)}>
+      <Button variant="base" onClick={() => onDelete(id)}>
         <FaTrash />
       </Button>
     </StyledChampionListFooter>

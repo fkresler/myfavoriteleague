@@ -6,6 +6,8 @@ export interface ITextInput {
   id: string;
   /** className for more styling customization */
   className?: string;
+  /** Indicates which type of text can be put into this field */
+  type?: 'text' | 'email' | 'password';
   /** Label text to be used for the input */
   label?: string;
   /** Current value of the input field */
@@ -86,6 +88,7 @@ const StyledInput = styled.input<{ hasError?: boolean; isFullWidth?: boolean }>`
 export const TextInput: React.FC<ITextInput> = ({
   id,
   className,
+  type = 'text',
   label,
   value,
   placeholder,
@@ -106,6 +109,8 @@ export const TextInput: React.FC<ITextInput> = ({
     <InputWrapper>
       <StyledInput
         id={id}
+        name={id}
+        type={type}
         autoFocus={hasAutoFocus}
         className={className}
         value={value}

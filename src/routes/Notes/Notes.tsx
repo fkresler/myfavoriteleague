@@ -35,14 +35,14 @@ const Notes: React.FC = () => {
         }}
         onClose={() => setIsAddNoteModalOpen(false)}
       />
-      <Button variant="success" onClick={() => setIsAddNoteModalOpen(true)}>
+      <Button variant="constructive" onClick={() => setIsAddNoteModalOpen(true)}>
         +
       </Button>
     </>
   );
 
   const SaveNotesButton: React.ReactNode = (
-    <Button variant="success" onClick={() => dispatch(noteActions.pushNotes())}>
+    <Button variant="constructive" onClick={() => dispatch(noteActions.pushNotes())}>
       Save Notes
     </Button>
   );

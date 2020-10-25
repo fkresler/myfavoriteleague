@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-import { TextInput } from '@/components/Input/TextInput';
+import { TextInput } from '@/components/Form';
 import { ChampionListData } from '@/types';
 
 export type IChampionListModal = {
@@ -36,7 +36,6 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
 
   return (
     <Modal
-      size="huge"
       isOpen={isModalOpen}
       onRequestClose={() => {
         closeModalBox();
@@ -44,6 +43,7 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
     >
       <form id="championlist-form">
         <TextInput
+          id="championlist-name"
           label="Name"
           placeholder="e.g. 'S-Tier'"
           value={clName}
@@ -52,6 +52,7 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
           }}
         />
         <TextInput
+          id="championlist-description"
           label="Description"
           placeholder="e.g. 'My absolute best stuff!'"
           value={clDescription}
@@ -60,7 +61,7 @@ const ChampionListModal: React.FC<IChampionListModal> = ({
           }}
         />
         <Button
-          variant="success"
+          variant="constructive"
           onClick={() => {
             handleChampionListData(clName, clDescription);
             closeModalBox();

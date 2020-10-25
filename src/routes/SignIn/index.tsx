@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { SignInData } from '@/types/authentication';
 import Routes from '@/types/routes';
-import { Input, Button } from 'react-rainbow-components';
+import { TextInput } from '@/components/Form';
+import { Button } from '@/components/Button';
 
 const initialSignInData = {
   email: '',
@@ -49,23 +50,21 @@ const SignInPage: React.FC = () => {
   };
   return (
     <StyledForm onSubmit={(event) => onSignInSubmit(event)}>
-      <Input
-        name="email"
+      <TextInput
+        id="email"
         type="email"
         placeholder="Your login email"
         value={email}
         onChange={(event: React.SyntheticEvent<HTMLInputElement>) => onInputChange(event)}
       />
-      <Input
-        name="password"
+      <TextInput
+        id="password"
         type="password"
         placeholder="Your login password"
         value={password}
         onChange={(event: React.SyntheticEvent<HTMLInputElement>) => onInputChange(event)}
       />
-      <Button type="submit" variant="success">
-        Login
-      </Button>
+      <Button variant="constructive">Login</Button>
       {error && <div>{error.message}</div>}
     </StyledForm>
   );

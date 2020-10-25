@@ -85,19 +85,13 @@ const TierListApp: React.FC<{}> = () => {
         }}
         closeModalBox={() => setTierListModalOpen(false)}
       />
-      <Button
-        type="button"
-        variant="success"
-        icon={<FaPlus />}
-        onClick={() => setTierListModalOpen(true)}
-      />
+      <Button variant="constructive" icon={<FaPlus />} onClick={() => setTierListModalOpen(true)} />
     </>
   );
 
   const SaveTierListsButton: React.ReactNode = (
     <Button
-      type="button"
-      variant="success"
+      variant="constructive"
       onClick={() => {
         dispatch(tierListActions.pushTierLists());
       }}

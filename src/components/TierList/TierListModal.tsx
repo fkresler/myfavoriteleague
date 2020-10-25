@@ -1,7 +1,7 @@
 import React from 'react';
-import {
-  Modal, Button, Input, Select,
-} from 'react-rainbow-components';
+import { Modal } from '@/components/Modal';
+import { Button } from '@/components/Button';
+import { TextInput, Select } from '@/components/Form';
 import { TierListData, TierListTemplate } from '@/types';
 
 export type ITierListModal = {
@@ -39,19 +39,17 @@ const TierListModal: React.FC<ITierListModal> = ({
 
   return (
     <Modal
-      id="tierlist-modal"
       isOpen={isModalOpen}
       onRequestClose={() => {
         closeModalBox();
       }}
     >
       <form id="tierlist-form">
-        <Input
+        <TextInput
+          id="tierlist-name"
           label="Tierlist Name"
           placeholder="e.g. 'Top Lane'"
-          required
-          type="text"
-          error={tlNameError}
+          isRequired
           value={tlName}
           onChange={(e) => {
             setTlName(e.target.value);
@@ -59,36 +57,28 @@ const TierListModal: React.FC<ITierListModal> = ({
         />
         {isCreateMode && (
           <Select
-            label="Template"
-            bottomHelpText="This prefills your lists so you don't have to"
-            value={tlTemplate}
+            selectedId={tlTemplate}
             options={[
               {
-                label: TierListTemplate.GENERAL,
-                value: TierListTemplate.GENERAL,
-                disabled: false,
+                id: TierListTemplate.GENERAL,
+                description: TierListTemplate.GENERAL,
               },
               {
-                label: TierListTemplate.TRUETIERLIST,
-                value: TierListTemplate.TRUETIERLIST,
-                disabled: false,
+                id: TierListTemplate.TRUETIERLIST,
+                description: TierListTemplate.TRUETIERLIST,
               },
               {
-                label: TierListTemplate.EMPTY,
-                value: TierListTemplate.EMPTY,
-                disabled: false,
+                id: TierListTemplate.EMPTY,
+                description: TierListTemplate.EMPTY,
               },
             ]}
-            onChange={(event) => {
-              const eventTarget = event.target as HTMLInputElement;
-              const newValue = eventTarget.value as TierListTemplate;
-              setTlTemplate(newValue);
+            onChange={(id) => {
+              setTlTemplate(id as TierListTemplate);
             }}
           />
         )}
         <Button
-          type="submit"
-          variant="success"
+          variant="constructive"
           onClick={() => {
             handleTierListData(tlName, tlTemplate);
             closeModalBox();
