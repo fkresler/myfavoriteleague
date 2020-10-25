@@ -17,6 +17,12 @@ export default {
     ),
   ],
   argTypes: {
+    championId: {
+      control: {
+        type: 'select',
+        options: ['Aatrox', 'Ahri', 'Akali'],
+      },
+    },
     onClick: { action: 'clicked' },
   },
   args: {

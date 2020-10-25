@@ -14,6 +14,7 @@ export default {
   args: {
     isOpen: true,
     title: 'Modalbox Title',
+    showClose: false,
   },
 };
 

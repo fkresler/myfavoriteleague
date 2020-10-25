@@ -1,10 +1,22 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+import { FaRegTimesCircle } from 'react-icons/fa';
 
 export interface IModal {
+  /** Custom test id to query for the modalbox */
+  customTestId?: string;
+  /** Custom test id to query for the background */
+  customBgId?: string;
+  /** Custom test id to query for the close button */
+  customCloseId?: string;
+  /** Indicates whether a modalbox is rendered or not */
   isOpen: boolean;
+  /** Optional title of the modalbox */
   title?: string;
+  /** Indicates whether a close button should be rendered */
+  showClose?: boolean;
+  /** Function that is called when the modalbox is requesting to close itself */
   onRequestClose?: () => void;
 }
 
@@ -60,12 +72,38 @@ const ModalboxContentContainer = styled.div`
   overflow: auto;
 `;
 
-export const Modal: React.FC<IModal> = ({ isOpen, title, onRequestClose, children }) => {
+const ModalboxClose = styled.div`
+  position: absolute;
+  font-size: 2rem;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+`;
+
+export const Modal: React.FC<IModal> = ({
+  customTestId,
+  customBgId,
+  customCloseId,
+  isOpen,
+  title,
+  showClose,
+  onRequestClose,
+  children,
+}) => {
   if (isOpen) {
     return createPortal(
       <>
-        <ModalBackground isOpen={isOpen} onClick={() => onRequestClose && onRequestClose()} />
-        <ModalboxContainer>
+        <ModalBackground
+          data-testid={customBgId || 'background'}
+          isOpen={isOpen}
+          onClick={onRequestClose}
+        />
+        <ModalboxContainer data-testid={customTestId || 'modalbox'}>
+          {showClose && (
+            <ModalboxClose data-testid={customCloseId || 'close'} onClick={onRequestClose}>
+              <FaRegTimesCircle />
+            </ModalboxClose>
+          )}
           {title && <ModalboxHeadlineContainer>{title}</ModalboxHeadlineContainer>}
           <ModalboxContentContainer>{children}</ModalboxContentContainer>
         </ModalboxContainer>
