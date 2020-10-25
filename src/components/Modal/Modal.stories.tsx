@@ -15,6 +15,7 @@ export default {
     isOpen: true,
     title: 'Modalbox Title',
     showClose: false,
+    footer: <div>Some additional footer content</div>,
   },
 };
 

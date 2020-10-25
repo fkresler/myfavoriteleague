@@ -9,7 +9,7 @@ export interface ISegmentedSelect {
   }[];
   initialSelectedId?: string;
   selectedId?: string;
-  onSelect?: (selectedId: string) => void;
+  onChange?: (selectedId: string) => void;
 }
 
 const segmentedHeight = '3rem';
@@ -40,16 +40,16 @@ const SegmentedChoice = styled.div<{ isActive: boolean }>`
   cursor: ${({ isActive }) => (isActive ? 'default' : 'pointer')};
   text-decoration: ${({ isActive }) => (isActive ? 'underline' : 'none')};
   background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.highlight.default : theme.colors.primary.default};
+    isActive ? theme.colors.brand.default : theme.colors.primary.default};
   color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.highlight.text : theme.colors.primary.text};
+    isActive ? theme.colors.brand.text : theme.colors.primary.text};
 `;
 
-const SegmentedSelect: React.FC<ISegmentedSelect> = ({
+export const SegmentedSelect: React.FC<ISegmentedSelect> = ({
   choices,
   initialSelectedId,
   selectedId,
-  onSelect,
+  onChange,
 }) => {
   const renderedChoices = choices?.sort((a, b) => a.order - b.order);
   const defaultSelectedId =
@@ -64,13 +64,13 @@ const SegmentedSelect: React.FC<ISegmentedSelect> = ({
       return;
     }
     setLocalSelectedId(id);
-    if (onSelect) {
-      onSelect(id);
+    if (onChange) {
+      onChange(id);
     }
   };
 
   if (!renderedChoices) {
-    return <></>;
+    return null;
   }
 
   return (

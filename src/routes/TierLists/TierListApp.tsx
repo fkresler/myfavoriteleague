@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button } from '@/components/Button';
 import TierList from '@/components/TierList';
 import TierListModal from '@/components/TierList/TierListModal';
-import SegmentedSelect from '@/components/SegmentedSelect';
+import { SegmentedSelect } from '@/components/Form';
 import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { FaPlus } from 'react-icons/fa';
@@ -117,7 +117,7 @@ const TierListApp: React.FC<{}> = () => {
             <SegmentedSelect
               choices={tierListSelectData}
               selectedId={selectedList}
-              onSelect={selectList}
+              onChange={selectList}
             />
           )}
           {AddTierList}

@@ -3,8 +3,6 @@ import { Button } from '@/components/Button';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
 import Note from '@/components/Note';
-import NoteModal from '@/components/NoteModal';
-import { NoteData } from '@/types';
 
 const Notes: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
@@ -27,14 +25,6 @@ const Notes: React.FC = () => {
 
   const AddNoteModal: React.ReactNode = (
     <>
-      <NoteModal
-        isOpen={isAddNoteModalOpen}
-        onConfirm={(noteData: Partial<NoteData>) => {
-          dispatch(noteActions.addNote(noteData));
-          setIsAddNoteModalOpen(false);
-        }}
-        onClose={() => setIsAddNoteModalOpen(false)}
-      />
       <Button variant="constructive" onClick={() => setIsAddNoteModalOpen(true)}>
         +
       </Button>
@@ -60,7 +50,14 @@ const Notes: React.FC = () => {
       {SaveNotesButton}
       <div>Your notes:</div>
       {data.map((note) => (
-        <Note data={{ ...note, dispatch }} />
+        <Note
+          id={note.id}
+          title={note.title}
+          datetime={note.datetime}
+          text={note.text}
+          tags={note.tags}
+          onDelete={() => {}}
+        />
       ))}
       {AddNoteModal}
     </>

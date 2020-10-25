@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { render } from '@/utils/testUtils';
-import SegmentedSelect from './SegmentedSelect';
+import { SegmentedSelect } from './SegmentedSelect';
 
 const defaultChoices = [
   {
@@ -44,7 +44,7 @@ describe('SegmentedSelect', () => {
     });
     it('calls the provided onSelect function whenever clicks happen', () => {
       const mockedOnSelect = jest.fn();
-      render(<SegmentedSelect choices={defaultChoices} onSelect={mockedOnSelect} />);
+      render(<SegmentedSelect choices={defaultChoices} onChange={mockedOnSelect} />);
       fireEvent.click(screen.getByText('E'));
       expect(mockedOnSelect).toHaveBeenLastCalledWith('E');
       fireEvent.click(screen.getByText('A'));
@@ -55,7 +55,7 @@ describe('SegmentedSelect', () => {
     });
     it('does not call the provided function when clicking the active element', () => {
       const mockedOnSelect = jest.fn();
-      render(<SegmentedSelect choices={defaultChoices} onSelect={mockedOnSelect} />);
+      render(<SegmentedSelect choices={defaultChoices} onChange={mockedOnSelect} />);
       fireEvent.click(screen.getByText('E'));
       expect(mockedOnSelect).toHaveBeenLastCalledWith('E');
       fireEvent.click(screen.getByText('A'));

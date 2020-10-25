@@ -59,4 +59,8 @@ describe('Modal', () => {
     userEvent.click(screen.getByTestId('close'));
     expect(testOnRequestClose).toHaveBeenCalled();
   });
+  it('renders a footer when provided one', () => {
+    render(<Modal isOpen title="Modalbox" footer={<div>This is a modal footer</div>} showClose />);
+    expect(screen.getByText('This is a modal footer')).toBeTruthy();
+  });
 });

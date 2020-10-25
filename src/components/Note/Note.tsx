@@ -1,7 +1,7 @@
 import React from 'react';
 import { NoteData } from '@/types';
 import { Button } from '@/components/Button';
-import Card, { CardSeperator } from '@/components/Card';
+import { Card, CardSeperator } from '@/components/Card';
 import ReactMarkdown from 'react-markdown';
 
 export interface NoteProps extends NoteData {
@@ -16,7 +16,7 @@ const Note: React.FC<NoteProps> = ({ id, title, text, tags, onDelete }) => {
       <CardSeperator />
       <div>
         {onDelete && (
-          <Button variant="error" onClick={() => onDelete(id)}>
+          <Button variant="destructive" onClick={() => onDelete(id)}>
             Delete note
           </Button>
         )}
