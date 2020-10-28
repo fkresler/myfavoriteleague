@@ -9,7 +9,7 @@ export interface NoteProps extends NoteData {
   onDelete?: (id: string) => void;
 }
 
-const Note: React.FC<NoteProps> = ({ id, title, text, tags, onDelete }) => {
+export const Note: React.FC<NoteProps> = ({ id, title, text, tags, onDelete }) => {
   return (
     <Card key={id} headline={title}>
       <ReactMarkdown>{text}</ReactMarkdown>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/Button';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
-import Note from '@/components/Note';
+import { Note } from '@/components/Note';
 
 const Notes: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
