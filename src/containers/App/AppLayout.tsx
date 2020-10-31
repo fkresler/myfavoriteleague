@@ -1,20 +1,12 @@
 import React, { useState, useContext } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
+import { GlobalStyle } from '@/theme';
 import { FaTimes, FaPowerOff, FaRegLightbulb } from 'react-icons/fa';
 import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { Link, useHistory } from 'react-router-dom';
 import Routes from '@/types/routes';
 import { UserDataContext, userSettingsActions } from '@/providers/UserDataProvider';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: "Arial", sans-serif;
-    background-color: ${({ theme }) => theme.colors.base.default};
-    color: ${({ theme }) => theme.colors.base.text};
-  }
-`;
 
 const GeneralLayout = styled.div`
   display: block;

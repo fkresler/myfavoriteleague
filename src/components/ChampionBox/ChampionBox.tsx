@@ -36,7 +36,6 @@ const StyledChampionBox = styled.div<{
     `
     border: 1px solid ${theme.borders.default};
   `}
-  box-sizing: border-box;
   overflow: hidden;
 
   img {

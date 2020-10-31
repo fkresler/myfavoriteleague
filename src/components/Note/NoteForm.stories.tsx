@@ -2,13 +2,13 @@ import React from 'react';
 import { Story } from '@storybook/react';
 import { INoteForm, NoteForm } from './NoteForm';
 
-const NoteFormTemplate: Story<INoteForm> = (args) => <NoteFormTemplate {...args} />;
+const NoteFormTemplate: Story<INoteForm> = (args) => <NoteForm {...args} />;
 
 export default {
-  title: 'Containers/NoteForm',
+  title: 'Components/NoteForm',
   component: NoteForm,
   argTypes: {
-    onClick: { action: 'clicked' },
+    onSave: { action: 'clicked' },
   },
   args: {
     initTitle: 'Some note title',

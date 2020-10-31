@@ -58,7 +58,6 @@ const ModalboxHeadlineContainer = styled.div`
   display: block;
   width: 100%;
   overflow: hidden;
-  box-sizing: border-box;
   text-overflow: ellipsis;
   font-size: 150%;
   line-height: 150%;
@@ -78,7 +77,6 @@ const ModalboxFooterContainer = styled.div`
   flex: 0 0 auto;
   display: block;
   width: 100%
-  box-sizing: border-box;
   padding: 1rem;
 `;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from '@/theme';
+import { GlobalStyle, lightTheme, darkTheme } from '@/theme';
 
 export const globalTypes = {
   theme: {
@@ -31,6 +31,7 @@ const withThemeProvider = (Story, context) => {
   return (
     <div style={styles}>
       <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <Story {...context} />
       </ThemeProvider>
     </div>

@@ -11,7 +11,6 @@ export interface ICard {
 
 export const CardWrapper = styled.div`
   display: block;
-  box-sizing: border-box;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.base.default};
   color: ${({ theme }) => theme.colors.base.text};
