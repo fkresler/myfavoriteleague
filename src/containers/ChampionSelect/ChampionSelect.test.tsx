@@ -8,9 +8,9 @@ describe('ChampionSelect', () => {
     render(<ChampionSelect />);
     expect(screen.queryAllByTestId('champion-box').length).toEqual(3);
   });
-  it('calls the onSelectionChange function when adding champions to the selection', () => {
+  it('calls the onChange function when adding champions to the selection', () => {
     const debugSelectionChange = jest.fn();
-    render(<ChampionSelect onSelectionChange={debugSelectionChange} />);
+    render(<ChampionSelect onChange={debugSelectionChange} />);
     expect(screen.queryAllByTestId('champion-box').length).toEqual(3);
     fireEvent.click(screen.queryAllByTestId('champion-box')[0]);
     expect(debugSelectionChange).toHaveBeenCalledTimes(1);
@@ -19,9 +19,9 @@ describe('ChampionSelect', () => {
     expect(debugSelectionChange).toHaveBeenCalledTimes(2);
     expect(debugSelectionChange).toHaveBeenLastCalledWith(['Aatrox', 'Ahri']);
   });
-  it('calls the onSelectionChange function when adding to and removing champions from the selection', () => {
+  it('calls the onChange function when adding to and removing champions from the selection', () => {
     const debugSelectionChange = jest.fn();
-    render(<ChampionSelect onSelectionChange={debugSelectionChange} />);
+    render(<ChampionSelect onChange={debugSelectionChange} />);
     fireEvent.click(screen.queryAllByTestId('champion-box')[0]);
     expect(debugSelectionChange).toHaveBeenCalledTimes(1);
     expect(debugSelectionChange).toHaveBeenLastCalledWith(['Aatrox']);
@@ -32,13 +32,10 @@ describe('ChampionSelect', () => {
     expect(debugSelectionChange).toHaveBeenCalledTimes(3);
     expect(debugSelectionChange).toHaveBeenLastCalledWith(['Ahri']);
   });
-  it('does not call the onSelectionChange function when the champion is disabled', () => {
+  it('does not call the onChange function when the champion is disabled', () => {
     const debugSelectionChange = jest.fn();
     render(
-      <ChampionSelect
-        disabledChampions={['Aatrox', 'Akali']}
-        onSelectionChange={debugSelectionChange}
-      />,
+      <ChampionSelect disabledChampions={['Aatrox', 'Akali']} onChange={debugSelectionChange} />,
     );
     fireEvent.click(screen.queryAllByTestId('champion-box')[0]);
     expect(debugSelectionChange).toHaveBeenCalledTimes(0);

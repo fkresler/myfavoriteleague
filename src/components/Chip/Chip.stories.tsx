@@ -12,6 +12,8 @@ export default {
   },
   args: {
     value: 'This is a chip',
+    isActive: false,
+    isDisabled: false,
   },
 };
 

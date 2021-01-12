@@ -5,14 +5,14 @@ import { FaPlus, FaEdit, FaTrash, FaTimesCircle } from 'react-icons/fa';
 import { Card } from '@/components/Card';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-import ChampionListModal from '@/components/TierList/ChampionListModal';
 import {
   DnDTierListTypes,
   DnDTierListItemData,
   ChampionListData,
   ChampionListEntryData,
 } from '@/types';
-import ChampionSelect from '@/components/ChampionSelect';
+import { ChampionSelect } from '@/containers/ChampionSelect';
+import ChampionListModal from './ChampionListModal';
 import ChampionListEntry from './ChampionEntry';
 
 const StyledChampionContainer = styled.div`
@@ -93,7 +93,7 @@ const ChampionList: React.FC<IChampionList> = ({
         <ChampionSelect
           showFilter
           excludedChampions={nonAddableChampions}
-          onSelectionChange={(selection) => setSelectedChampions(selection)}
+          onChange={(selection) => setSelectedChampions(selection)}
         />
       </Modal>
       <Button variant="constructive" onClick={() => setChampionEntryModalOpen(true)}>

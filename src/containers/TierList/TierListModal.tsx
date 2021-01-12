@@ -12,7 +12,7 @@ export type ITierListModal = {
   closeModalBox: () => void;
 };
 
-const TierListModal: React.FC<ITierListModal> = ({
+export const TierListModal: React.FC<ITierListModal> = ({
   isModalOpen,
   initialTierListData = { name: '' },
   isCreateMode,

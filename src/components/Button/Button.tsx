@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
+import { IconContext } from 'react-icons';
 
 export interface ButtonProps {
   /** Variation of the button */
@@ -67,8 +68,8 @@ const DestructiveButton = styled(BaseButton)`
 
 const DisabledButton = styled(BaseButton)`
   cursor: default;
-  background-color: ${({ theme }) => theme.colors.greyLight.default};
-  color: ${({ theme }) => theme.colors.greyLight.text};
+  background-color: ${({ theme }) => theme.colors.disabled.default};
+  color: ${({ theme }) => theme.colors.disabled.text};
 `;
 
 export const Button: React.FC<ButtonProps> = ({
@@ -78,42 +79,55 @@ export const Button: React.FC<ButtonProps> = ({
   isFullWidth = false,
   onClick,
 }) => {
+  const theme = React.useContext(ThemeContext);
   switch (variant) {
     case 'brand':
       return (
-        <BrandButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
-          {icon || children}
-        </BrandButton>
+        <IconContext.Provider value={{ color: theme.colors.brand.text }}>
+          <BrandButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
+            {icon || children}
+          </BrandButton>
+        </IconContext.Provider>
       );
     case 'constructive':
       return (
-        <ConstructiveButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
-          {icon || children}
-        </ConstructiveButton>
+        <IconContext.Provider value={{ color: theme.colors.success.text }}>
+          <ConstructiveButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
+            {icon || children}
+          </ConstructiveButton>
+        </IconContext.Provider>
       );
     case 'warning':
       return (
-        <WarningButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
-          {icon || children}
-        </WarningButton>
+        <IconContext.Provider value={{ color: theme.colors.warning.text }}>
+          <WarningButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
+            {icon || children}
+          </WarningButton>
+        </IconContext.Provider>
       );
     case 'destructive':
       return (
-        <DestructiveButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
-          {icon || children}
-        </DestructiveButton>
+        <IconContext.Provider value={{ color: theme.colors.error.text }}>
+          <DestructiveButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
+            {icon || children}
+          </DestructiveButton>
+        </IconContext.Provider>
       );
     case 'disabled':
       return (
-        <DisabledButton isFullWidth={isFullWidth} isIcon={!!icon}>
-          {icon || children}
-        </DisabledButton>
+        <IconContext.Provider value={{ color: theme.colors.disabled.text }}>
+          <DisabledButton isFullWidth={isFullWidth} isIcon={!!icon}>
+            {icon || children}
+          </DisabledButton>
+        </IconContext.Provider>
       );
     default:
       return (
-        <BaseButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
-          {icon || children}
-        </BaseButton>
+        <IconContext.Provider value={{ color: theme.colors.base.text }}>
+          <BaseButton isFullWidth={isFullWidth} isIcon={!!icon} onClick={onClick}>
+            {icon || children}
+          </BaseButton>
+        </IconContext.Provider>
       );
   }
 };

@@ -4,16 +4,32 @@ import { FaPlus } from 'react-icons/fa';
 
 export interface IChip {
   value: string;
+  isActive?: boolean;
+  isDisabled?: boolean;
   onDelete?: () => void;
 }
 
-const ChipWrapper = styled.div`
+const ChipWrapper = styled.div<{ isDisabled?: boolean; isActive?: boolean }>`
   display: inline-flex;
   align-items: center;
   padding: 0.75rem;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.brand.default};
-  color: ${({ theme }) => theme.colors.brand.text};
+  border-radius: 10%;
+  background-color: ${({ theme }) => theme.colors.primary.default};
+  color: ${({ theme }) => theme.colors.primary.text};
+
+  ${({ isActive, theme }) =>
+    isActive &&
+    `
+    background-color: ${theme.colors.brand.default};
+    color: ${theme.colors.brand.text};
+  `}
+
+  ${({ isDisabled, theme }) =>
+    isDisabled &&
+    `
+    background-color: ${theme.colors.disabled.default};
+    color: ${theme.colors.disabled.text};
+  `}
 `;
 
 const DeleteAction = styled(FaPlus)`
@@ -22,11 +38,11 @@ const DeleteAction = styled(FaPlus)`
   transform: rotate(45deg);
 `;
 
-export const Chip: React.FC<IChip> = ({ value, onDelete }) => {
+export const Chip: React.FC<IChip> = ({ value, isActive, isDisabled, onDelete }) => {
   return (
-    <ChipWrapper>
+    <ChipWrapper isActive={isActive} isDisabled={isDisabled}>
       {value}
-      {onDelete && <DeleteAction onClick={onDelete} />}
+      {onDelete && !isDisabled && <DeleteAction data-testid="chip-delete" onClick={onDelete} />}
     </ChipWrapper>
   );
 };

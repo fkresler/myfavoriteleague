@@ -5,7 +5,7 @@ import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 import { TierListData, TierListAction } from '@/types';
 import { tierListActions } from '@/providers/UserDataProvider';
 import ChampionList from './ChampionList';
-import TierListModal from './TierListModal';
+import { TierListModal } from './TierListModal';
 import ChampionListModal from './ChampionListModal';
 
 const StyledChampionListSpacer = styled.div`
@@ -29,7 +29,7 @@ export type ITierList = TierListData & {
   dispatch: (action: TierListAction) => void;
 };
 
-const TierList: React.FC<ITierList> = ({
+export const TierList: React.FC<ITierList> = ({
   id,
   authorId,
   name,

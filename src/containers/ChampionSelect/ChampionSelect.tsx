@@ -12,7 +12,7 @@ export interface IChampionSelect {
   disabledChampions?: string[];
   excludedChampions?: string[];
   showFilter?: boolean;
-  onSelectionChange?: (championSelection: string[]) => void;
+  onChange?: (championSelection: string[]) => void;
   onSubmit?: (selectedChampions: string[]) => void;
 }
 
@@ -35,7 +35,14 @@ const ChampionSelectWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 
   & > * {
     margin: 1rem;
@@ -57,7 +64,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
   disabledChampions = [],
   excludedChampions = [],
   showFilter,
-  onSelectionChange,
+  onChange,
   onSubmit,
 }) => {
   const { data: allChampions = {} } = useAllChampionData();
@@ -78,7 +85,7 @@ export const ChampionSelect: React.FC<IChampionSelect> = ({
       newSelection = currentSelection.concat(championId);
       setCurrentSelection(newSelection);
     }
-    return onSelectionChange && onSelectionChange(newSelection);
+    return onChange && onChange(newSelection);
   };
 
   return (

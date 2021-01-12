@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@/components/Button';
-import TierList from '@/components/TierList';
-import TierListModal from '@/components/TierList/TierListModal';
+import { TierList, TierListModal } from '@/containers/TierList';
 import { SegmentedSelect } from '@/components/Form';
 import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
