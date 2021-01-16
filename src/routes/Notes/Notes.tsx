@@ -1,9 +1,41 @@
 import React from 'react';
+import styled from 'styled-components';
+import { FaPlus } from 'react-icons/fa';
 import { Button } from '@/components/Button';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
+import { Loader } from '@/components/Loader';
+import { Notification } from '@/components/Notification';
 import { Modal } from '@/components/Modal';
 import { Note, NoteForm } from '@/components/Note';
+
+const NoteActionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1rem;
+`;
+
+const NoteListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+
+  & > * {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    & > * {
+      max-width: 20rem;
+    }
+  }
+`;
 
 const Notes: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
@@ -20,11 +52,25 @@ const Notes: React.FC = () => {
     }
   }, [authUser, dispatch, hasLoaded]);
 
-  const AddNoteModalButton: React.ReactNode = (
+  const NewNote: React.ReactNode = (
     <>
-      <Button variant="constructive" onClick={() => setIsAddNoteModalOpen(true)}>
-        +
-      </Button>
+      <Button
+        variant="constructive"
+        icon={<FaPlus />}
+        onClick={() => setIsAddNoteModalOpen(true)}
+      />
+      <Modal
+        isOpen={isAddNoteModalOpen}
+        showClose
+        onRequestClose={() => setIsAddNoteModalOpen(false)}
+      >
+        <NoteForm
+          onSave={(newNoteData) => {
+            dispatch(noteActions.addNote(newNoteData));
+            setIsAddNoteModalOpen(false);
+          }}
+        />
+      </Modal>
     </>
   );
 
@@ -35,36 +81,45 @@ const Notes: React.FC = () => {
   );
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <Loader />;
   }
 
   if (isError) {
-    return <div>Something odd happened oof</div>;
+    return <Notification variant="error">Something odd happened, try again later</Notification>;
   }
 
   if (data.length === 0) {
     return (
       <>
-        <div>You do not have any notes yet, create some with the button below!</div>
-        {AddNoteModalButton}
+        <Notification variant="warning">
+          You do not have any notifications yet. Create some with the button below!
+        </Notification>
+        <NoteActionWrapper>{NewNote}</NoteActionWrapper>
       </>
     );
   }
 
   return (
     <>
-      {SaveNotesButton}
-      {data.map((note) => (
-        <Note
-          id={note.id}
-          title={note.title}
-          datetime={note.datetime}
-          text={note.text}
-          tags={note.tags}
-          onDelete={() => {}}
-        />
-      ))}
-      {AddNoteModalButton}
+      <NoteActionWrapper>
+        {SaveNotesButton}
+        {NewNote}
+      </NoteActionWrapper>
+      <NoteListWrapper>
+        {data.map((note) => (
+          <Note
+            id={note.id}
+            key={note.id}
+            title={note.title}
+            datetime={note.datetime}
+            text={note.text}
+            tags={note.tags}
+            onDelete={() => {
+              dispatch(noteActions.deleteNote(note.id));
+            }}
+          />
+        ))}
+      </NoteListWrapper>
     </>
   );
 };

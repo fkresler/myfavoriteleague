@@ -12,8 +12,9 @@ export interface IChip {
 const ChipWrapper = styled.div<{ isDisabled?: boolean; isActive?: boolean }>`
   display: inline-flex;
   align-items: center;
-  padding: 0.75rem;
-  border-radius: 10%;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 25px;
   background-color: ${({ theme }) => theme.colors.primary.default};
   color: ${({ theme }) => theme.colors.primary.text};
 
@@ -33,7 +34,7 @@ const ChipWrapper = styled.div<{ isDisabled?: boolean; isActive?: boolean }>`
 `;
 
 const DeleteAction = styled(FaPlus)`
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   cursor: pointer;
   transform: rotate(45deg);
 `;

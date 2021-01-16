@@ -14,3 +14,8 @@ export default {
 };
 
 export const CardDefault = Template.bind({});
+
+export const CardWithFooter = Template.bind({});
+CardWithFooter.args = {
+  footer: <div>This is footer content</div>,
+};

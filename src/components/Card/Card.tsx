@@ -7,6 +7,7 @@ export interface ICard {
   showHeaderSeparator?: boolean;
   action?: React.ReactNode;
   children?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export const CardWrapper = styled.div`
@@ -15,6 +16,8 @@ export const CardWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.base.default};
   color: ${({ theme }) => theme.colors.base.text};
   border: 1px solid ${({ theme }) => theme.borders.default};
+  max-width: 100%;
+  overflow: hidden;
 
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.default};
@@ -62,6 +65,7 @@ export const Card: React.FC<ICard> = ({
   showHeaderSeparator = true,
   action,
   children,
+  footer,
 }) => (
   <CardWrapper>
     {(headline || subHeadline || action) && (
@@ -77,6 +81,12 @@ export const Card: React.FC<ICard> = ({
       </>
     )}
     <CardContentWrapper>{children}</CardContentWrapper>
+    {footer && (
+      <>
+        <CardSeperator />
+        <CardContentWrapper>{footer}</CardContentWrapper>
+      </>
+    )}
   </CardWrapper>
 );
 
