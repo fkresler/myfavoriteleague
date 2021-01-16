@@ -17,25 +17,9 @@ const NoteActionWrapper = styled.div`
 `;
 
 const NoteListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-
-  & > * {
-    width: 100%;
-    flex: 1 0 100%;
-    margin: 0.75rem auto;
-  }
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    & > * {
-      flex: 1 0 20rem;
-      margin: 0.75rem;
-    }
-  }
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
 `;
 
 const Notes: React.FC = () => {

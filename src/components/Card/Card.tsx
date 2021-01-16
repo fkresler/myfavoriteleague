@@ -11,7 +11,8 @@ export interface ICard {
 }
 
 export const CardWrapper = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.base.default};
   color: ${({ theme }) => theme.colors.base.text};
@@ -28,6 +29,16 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
+`;
+
+const CardMain = styled.div`
+  flex: 1 0 auto;
+  display: block;
+`;
+
+const CardFooter = styled.div`
+  flex: 0 0 auto;
+  display: block;
 `;
 
 export const CardHeadlineWrapper = styled.div`
@@ -80,12 +91,14 @@ export const Card: React.FC<ICard> = ({
         {showHeaderSeparator && <CardSeperator />}
       </>
     )}
-    <CardContentWrapper>{children}</CardContentWrapper>
+    <CardMain>
+      <CardContentWrapper>{children}</CardContentWrapper>
+    </CardMain>
     {footer && (
-      <>
+      <CardFooter>
         <CardSeperator />
         <CardContentWrapper>{footer}</CardContentWrapper>
-      </>
+      </CardFooter>
     )}
   </CardWrapper>
 );
