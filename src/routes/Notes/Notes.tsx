@@ -2,7 +2,8 @@ import React from 'react';
 import { Button } from '@/components/Button';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
-import { Note } from '@/components/Note';
+import { Modal } from '@/components/Modal';
+import { Note, NoteForm } from '@/components/Note';
 
 const Notes: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
@@ -19,11 +20,7 @@ const Notes: React.FC = () => {
     }
   }, [authUser, dispatch, hasLoaded]);
 
-  const NotesLoading: React.ReactNode = <div>Loading ...</div>;
-
-  const NotesError: React.ReactNode = <div>Something odd happened oof</div>;
-
-  const AddNoteModal: React.ReactNode = (
+  const AddNoteModalButton: React.ReactNode = (
     <>
       <Button variant="constructive" onClick={() => setIsAddNoteModalOpen(true)}>
         +
@@ -38,17 +35,25 @@ const Notes: React.FC = () => {
   );
 
   if (isLoading) {
-    return <>{NotesLoading}</>;
+    return <div>Loading ...</div>;
   }
 
   if (isError) {
-    return <>{NotesError}</>;
+    return <div>Something odd happened oof</div>;
+  }
+
+  if (data.length === 0) {
+    return (
+      <>
+        <div>You do not have any notes yet, create some with the button below!</div>
+        {AddNoteModalButton}
+      </>
+    );
   }
 
   return (
     <>
       {SaveNotesButton}
-      <div>Your notes:</div>
       {data.map((note) => (
         <Note
           id={note.id}
@@ -59,7 +64,7 @@ const Notes: React.FC = () => {
           onDelete={() => {}}
         />
       ))}
-      {AddNoteModal}
+      {AddNoteModalButton}
     </>
   );
 };
