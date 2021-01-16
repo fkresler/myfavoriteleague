@@ -39,13 +39,11 @@ const DeleteAction = styled(FaPlus)`
   transform: rotate(45deg);
 `;
 
-export const Chip: React.FC<IChip> = ({ value, isActive, isDisabled, onDelete }) => {
-  return (
+export const Chip: React.FC<IChip> = ({ value, isActive, isDisabled, onDelete }) => (
     <ChipWrapper isActive={isActive} isDisabled={isDisabled}>
       {value}
       {onDelete && !isDisabled && <DeleteAction data-testid="chip-delete" onClick={onDelete} />}
     </ChipWrapper>
   );
-};
 
 export default Chip;

@@ -27,8 +27,7 @@ export const Editor: React.FC<IEditor> = ({
   autoFocus,
   height = 320,
   onChange,
-}) => {
-  return (
+}) => (
     <MDEditor
       preview={mode}
       value={value}
@@ -38,6 +37,5 @@ export const Editor: React.FC<IEditor> = ({
       onChange={onChange}
     />
   );
-};
 
 export default Editor;

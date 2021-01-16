@@ -30,8 +30,7 @@ const LoadingElement = styled.div<{ position: number; positionTop: number; posit
   left: ${({ positionLeft }) => `${positionLeft}px`};
 `;
 
-export const Loader = () => {
-  return (
+export const Loader = () => (
     <LoadingWrapper>
       <LoadingElement position={0} positionTop={37} positionLeft={66} />
       <LoadingElement position={1} positionTop={22} positionLeft={62} />
@@ -47,6 +46,5 @@ export const Loader = () => {
       <LoadingElement position={11} positionTop={52} positionLeft={62} />
     </LoadingWrapper>
   );
-};
 
 export default Loader;
