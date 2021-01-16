@@ -49,6 +49,7 @@ export const NoteForm: React.FC<INoteForm> = ({ initTitle, initContent, initTags
       />
       {onSave && (
         <Button
+          variant="constructive"
           isFullWidth
           onClick={() =>
             onSave({

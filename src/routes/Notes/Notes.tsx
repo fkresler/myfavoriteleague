@@ -77,7 +77,7 @@ const Notes: React.FC = () => {
     return (
       <>
         <Notification variant="warning">
-          You do not have any notifications yet. Create some with the button below!
+          You do not have any notes yet. Create some with the button below!
         </Notification>
         <NoteActionWrapper>{NewNote}</NoteActionWrapper>
       </>
@@ -99,6 +99,7 @@ const Notes: React.FC = () => {
             datetime={note.datetime}
             text={note.text}
             tags={note.tags}
+            onEdit={(newData) => dispatch(noteActions.updateNote(note.id, newData))}
             onDelete={() => {
               dispatch(noteActions.deleteNote(note.id));
             }}

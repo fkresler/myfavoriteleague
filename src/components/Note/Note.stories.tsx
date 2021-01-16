@@ -20,3 +20,8 @@ export default {
 };
 
 export const NoteDefault = NoteTemplate.bind({});
+
+export const EditableNote = NoteTemplate.bind({});
+EditableNote.argTypes = {
+  onEdit: { action: 'edited' },
+};
