@@ -25,14 +25,15 @@ const NoteListWrapper = styled.div`
 
   & > * {
     width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    flex: 1 0 100%;
+    margin: 0.75rem auto;
   }
 
   @media (min-width: 768px) {
     flex-direction: row;
     & > * {
-      max-width: 20rem;
+      flex: 1 0 20rem;
+      margin: 0.75rem;
     }
   }
 `;
