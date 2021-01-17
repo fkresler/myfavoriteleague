@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Loader } from '@/components/Loader';
+import { Notification } from '@/components/Notification';
 import { Button } from '@/components/Button';
 import { TierList, TierListModal } from '@/containers/TierList';
 import { SegmentedSelect } from '@/components/Form';
@@ -7,23 +9,15 @@ import { UserDataContext, tierListActions } from '@/providers/UserDataProvider';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { FaPlus } from 'react-icons/fa';
 
-const StyledSegmentedSection = styled.div`
-  margin: 1.5rem 0;
+const ActionBarWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-
-  & > *:first-child {
-    flex-grow: 1;
-  }
-
-  & > *:last-child {
-    margin-left: 1rem;
-  }
+  padding: 1rem;
 `;
 
-const TierListApp: React.FC<{}> = () => {
+const TierLists: React.FC<{}> = () => {
   const { authUser } = React.useContext(FirebaseContext);
   const { tierlists } = React.useContext(UserDataContext);
   const {
@@ -66,7 +60,7 @@ const TierListApp: React.FC<{}> = () => {
     };
   }, [hasChanged]);
 
-  const AddTierList: React.ReactNode = (
+  const NewTierList: React.ReactNode = (
     <>
       <TierListModal
         isModalOpen={isAddTierListModalOpen}
@@ -100,52 +94,58 @@ const TierListApp: React.FC<{}> = () => {
   );
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <Loader />;
   }
 
   if (isError) {
-    return <div>Something odd happened oof</div>;
+    return (
+      <Notification variant="error">
+        Oops, omething went wrong! Please try again later.
+      </Notification>
+    );
   }
 
-  if (data && data.length > 0) {
+  if (!data || data.length === 0) {
     return (
       <>
-        {SaveTierListsButton}
-        <StyledSegmentedSection>
-          {data && (
-            <SegmentedSelect
-              choices={tierListSelectData}
-              selectedId={selectedList}
-              onChange={selectList}
-            />
-          )}
-          {AddTierList}
-        </StyledSegmentedSection>
-        {currentTierListData && (
-          <TierList
-            allowSingleUseEntriesOnly
-            id={currentTierListData.id}
-            authorId={currentTierListData.authorId}
-            name={currentTierListData.name}
-            mode={currentTierListData.mode}
-            role={currentTierListData.role}
-            isPublic={currentTierListData.isPublic}
-            isRemovable={currentTierListData.isRemovable}
-            order={currentTierListData.order}
-            lists={currentTierListData.lists}
-            dispatch={dispatch}
-          />
-        )}
+        <Notification variant="warning">
+          You have not created any lists yet. Go create some with the button!
+        </Notification>
+        <ActionBarWrapper>{NewTierList}</ActionBarWrapper>
       </>
     );
   }
 
   return (
     <>
-      {AddTierList}
-      <div>You have no content yet :( Go create some!</div>
+      <ActionBarWrapper>
+        {SaveTierListsButton}
+        {NewTierList}
+      </ActionBarWrapper>
+      {data && (
+        <SegmentedSelect
+          choices={tierListSelectData}
+          selectedId={selectedList}
+          onChange={selectList}
+        />
+      )}
+      {currentTierListData && (
+        <TierList
+          allowSingleUseEntriesOnly
+          id={currentTierListData.id}
+          authorId={currentTierListData.authorId}
+          name={currentTierListData.name}
+          mode={currentTierListData.mode}
+          role={currentTierListData.role}
+          isPublic={currentTierListData.isPublic}
+          isRemovable={currentTierListData.isRemovable}
+          order={currentTierListData.order}
+          lists={currentTierListData.lists}
+          dispatch={dispatch}
+        />
+      )}
     </>
   );
 };
 
-export default TierListApp;
+export default TierLists;

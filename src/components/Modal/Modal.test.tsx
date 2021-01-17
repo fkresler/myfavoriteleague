@@ -34,13 +34,13 @@ describe('Modal', () => {
     userEvent.click(screen.getByTestId('background'));
     expect(testOnRequestClose).toHaveBeenCalled();
   });
-  it('does not render a close button by default', () => {
+  it('does renders a close button by default', () => {
     render(
       <Modal customCloseId="close" isOpen title="Modalbox">
         Modalbox content
       </Modal>,
     );
-    expect(screen.queryByTestId('close')).toBeNull();
+    expect(screen.getByTestId('close')).toBeTruthy();
   });
   it('calls the provided onRequestClose when clicking the close button', () => {
     const testOnRequestClose = jest.fn();

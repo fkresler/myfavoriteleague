@@ -73,7 +73,7 @@ const Notes: React.FC = () => {
     return <Notification variant="error">Something odd happened, try again later</Notification>;
   }
 
-  if (data.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <>
         <Notification variant="warning">

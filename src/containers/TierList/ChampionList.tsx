@@ -86,7 +86,7 @@ const ChampionList: React.FC<IChampionList> = ({
               setChampionEntryModalOpen(false);
             }}
           >
-            These are my champions!
+            Save these champions
           </Button>
         }
       >
@@ -96,9 +96,11 @@ const ChampionList: React.FC<IChampionList> = ({
           onChange={(selection) => setSelectedChampions(selection)}
         />
       </Modal>
-      <Button variant="constructive" onClick={() => setChampionEntryModalOpen(true)}>
-        <FaPlus />
-      </Button>
+      <Button
+        variant="constructive"
+        icon={<FaPlus />}
+        onClick={() => setChampionEntryModalOpen(true)}
+      />
     </>
   );
 
@@ -123,15 +125,9 @@ const ChampionList: React.FC<IChampionList> = ({
         }
         closeModalBox={() => setEditModalOpen(false)}
       />
-      <Button variant="base" onClick={() => setEditModalOpen(true)}>
-        <FaEdit />
-      </Button>
-      <Button variant="base" onClick={() => onClear(id)}>
-        <FaTimesCircle />
-      </Button>
-      <Button variant="base" onClick={() => onDelete(id)}>
-        <FaTrash />
-      </Button>
+      <Button variant="base" icon={<FaEdit />} onClick={() => setEditModalOpen(true)} />
+      <Button variant="destructive" icon={<FaTimesCircle />} onClick={() => onClear(id)} />
+      <Button variant="destructive" icon={<FaTrash />} onClick={() => onDelete(id)} />
     </StyledChampionListFooter>
   );
 

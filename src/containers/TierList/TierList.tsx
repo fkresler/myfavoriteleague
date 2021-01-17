@@ -72,12 +72,11 @@ export const TierList: React.FC<ITierList> = ({
       />
       <Button
         variant="base"
+        icon={<FaEdit />}
         onClick={() => {
           setTierListModalOpen(true);
         }}
-      >
-        <FaEdit />
-      </Button>
+      />
     </>
   );
 
@@ -94,12 +93,11 @@ export const TierList: React.FC<ITierList> = ({
       />
       <Button
         variant="constructive"
+        icon={<FaPlus />}
         onClick={() => {
           setChampionListModalOpen(true);
         }}
-      >
-        <FaPlus />
-      </Button>
+      />
     </>
   );
 
@@ -139,9 +137,11 @@ export const TierList: React.FC<ITierList> = ({
         {AddChampionList}
         {EditTierList}
         {isRemovable && (
-          <Button variant="base" onClick={() => dispatch(tierListActions.deleteTierList(id))}>
-            <FaTrash />
-          </Button>
+          <Button
+            variant="destructive"
+            icon={<FaTrash />}
+            onClick={() => dispatch(tierListActions.deleteTierList(id))}
+          />
         )}
       </StyledAddChampionListRow>
     </>

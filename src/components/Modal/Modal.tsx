@@ -16,7 +16,7 @@ export interface IModal {
   title?: string;
   /** Optional fixed footer inside the modalbox */
   footer?: React.ReactNode;
-  /** Indicates whether a close button should be rendered */
+  /** Indicates whether a close button should be rendered, defaults to true */
   showClose?: boolean;
   /** Function that is called when the modalbox is requesting to close itself */
   onRequestClose?: () => void;
@@ -43,14 +43,21 @@ const ModalboxContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000001;
-  width: 40rem;
-  max-width: 100%;
-  height: 25rem;
-  max-height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: ${({ theme }) => theme.colors.base.default};
   color: ${({ theme }) => theme.colors.base.text};
   box-shadow: ${({ theme }) => theme.shadows.default};
   border-radius: 3px;
+
+  @media (min-width: 768px) {
+    width: 50vw;
+    min-width: 40rem;
+    max-width: 100%;
+    height: 50vh;
+    min-height: 25rem;
+    max-height: 100%;
+  }
 `;
 
 const ModalboxHeadlineContainer = styled.div`
@@ -95,7 +102,7 @@ export const Modal: React.FC<IModal> = ({
   isOpen,
   title,
   footer,
-  showClose,
+  showClose = true,
   onRequestClose,
   children,
 }) => {

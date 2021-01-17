@@ -1,3 +1,3 @@
-import TierListApp from './TierListApp';
+import TierLists from './TierLists';
 
-export default TierListApp;
+export default TierLists;
