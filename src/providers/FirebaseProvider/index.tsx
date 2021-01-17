@@ -1,10 +1,10 @@
 import React from 'react';
-import { User } from 'firebase';
+import app from 'firebase/app';
 import Firebase from './firebase';
 
 export type IFirebaseContext = {
   Firebase: Firebase;
-  authUser?: User;
+  authUser?: app.User;
 };
 
 const FirebaseApp = new Firebase();
@@ -19,7 +19,7 @@ export const FirebaseProvider: React.FC<Partial<IFirebaseContext>> = ({
   Firebase: fireApp,
   authUser,
 }) => {
-  const [currentAuthUser, setAuthUser] = React.useState<User | undefined>(undefined);
+  const [currentAuthUser, setAuthUser] = React.useState<app.User | undefined>(undefined);
 
   React.useEffect(() => {
     const unlisten = FirebaseApp.auth.onAuthStateChanged((user) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from '@/theme';
+import { GlobalStyle, lightTheme, darkTheme } from '@/theme';
 
 export const globalTypes = {
   theme: {
@@ -16,20 +16,26 @@ export const globalTypes = {
 
 export const parameters = {
   backgrounds: {
-    disabled: true
-  }
+    disable: true,
+  },
 };
 
-const withThemeProvider=(Story, context)=>{
+const withThemeProvider = (Story, context) => {
   const theme = context.globals.theme === 'dark' ? darkTheme : lightTheme;
+  const styles = {
+    display: 'block',
+    padding: '3rem',
+    backgroundColor: theme.colors.base.default,
+    color: theme.colors.base.text,
+  };
   return (
-    <ThemeProvider theme={theme}>
-      <Story {...context} />
-    </ThemeProvider>
+    <div style={styles}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Story {...context} />
+      </ThemeProvider>
+    </div>
   );
 };
 
-export const decorators = [
-  (Story) => <div style={{ margin: '3em' }}><Story/></div>,
-  withThemeProvider
-];
+export const decorators = [withThemeProvider];

@@ -4,7 +4,7 @@ import { useChampionData } from '@/providers/StaticLeagueProvider/useChampionDat
 import { FaInfoCircle } from 'react-icons/fa';
 import { getChampionImageUrl } from '@/utils/championInfoUtils';
 
-interface IChampionBox {
+export interface IChampionBox {
   className?: string;
   testId?: string;
   championId: string;
@@ -36,8 +36,6 @@ const StyledChampionBox = styled.div<{
     `
     border: 1px solid ${theme.borders.default};
   `}
-  box-sizing: border-box;
-  overflow: hidden;
 
   img {
     width: 100%;
@@ -54,7 +52,7 @@ const StyledInfoIconWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, -50%);
+  transform: translate(30%, -30%);
 `;
 
 export const ChampionBox: React.FC<IChampionBox> = ({

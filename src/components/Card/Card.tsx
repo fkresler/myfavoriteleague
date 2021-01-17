@@ -7,15 +7,18 @@ export interface ICard {
   showHeaderSeparator?: boolean;
   action?: React.ReactNode;
   children?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export const CardWrapper = styled.div`
-  display: block;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   border-radius: 5px;
   background-color: ${({ theme }) => theme.colors.base.default};
   color: ${({ theme }) => theme.colors.base.text};
   border: 1px solid ${({ theme }) => theme.borders.default};
+  max-width: 100%;
+  overflow: hidden;
 
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.default};
@@ -26,6 +29,16 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
+`;
+
+const CardMain = styled.div`
+  flex: 1 0 auto;
+  display: block;
+`;
+
+const CardFooter = styled.div`
+  flex: 0 0 auto;
+  display: block;
 `;
 
 export const CardHeadlineWrapper = styled.div`
@@ -57,12 +70,13 @@ export const SubHeadlineElement = styled(HeadlineElement)`
   letter-spacing: 0.3px;
 `;
 
-export const DefaultCard: React.FC<ICard> = ({
+export const Card: React.FC<ICard> = ({
   headline,
   subHeadline,
   showHeaderSeparator = true,
   action,
   children,
+  footer,
 }) => (
   <CardWrapper>
     {(headline || subHeadline || action) && (
@@ -77,8 +91,16 @@ export const DefaultCard: React.FC<ICard> = ({
         {showHeaderSeparator && <CardSeperator />}
       </>
     )}
-    <CardContentWrapper>{children}</CardContentWrapper>
+    <CardMain>
+      <CardContentWrapper>{children}</CardContentWrapper>
+    </CardMain>
+    {footer && (
+      <CardFooter>
+        <CardSeperator />
+        <CardContentWrapper>{footer}</CardContentWrapper>
+      </CardFooter>
+    )}
   </CardWrapper>
 );
 
-export default DefaultCard;
+export default Card;

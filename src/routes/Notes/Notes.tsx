@@ -1,10 +1,26 @@
 import React from 'react';
-import { Button } from 'react-rainbow-components';
+import styled from 'styled-components';
+import { FaPlus } from 'react-icons/fa';
+import { Button } from '@/components/Button';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { UserDataContext, noteActions } from '@/providers/UserDataProvider';
-import Note from '@/components/Note';
-import NoteModal from '@/components/NoteModal';
-import { NoteData } from '@/types';
+import { Loader } from '@/components/Loader';
+import { Notification } from '@/components/Notification';
+import { Modal } from '@/components/Modal';
+import { Note, NoteForm } from '@/components/Note';
+
+const NoteActionWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1rem;
+`;
+
+const NoteListWrapper = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+`;
 
 const Notes: React.FC = () => {
   const { authUser } = React.useContext(FirebaseContext);
@@ -21,48 +37,75 @@ const Notes: React.FC = () => {
     }
   }, [authUser, dispatch, hasLoaded]);
 
-  const NotesLoading: React.ReactNode = <div>Loading ...</div>;
-
-  const NotesError: React.ReactNode = <div>Something odd happened oof</div>;
-
-  const AddNoteModal: React.ReactNode = (
+  const NewNote: React.ReactNode = (
     <>
-      <NoteModal
-        isOpen={isAddNoteModalOpen}
-        onConfirm={(noteData: Partial<NoteData>) => {
-          dispatch(noteActions.addNote(noteData));
-          setIsAddNoteModalOpen(false);
-        }}
-        onClose={() => setIsAddNoteModalOpen(false)}
+      <Button
+        variant="constructive"
+        icon={<FaPlus />}
+        onClick={() => setIsAddNoteModalOpen(true)}
       />
-      <Button variant="success" onClick={() => setIsAddNoteModalOpen(true)}>
-        +
-      </Button>
+      <Modal
+        isOpen={isAddNoteModalOpen}
+        showClose
+        onRequestClose={() => setIsAddNoteModalOpen(false)}
+      >
+        <NoteForm
+          onSave={(newNoteData) => {
+            dispatch(noteActions.addNote(newNoteData));
+            setIsAddNoteModalOpen(false);
+          }}
+        />
+      </Modal>
     </>
   );
 
   const SaveNotesButton: React.ReactNode = (
-    <Button variant="success" onClick={() => dispatch(noteActions.pushNotes())}>
+    <Button variant="constructive" onClick={() => dispatch(noteActions.pushNotes())}>
       Save Notes
     </Button>
   );
 
   if (isLoading) {
-    return <>{NotesLoading}</>;
+    return <Loader />;
   }
 
   if (isError) {
-    return <>{NotesError}</>;
+    return <Notification variant="error">Something odd happened, try again later</Notification>;
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <>
+        <Notification variant="warning">
+          You do not have any notes yet. Create some with the button below!
+        </Notification>
+        <NoteActionWrapper>{NewNote}</NoteActionWrapper>
+      </>
+    );
   }
 
   return (
     <>
-      {SaveNotesButton}
-      <div>Your notes:</div>
-      {data.map((note) => (
-        <Note data={{ ...note, dispatch }} />
-      ))}
-      {AddNoteModal}
+      <NoteActionWrapper>
+        {SaveNotesButton}
+        {NewNote}
+      </NoteActionWrapper>
+      <NoteListWrapper>
+        {data.map((note) => (
+          <Note
+            id={note.id}
+            key={note.id}
+            title={note.title}
+            datetime={note.datetime}
+            text={note.text}
+            tags={note.tags}
+            onEdit={(newData) => dispatch(noteActions.updateNote(note.id, newData))}
+            onDelete={() => {
+              dispatch(noteActions.deleteNote(note.id));
+            }}
+          />
+        ))}
+      </NoteListWrapper>
     </>
   );
 };

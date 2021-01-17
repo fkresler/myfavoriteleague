@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import Routes from '@/types/routes';
 import { SignUpData } from '@/types/authentication';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
-import { Input, Button } from 'react-rainbow-components';
+import { Button } from '@/components/Button';
+import { TextInput } from '@/components/Form';
 
 const initialSignUpState: SignUpData = {
   email: '',
@@ -26,10 +27,9 @@ const SignUpPage: React.FC = () => {
   const { Firebase } = useContext(FirebaseContext);
   const history = useHistory();
   const [signUpData, setSignUpData] = useState<SignUpData>(initialSignUpState);
-  const {
-    email, password, passwordRepeat, error,
-  } = signUpData;
-  const isDataValid: boolean = !!email && !!password && !!passwordRepeat && password === passwordRepeat;
+  const { email, password, passwordRepeat, error } = signUpData;
+  const isDataValid: boolean =
+    !!email && !!password && !!passwordRepeat && password === passwordRepeat;
   const onInputChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
     const eventTarget = event.target as HTMLInputElement;
     setSignUpData({
@@ -56,30 +56,28 @@ const SignUpPage: React.FC = () => {
   };
   return (
     <StyledForm onSubmit={(event) => onSignUpSubmit(event)}>
-      <Input
-        name="email"
+      <TextInput
+        id="email"
         type="email"
         placeholder="Your email"
         value={email}
         onChange={(event) => onInputChange(event)}
       />
-      <Input
-        name="password"
+      <TextInput
+        id="password"
         type="password"
         placeholder="Your password"
         value={password}
         onChange={(event) => onInputChange(event)}
       />
-      <Input
-        name="passwordRepeat"
+      <TextInput
+        id="passwordRepeat"
         type="password"
         placeholder="Your password (again)"
         value={passwordRepeat}
         onChange={(event) => onInputChange(event)}
       />
-      <Button type="submit" variant="success" disabled={!isDataValid}>
-        Register Now!
-      </Button>
+      <Button variant={isDataValid ? 'constructive' : 'disabled'}>Register Now!</Button>
       {error && <div>{error.message}</div>}
     </StyledForm>
   );

@@ -75,8 +75,7 @@ const AllProviders: React.FC<Partial<MockedProviderData>> = ({
   </StaticLeagueContext.Provider>
 );
 
-const customRender = (ui: React.ReactElement, data?: Partial<MockedProviderData>) => {
-  return render(
+const customRender = (ui: React.ReactElement, data?: Partial<MockedProviderData>) => render(
     <AllProviders
       customTheme={data?.customTheme}
       customStaticData={data?.customStaticData}
@@ -87,10 +86,10 @@ const customRender = (ui: React.ReactElement, data?: Partial<MockedProviderData>
       {ui}
     </AllProviders>,
   );
-};
 
 // re-export everything
 export * from '@testing-library/react';
+export * from '@testing-library/user-event';
 
 // override render method
 export { customRender as render };
