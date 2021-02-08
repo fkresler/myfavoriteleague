@@ -1,17 +1,22 @@
-import { Chip } from '@/src/components/Chip';
-import { TextInput } from '@/src/components/Form/TextInput';
+import { Chip } from '@/components/Chip';
+import { TextInput } from '@/components/Form/TextInput';
 import React from 'react';
 import styled from 'styled-components';
 
 const TagContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
 
   & > * {
-    margin: 0.5rem auto;
+    margin: 0.25rem;
   }
+`;
+
+const InputSpacing = styled.div`
+  display: block;
+  margin: 1rem;
 `;
 
 export interface ITagInput {
@@ -45,21 +50,29 @@ export const TagInput: React.FC<ITagInput> = ({ id, tags, isDisabled, onTagAdd, 
 
   return (
     <div>
+      <InputSpacing>
+        <TextInput
+          id={id}
+          label="Enter your tags"
+          isDisabled={isDisabled}
+          placeholder="Press enter to add a tag"
+          value={inputValue}
+          onKeyPress={handleActionKeys}
+          onChange={handleChange}
+        />
+      </InputSpacing>
       {tags && (
         <TagContainer>
           {tags.map((tagValue, index) => (
-            <Chip value={tagValue} onDelete={() => handleTagRemove(index)} />
+            <Chip
+              key={tagValue}
+              value={tagValue}
+              isDisabled={isDisabled}
+              onDelete={() => handleTagRemove(index)}
+            />
           ))}
         </TagContainer>
       )}
-      <TextInput
-        id={id}
-        isDisabled={isDisabled}
-        placeholder="Press enter to add a tag"
-        value={inputValue}
-        onKeyPress={handleActionKeys}
-        onChange={handleChange}
-      />
     </div>
   );
 };

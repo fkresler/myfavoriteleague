@@ -10,12 +10,12 @@ export default {
   argTypes: {
     onTagAdd: { action: 'tag added' },
     onTagRemove: { action: 'tag removed' },
-    args: {
-      id: 'default-id',
-      tags: ['Riven', 'Aatrox', 'Ahri'],
-      placeholder: 'Enter your tags, press enter to submit',
-      isDisabled: false,
-    },
+  },
+  args: {
+    id: 'default-id',
+    tags: ['Riven', 'Aatrox', 'Ahri'],
+    placeholder: 'Enter your tags, press enter to submit',
+    isDisabled: false,
   },
 };
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import userEvent from '@testing-library/user-event';
 import { render, screen } from '@/utils/testUtils';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
 import { TextInput } from './TextInput';
 
 describe('TextInput', () => {
