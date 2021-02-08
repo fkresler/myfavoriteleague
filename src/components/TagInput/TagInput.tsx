@@ -1,57 +1,65 @@
+import { Chip } from '@/src/components/Chip';
+import { TextInput } from '@/src/components/Form/TextInput';
 import React from 'react';
 import styled from 'styled-components';
 
-const TagInput: React.FC<{
-  values?: string[];
+const TagContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  & > * {
+    margin: 0.5rem auto;
+  }
+`;
+
+export interface ITagInput {
+  id: string;
+  tags?: string[];
   isDisabled?: boolean;
-  onTagAdd?: (newTag: string[]) => void;
+  onTagAdd?: (newTag: string) => void;
   onTagRemove?: (removedIndex?: number) => void;
-}> = ({
-  values = [], isDisabled = false, onTagAdd, onTagRemove,
-}) => {
-  const [tags, setTags] = React.useState<string[]>(values);
+}
+
+export const TagInput: React.FC<ITagInput> = ({ id, tags, isDisabled, onTagAdd, onTagRemove }) => {
   const [inputValue, setInputValue] = React.useState<string>('');
 
   const handleActionKeys = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputValue) {
-      setTags([...tags, inputValue]);
+    if (event.key === 'Enter' && inputValue && onTagAdd) {
+      onTagAdd(inputValue);
       setInputValue('');
-      if (onTagAdd) {
-        onTagAdd(tags);
-      }
-    }
-    if (event.key === 'Backspace' && !inputValue && tags.length > 0) {
-      const removedTagIndex = tags.length - 1;
-      setTags(tags.slice(0, -1));
-      if (onTagRemove) {
-        onTagRemove(removedTagIndex);
-      }
     }
   };
 
-  const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const currentInputValue = event.target.value;
-    if (currentInputValue) {
-      setInputValue(currentInputValue);
+    setInputValue(currentInputValue);
+  };
+
+  const handleTagRemove = (index: number) => {
+    if (onTagRemove) {
+      onTagRemove(index);
     }
-  }, []);
+  };
 
   return (
     <div>
-      <div>
-        {tags.map((tagElement) => (
-          <div>{tagElement}</div>
-        ))}
-      </div>
-      {isDisabled || (
-        <input
-          type="text"
-          placeholder="Your next tag ..."
-          value={inputValue}
-          onKeyDown={handleActionKeys}
-          onChange={handleChange}
-        />
+      {tags && (
+        <TagContainer>
+          {tags.map((tagValue, index) => (
+            <Chip value={tagValue} onDelete={() => handleTagRemove(index)} />
+          ))}
+        </TagContainer>
       )}
+      <TextInput
+        id={id}
+        isDisabled={isDisabled}
+        placeholder="Press enter to add a tag"
+        value={inputValue}
+        onKeyPress={handleActionKeys}
+        onChange={handleChange}
+      />
     </div>
   );
 };
