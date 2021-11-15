@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-import { render } from '@/utils/testUtils';
+import { uiRender as render } from '@/utils/testUtils';
 import { SegmentedSelect } from './SegmentedSelect';
 
 const defaultChoices = [

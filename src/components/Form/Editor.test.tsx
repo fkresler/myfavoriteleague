@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { screen, render } from '@/utils/testUtils';
+import { screen, uiRender as render } from '@/utils/testUtils';
 import { Editor } from './Editor';
 
 describe('Editor', () => {

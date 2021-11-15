@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@/utils/testUtils';
+import { uiRender as render } from '@/utils/testUtils';
 import { Loader } from './Loader';
 
 describe('Loader', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render } from '@/utils/testUtils';
+import { screen, uiRender as render } from '@/utils/testUtils';
 import userEvent from '@testing-library/user-event';
 import { Select } from './Select';
 

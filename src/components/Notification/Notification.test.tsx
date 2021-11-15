@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render } from '@/utils/testUtils';
+import { screen, uiRender as render } from '@/utils/testUtils';
 import { Notification } from './Notification';
 
 describe('Notification', () => {

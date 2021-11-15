@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@/utils/testUtils';
+import { uiRender as render, screen } from '@/utils/testUtils';
 import userEvent from '@testing-library/user-event';
 import { Modal } from './Modal';
 

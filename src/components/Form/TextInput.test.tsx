@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@/utils/testUtils';
+import { uiRender as render, screen } from '@/utils/testUtils';
 import { TextInput } from './TextInput';
 
 describe('TextInput', () => {
