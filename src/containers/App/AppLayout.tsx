@@ -4,7 +4,7 @@ import { GlobalStyle } from '@/theme';
 import { FaTimes, FaPowerOff, FaRegLightbulb } from 'react-icons/fa';
 import useClickOutside from '@/hooks/useClickOutside';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Routes from '@/types/routes';
 import { UserDataContext, userSettingsActions } from '@/providers/UserDataProvider';
 
@@ -124,7 +124,7 @@ const AppLayout: React.FC<IAppLayout> = ({ navLinks = [], children }) => {
   const [isNavbarOpen, setNavbarOpen] = useState(false);
   const { Firebase, authUser: currentUser } = useContext(FirebaseContext);
   const clickOutsideRef = useClickOutside(() => setNavbarOpen(false));
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     usersettings: { dispatch },
   } = React.useContext(UserDataContext);
@@ -170,7 +170,7 @@ const AppLayout: React.FC<IAppLayout> = ({ navLinks = [], children }) => {
             <HeaderElement
               onClick={() => {
                 Firebase.doSignOut();
-                history.push(Routes.HOME);
+                navigate(Routes.HOME, { replace: true });
               }}
             >
               <FaPowerOff />

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Routes from '@/types/routes';
 import { SignUpData } from '@/types/authentication';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
@@ -25,7 +25,7 @@ const StyledForm = styled.form`
 
 const SignUpPage: React.FC = () => {
   const { Firebase } = useContext(FirebaseContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [signUpData, setSignUpData] = useState<SignUpData>(initialSignUpState);
   const { email, password, passwordRepeat, error } = signUpData;
   const isDataValid: boolean =
@@ -45,7 +45,7 @@ const SignUpPage: React.FC = () => {
       })
       .then(() => {
         setSignUpData(initialSignUpState);
-        history.push(Routes.HOME);
+        navigate(Routes.HOME, { replace: true });
       })
       .catch((signUpError) => {
         setSignUpData({

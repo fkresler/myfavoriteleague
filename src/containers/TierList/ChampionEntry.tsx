@@ -47,7 +47,8 @@ export const ChampionEntry: React.FC<IChampionListEntry> = ({
   const dataVersion = championData?.version;
   const imageName = championData?.image?.full;
   const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${dataVersion}/img/champion/${imageName}`;
-  const [, dragRef, preview] = useDrag({
+  const [, dragRef, preview] = useDrag(() => ({
+    type: DnDTierListTypes.ChampionElement,
     item: {
       type: DnDTierListTypes.ChampionElement,
       id,
@@ -57,7 +58,7 @@ export const ChampionEntry: React.FC<IChampionListEntry> = ({
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.4 : 1,
     }),
-  });
+  }));
   return (
     <StyledChampionEntry
       ref={dragRef}

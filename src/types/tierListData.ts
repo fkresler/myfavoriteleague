@@ -3,7 +3,7 @@ import { GameMode, PositionalRole } from './league';
 
 export enum DnDTierListTypes {
   ChampionElement = 'ChampionElement',
-  OrderedChampionListElement = 'ChampionListElement'
+  OrderedChampionListElement = 'ChampionListElement',
 }
 
 export type DnDTierListItemData<T> = T & {
@@ -13,7 +13,8 @@ export type DnDTierListItemData<T> = T & {
 export enum TierListTemplate {
   GENERAL = 'General (Default)',
   TRUETIERLIST = 'Tierlist',
-  EMPTY = 'Empty'
+  FOCUS = 'Focus',
+  EMPTY = 'Empty',
 }
 
 export type ChampionListEntryData = {

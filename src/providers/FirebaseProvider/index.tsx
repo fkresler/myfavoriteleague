@@ -1,5 +1,5 @@
 import React from 'react';
-import app from 'firebase/app';
+import app from 'firebase/compat/app';
 import Firebase from './firebase';
 
 export type IFirebaseContext = {

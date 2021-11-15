@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '@/providers/FirebaseProvider';
 import { SignInData } from '@/types/authentication';
 import Routes from '@/types/routes';
@@ -24,7 +24,7 @@ const StyledForm = styled.form`
 
 const SignInPage: React.FC = () => {
   const { Firebase } = useContext(FirebaseContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [signInData, setSignInData] = useState<SignInData>(initialSignInData);
   const { email, password, error } = signInData;
   const onInputChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
@@ -39,7 +39,7 @@ const SignInPage: React.FC = () => {
     Firebase.doSigninWithEmailAndPassword(email, password)
       .then(() => {
         setSignInData(initialSignInData);
-        history.push(Routes.HOME);
+        navigate(Routes.HOME, { replace: true});
       })
       .catch((signInError) => {
         setSignInData({
