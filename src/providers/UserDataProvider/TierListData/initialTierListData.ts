@@ -69,6 +69,30 @@ export const getTrueTierListTemplate = (tierListId: string): ChampionListData[] 
   },
 ];
 
+export const getFocusTierListTemplate = (tierListId: string): ChampionListData[] => [
+  {
+    id: `${tierListId}focused`,
+    name: 'Focused Champions',
+    order: 0,
+    description: 'Champions I will heavily focus on playing or want to heavily improve at',
+    entries: [],
+  },
+  {
+    id: `${tierListId}sometimes`,
+    name: 'Outlier Champions',
+    order: 1,
+    description: 'Champions I will play from time to time because they are fun',
+    entries: [],
+  },
+  {
+    id: `${tierListId}offmeta`,
+    name: 'Offmeta Champions',
+    order: 2,
+    description: 'Champions that are off-meta and can be a fun off-meta experience',
+    entries: [],
+  },
+];
+
 export const getTierListTemplate = (
   tierListId: string,
   template?: TierListTemplate,
@@ -79,6 +103,9 @@ export const getTierListTemplate = (
     }
     case TierListTemplate.TRUETIERLIST: {
       return getTrueTierListTemplate(tierListId);
+    }
+    case TierListTemplate.FOCUS: {
+      return getFocusTierListTemplate(tierListId);
     }
     case TierListTemplate.EMPTY: {
       return [];
